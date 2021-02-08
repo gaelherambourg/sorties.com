@@ -6,7 +6,10 @@
     <h1>Créer une sortie</h1>
     <div class="containerForm">
         <div class="sortieForm">
-            {{ form(sortie_form) }}
+{#            {{ form(sortie_form) }}#}
+            {{ form_start(sortie_form) }}
+
+            {{ form_end(sortie_form) }}
         </div>
     </div>
 {% endblock %}
