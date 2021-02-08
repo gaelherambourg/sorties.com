@@ -271,12 +271,25 @@ class Sortie
     /**
      * @Assert\Callback
      **/
-    public function isValidDate(ExecutionContextInterface $context, $date)
+    public function isValidDateDebut(ExecutionContextInterface $context, $date)
     {
         $date = $this->getDatedebut();
         if($date < new \DateTime()){
             $context->buildViolation('La date doit être supérieur à la date du jour')
                 ->atPath('datedebut')
+                ->addViolation();
+        }
+    }
+
+    /**
+     * @Assert\Callback
+     **/
+    public function isValidDateCloture(ExecutionContextInterface $context, $date)
+    {
+        $date = $this->getDatecloture();
+        if($date < new \DateTime() || $date > $this->getDatedebut()){
+            $context->buildViolation('La date doit être supérieur à la date du jour')
+                ->atPath('datecloture')
                 ->addViolation();
         }
     }
