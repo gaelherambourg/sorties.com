@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\SortieRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -56,6 +58,34 @@ class Sortie
      * @ORM\Column(type="string", length=250, nullable=true)
      */
     private $urlPhoto;
+
+    /**
+     * @ORM\ManyToMany(targetEntity=Participant::class, mappedBy="sorties")
+     */
+    private $participants;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Participant::class)
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $organisateur;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Etat::class)
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $etats_no_etat;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Lieu::class)
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $lieux_no_lieu;
+
+    public function __construct()
+    {
+        $this->participants = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -154,6 +184,69 @@ class Sortie
     public function setUrlPhoto(?string $urlPhoto): self
     {
         $this->urlPhoto = $urlPhoto;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Participant[]
+     */
+    public function getParticipants(): Collection
+    {
+        return $this->participants;
+    }
+
+    public function addParticipant(Participant $participant): self
+    {
+        if (!$this->participants->contains($participant)) {
+            $this->participants[] = $participant;
+            $participant->addSorty($this);
+        }
+
+        return $this;
+    }
+
+    public function removeParticipant(Participant $participant): self
+    {
+        if ($this->participants->removeElement($participant)) {
+            $participant->removeSorty($this);
+        }
+
+        return $this;
+    }
+
+    public function getOrganisateur(): ?Participant
+    {
+        return $this->organisateur;
+    }
+
+    public function setOrganisateur(?Participant $organisateur): self
+    {
+        $this->organisateur = $organisateur;
+
+        return $this;
+    }
+
+    public function getEtatsNoEtat(): ?Etat
+    {
+        return $this->etats_no_etat;
+    }
+
+    public function setEtatsNoEtat(?Etat $etats_no_etat): self
+    {
+        $this->etats_no_etat = $etats_no_etat;
+
+        return $this;
+    }
+
+    public function getLieuxNoLieu(): ?Lieu
+    {
+        return $this->lieux_no_lieu;
+    }
+
+    public function setLieuxNoLieu(?Lieu $lieux_no_lieu): self
+    {
+        $this->lieux_no_lieu = $lieux_no_lieu;
 
         return $this;
     }

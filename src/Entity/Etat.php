@@ -19,6 +19,7 @@ class Etat
 
     /**
      * @ORM\Column(type="string", length=30)
+     * @ORM\
      */
     private $libelle;
 
