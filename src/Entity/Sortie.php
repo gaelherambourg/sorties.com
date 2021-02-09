@@ -288,7 +288,7 @@ class Sortie
     {
         $date = $this->getDatecloture();
         if($date < new \DateTime() || $date > $this->getDatedebut()){
-            $context->buildViolation('La date doit être supérieur à la date du jour')
+            $context->buildViolation('La date doit être supérieure à la date du jour et inférieure à la date de la sortie')
                 ->atPath('datecloture')
                 ->addViolation();
         }

@@ -62,11 +62,15 @@ class FormSortieType extends AbstractType
                 "choice_label"=>"nom"
             ])
             ->add('Enregistrer', SubmitType::class, [
-                "attr"=>["value"=>"Modifier"]
+                "attr"=>["value"=>"Enregistrer"]
 
             ])
-            ->add('Publier', SubmitType::class)
-            ->add('Annuler', SubmitType::class)
+            ->add('Publier', SubmitType::class, [
+                "attr"=>["value"=>"Publier"]
+            ])
+            ->add('Annuler', SubmitType::class, [
+                "attr"=>["value"=>"Annuler"]
+            ])
 //            ->add('etatsortie')
 //            ->add('urlPhoto')
 //            ->add('participants')

@@ -36,9 +36,11 @@ class SortieController extends AbstractController
 
         $orga1 = $entityManager->find(Participant::class,1);
 
-
+        var_dump($request->get('form_sortie'));
+        var_dump($form->get('Enregistrer')->getName());
         //est ce que le formulaire est soumis et valide
         if($form->isSubmitted() && $form->isValid()){
+
 
             //hydrater les propriétés manquantes
             $sortie->setOrganisateur($orga1);
