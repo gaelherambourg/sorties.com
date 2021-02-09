@@ -6,6 +6,8 @@ use App\Repository\SortieRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 /**
  * @ORM\Entity(repositoryClass=SortieRepository::class)
@@ -20,31 +22,46 @@ class Sortie
     private $id;
 
     /**
+     * @Assert\NotBlank(message="Veuillez donner un nom à votre Sortie")
+     * @Assert\Length(
+     *     min=4,
+     *     minMessage="Le nom de la sortie doit comporter au moins 4 Caractères",
+     *     max=30,
+     *     maxMessage="Le nom de la sortie doit comporter moins de 30 caractères"
+     * )
      * @ORM\Column(type="string", length=30)
      */
     private $nom;
 
     /**
+     * @Assert\NotBlank(message="Veuillez selectionner une date")
      * @ORM\Column(type="datetime")
      */
     private $datedebut;
 
     /**
+     * @Assert\Type(type="integer", message="La durée doit être un nombre")
+     * @Assert\Positive(message="La durée doit être positive")
      * @ORM\Column(type="integer", nullable=true)
      */
     private $duree;
 
     /**
+     * @Assert\NotBlank(message="Veuillez selectionner une date")
      * @ORM\Column(type="datetime")
      */
     private $datecloture;
 
     /**
+     * @Assert\NotBlank(message="Veuillez précisez le nombre maximum de participant")
+     * @Assert\Type(type="integer",message="Le nombre de place doit être un nombre")
+     * @Assert\Positive(message="Le nombre de place doit être supérieur à 0 ")
      * @ORM\Column(type="integer")
      */
     private $nbinscriptionsmax;
 
     /**
+     * @Assert\Length(max=500, maxMessage="Le nombre de caractères ne doit pas dépasser 500")
      * @ORM\Column(type="text", nullable=true, length=500)
      */
     private $descriptioninfos;
@@ -249,6 +266,32 @@ class Sortie
         $this->lieux_no_lieu = $lieux_no_lieu;
 
         return $this;
+    }
+
+    /**
+     * @Assert\Callback
+     **/
+    public function isValidDateDebut(ExecutionContextInterface $context, $date)
+    {
+        $date = $this->getDatedebut();
+        if($date < new \DateTime()){
+            $context->buildViolation('La date doit être supérieur à la date du jour')
+                ->atPath('datedebut')
+                ->addViolation();
+        }
+    }
+
+    /**
+     * @Assert\Callback
+     **/
+    public function isValidDateCloture(ExecutionContextInterface $context, $date)
+    {
+        $date = $this->getDatecloture();
+        if($date < new \DateTime() || $date > $this->getDatedebut()){
+            $context->buildViolation('La date doit être supérieure à la date du jour et inférieure à la date de la sortie')
+                ->atPath('datecloture')
+                ->addViolation();
+        }
     }
 
 }
