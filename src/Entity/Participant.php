@@ -7,13 +7,17 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * @ORM\Entity(repositoryClass=ParticipantRepository::class)
- * @UniqueEntity("pseudo")
+ * @UniqueEntity(fields={"pseudo"}, message="Ce pseudo est déjà utilisé." )
+ * @UniqueEntity (fields={"mail"}, message="Un compte a déjà été crée avec cet email.")
+ *
  */
-class Participant
+class Participant implements UserInterface
 {
+
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
@@ -22,7 +26,7 @@ class Participant
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=30)
+     * @ORM\Column(type="string", length=30, unique=true)
      */
     private $pseudo;
 
@@ -42,12 +46,13 @@ class Participant
     private $telephone;
 
     /**
-     * @ORM\Column(type="string", length=30)
+     * @ORM\Column(type="string", length=30, unique=true)
      */
     private $mail;
 
     /**
-     * @ORM\Column(type="string", length=20)
+     * @var string Le mot de passe hashé
+     * @ORM\Column(type="string")
      */
     private $motPasse;
 
@@ -71,6 +76,11 @@ class Participant
      * @ORM\JoinColumn(nullable=false)
      */
     private $campus_no_campus;
+
+    /**
+     * @ORM\Column(type="json")
+     */
+    private $roles = [];
 
     public function __construct()
     {
@@ -213,4 +223,37 @@ class Participant
 
         return $this;
     }
+
+    public function getRoles(): array
+    {
+        return $this->roles;
+    }
+
+    public function setRoles(array $roles): self
+    {
+        $this->roles = $roles;
+
+        return $this;
+    }
+
+    public function getPassword(): ?string
+    {
+        return $this->motPasse;
+    }
+
+    public function getSalt()
+    {
+        // TODO: Implement getSalt() method.
+    }
+
+    public function getUsername(): ?string
+    {
+        return $this->pseudo;
+    }
+
+    public function eraseCredentials()
+    {
+        // TODO: Implement eraseCredentials() method.
+    }
+
 }
