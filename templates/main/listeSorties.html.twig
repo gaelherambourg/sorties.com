@@ -1,0 +1,51 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Sorties{% endblock %}
+
+{% block body %}
+
+    <section class="sorties-liste">
+
+        <h1>Sorties disponibles</h1>
+        <h2>Date du jour :{{ "now"|date("d/m/Y") }}</h2>
+
+
+
+       <table rules="all">
+           <thead style="background-color: #999999">
+                <tr>
+                    <th>Nom de la sortie</th>
+                    <th>Date de la sortie</th>
+                    <th>Clôture</th>
+                    <th>Inscrits/Places</th>
+                    <th>Etat</th>
+                    <th>Inscrit</th>
+                    <th>Organisateur</th>
+                    <th>Actions</th>
+                </tr>
+           </thead>
+           <tbody>
+            {% for sortie in sorties %}
+                <tr align="center">
+                    <td>{{ sortie.nom}}</td>
+                    <td>{{ sortie.datedebut|date("d/m/Y H:i:s") }}</td>
+                    <td>{{ sortie.datecloture|date("d/m/Y H:i:s")  }}</td>
+                    <td>{{ sortie.participants|length }}/{{ sortie.nbinscriptionsmax }}</td>
+                    <td>{{ sortie.getEtatsNoEtat().libelle }}</td>
+                    <td></td>
+                    <td>{{ sortie.getOrganisateur().pseudo }}</td>
+                    <td></td>
+                </tr>
+            {% endfor %}
+           </tbody>
+
+       </table>
+
+
+        <div>
+            <button ><a href="{{ path('main_home') }}" title="View pic detail"/>Créer une sortie</button>
+        </div>
+
+
+    </section>
+{% endblock %}

@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\Sortie;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\Tools\Pagination\Paginator;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -18,6 +19,20 @@ class SortieRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Sortie::class);
     }
+
+
+    public function trouverToutesSorties(){
+
+        $qb = $this ->createQueryBuilder('s');
+        $qb ->join('s.etats_no_etat', 'e')
+            ->addSelect('e');
+        $qb ->join('s.organisateur', 'o')
+            ->addSelect('o');
+        $query = $qb->getQuery();
+        return $query->getResult();
+    }
+
+
 
     // /**
     //  * @return Sortie[] Returns an array of Sortie objects
