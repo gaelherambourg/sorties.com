@@ -35,9 +35,6 @@ class ParticipantRepository extends ServiceEntityRepository
 
 
         return $query->getOneOrNullResult();
-
-
-
     }
 
     // /**
