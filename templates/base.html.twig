@@ -9,6 +9,18 @@
         {% block javascripts %}{% endblock %}
     </head>
     <body>
+
+    {% if app.user %}
+        <a href="{{ path('listeSorties') }}" title="Accueil">Accueil</a>
+        <a href="{{ path('app_logout') }}" title="deconnection">Se déconnecter</a>
+        <div>
+            Bonjour, {{app.user.pseudo}}
+        </div>
+    {% else %}
+        <a href="{{ path('app_login') }}" title="identification">S'identifier</a>
+        <a href="{{ path('app_register') }}" title="inscription">S'incrire</a>
+    {% endif %}
+
         {% block body %}{% endblock %}
     </body>
 </html>
