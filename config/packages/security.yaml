@@ -8,7 +8,7 @@ security:
         app_user_provider:
             entity:
                 class: App\Entity\Participant
-                property: email
+                property: pseudo
     firewalls:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
@@ -24,6 +24,13 @@ security:
                 path: app_logout
                 # where to redirect after logout
                 # target: app_any_route
+
+            #permettre à l'utilisateur d'être reconnu et connecté automatiquement à chaque visite
+            remember_me:
+                secret: '%kernel.secret%'
+                lifetime: 604800 # 1 semaine en secondes
+                path: /
+
 
             # activate different ways to authenticate
             # https://symfony.com/doc/current/security.html#firewalls-authentication
