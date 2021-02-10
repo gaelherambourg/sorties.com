@@ -32,9 +32,11 @@ class RegistrationController extends AbstractController
         $participant->setActif(true);
         $participant->setAdministrateur(false);
 
+        //Création du formulaire
         $form = $this->createForm(RegistrationFormType::class, $participant);
         $form->handleRequest($request);
 
+        //Après submit et validation, hash du mot de passe
         if ($form->isSubmitted() && $form->isValid()) {
             // Hashe le mot de passe proposé par l'utilisateur
             $participant->setMotPasse(

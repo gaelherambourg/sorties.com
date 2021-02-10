@@ -10,6 +10,10 @@
         <h2>Date du jour :{{ "now"|date("d/m/Y") }}</h2>
 
 
+        <div>
+            {{ form(selection_form) }}
+        </div>
+
 
        <table rules="all">
            <thead style="background-color: #999999">
@@ -26,13 +30,26 @@
            </thead>
            <tbody>
             {% for sortie in sorties %}
+
+
+                {% for participant in sortie.participants %}
+                    {% if  participant.id ==app.user.id%}
+                        {% set participe =true %}
+                    {% else %}
+                        {% set participe =false %}
+                    {% endif %}
+                {% endfor %}
+
+                {{ participe}}
+
+
                 <tr align="center">
                     <td>{{ sortie.nom}}</td>
                     <td>{{ sortie.datedebut|date("d/m/Y H:i:s") }}</td>
                     <td>{{ sortie.datecloture|date("d/m/Y H:i:s")  }}</td>
                     <td>{{ sortie.participants|length }}/{{ sortie.nbinscriptionsmax }}</td>
                     <td>{{ sortie.getEtatsNoEtat().libelle }}</td>
-                    <td></td>
+                    <td>{{ participe ? 'X':'' }}</td>
                     <td>{{ sortie.getOrganisateur().pseudo }}</td>
                     <td></td>
                 </tr>
@@ -42,8 +59,10 @@
        </table>
 
 
+
+
         <div>
-            <button ><a href="{{ path('main_home') }}" title="View pic detail"/>Créer une sortie</button>
+            <button ><a href="{{ path('sortie_creation') }}" title="View pic detail"/>Créer une sortie</button>
         </div>
 
 

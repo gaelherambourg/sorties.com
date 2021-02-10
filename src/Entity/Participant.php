@@ -224,6 +224,9 @@ class Participant implements UserInterface
         return $this;
     }
 
+    /**
+     * @see UserInterface
+     */
     public function getRoles(): array
     {
         return $this->roles;
@@ -236,21 +239,33 @@ class Participant implements UserInterface
         return $this;
     }
 
-    public function getPassword(): ?string
+    /**
+     * @see UserInterface
+     */
+    public function getPassword(): string
     {
-        return $this->motPasse;
+        return (string) $this->motPasse;
     }
 
+    /**
+     * @see UserInterface
+     */
     public function getSalt()
     {
         // TODO: Implement getSalt() method.
     }
 
-    public function getUsername(): ?string
+    /**
+     * @see UserInterface
+     */
+    public function getUsername(): string
     {
-        return $this->pseudo;
+        return (string) $this->pseudo;
     }
 
+    /**
+     * @see UserInterface
+     */
     public function eraseCredentials()
     {
         // TODO: Implement eraseCredentials() method.
