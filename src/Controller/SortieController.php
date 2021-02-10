@@ -7,6 +7,7 @@ use App\Entity\Lieu;
 use App\Entity\Participant;
 use App\Entity\Sortie;
 use App\Entity\Ville;
+use App\Form\FormLieuType;
 use App\Form\FormSortieType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -26,6 +27,8 @@ class SortieController extends AbstractController
         $sortie = new Sortie();
         //retourne l'entité user de l'utilisateur connecté
         //$user = $this->getUser();
+        $lieu2 = new Lieu();
+        $form2 = $this->createForm(FormLieuType::class, $lieu2);
 
         $lieu = $entityManager->find(Lieu::class,4);
 
@@ -37,15 +40,6 @@ class SortieController extends AbstractController
         $form->handleRequest($request);
 
         $orga1 = $entityManager->find(Participant::class,2);
-
-//        var_dump($request->get("form_sortie"));
-//        var_dump($form);
-//        //var_dump($form->getData());
-//        var_dump($form->get("Publier")->getData());
-//        var_dump($form->get("Enregistrer")->getData());
-
-//        var_dump($form->get('Publier')->isClicked());
-//        var_dump($form->get('Enregistrer')->isClicked());
 
         //est ce que le formulaire est soumis et valide
         if($form->isSubmitted() && $form->isValid()){
@@ -66,7 +60,7 @@ class SortieController extends AbstractController
             //Si le formulaire a été soumis avec le bouton Annuler, on retourne vers la page d'accueil
             else
             {
-                //return $this->redirectToRoute('main_home');
+                return $this->redirectToRoute('main_home');
             }
 
             //déclenche l'insert en bdd
@@ -83,7 +77,8 @@ class SortieController extends AbstractController
 
         return $this->render('sortie/creationSortie.html.twig', [
             "sortie_form"=> $form->createView(),
-            "lieu" => $lieu
+            "lieu" => $lieu,
+            "lieu_form"=> $form2->createView()
         ]);
     }
 }

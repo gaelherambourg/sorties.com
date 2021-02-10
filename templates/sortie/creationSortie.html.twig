@@ -23,16 +23,21 @@
             {{ form_row(sortie_form.Longitude, {'attr': {'value':lieu.longitude}}) }}
             </div>
             <div class="divAjoutLieu" style="display: none">
-
-                <label for="nomLieu">Lieu :</label>
-                <input type="text" id="nomLieu" name="nomLieu"/>
-                <label for="rueLieu">Rue :</label>
-                <input type="text" id="rueLieu" name="rueLieu"/>
-                <label for="latitudeLieu">Latitude :</label>
-                <input type="text" id="latitudeLieu" name="latitudeLieu"/>
-                <label for="longitudeLieu">Longitude :</label>
-                <input type="text" id="longitudeLieu" name="longitudeLieu"/>
+                {{ form_start(lieu_form) }}
+                {{ form_widget(lieu_form) }}
                 <button id="ajoutLieu" name="ajoutLieu">Ajout Lieu</button>
+                {{ form_end(lieu_form) }}
+{#                <form name="form_lieu">#}
+{#                    <label for="nomLieu">Lieu :</label>#}
+{#                    <input type="text" id="nomLieu" name="nomLieu"/>#}
+{#                    <label for="rueLieu">Rue :</label>#}
+{#                    <input type="text" id="rueLieu" name="rueLieu"/>#}
+{#                    <label for="latitudeLieu">Latitude :</label>#}
+{#                    <input type="number" id="latitudeLieu" name="latitudeLieu"/>#}
+{#                    <label for="longitudeLieu">Longitude :</label>#}
+{#                    <input type="number" id="longitudeLieu" name="longitudeLieu"/>#}
+{#                    <button id="ajoutLieu" name="ajoutLieu">Ajout Lieu</button>#}
+{#                </form>#}
             </div>
             {{ form_end(sortie_form) }}
             <button id="ouvrirAjoutLieu" name="ouvrirAjoutLieu">+</button>
@@ -81,26 +86,37 @@
             //Quand on clique sur le bouton nouveau lieu, on declenche les verifications et l'ajout d'un nouveau lieu
             $("#ajoutLieu").click(function (event){
                 event.preventDefault();
-                let nom = $("#nomLieu").val();
-                let rue = $("#rueLieu").val();
-                let latitude = $("#latitudeLieu").val();
-                let longitude = $("#longitudeLieu").val();
+                let nom = $("#form_lieu_nom").val();
+                let rue = $("#form_lieu_rue").val();
+                let latitude = $("#form_lieu_latitude").val();
+                let longitude = $("#form_lieu_longitude").val();
                 let idVille = $("#form_sortie_Ville option:selected").val();
+                let token = $("#form_lieu__token").val();
 
                 $.ajax({
+                    "type": "POST",
                     "url": "{{ path('ajout_lieu') }}",
                     "data": {
                         "nom": nom,
                         "rue": rue,
                         "latitude": latitude,
                         "longitude": longitude,
-                        "idVille": idVille
+                        "idVille": idVille,
+                        "token": token
                     }
-                }).done(function (response){
-                        console.log(response);
+                })
+                .done(function (Response){
+                        console.log(Response);
                         console.log("tutu");
-                    }
-                )
+                })
+                .fail(function (Response){
+                    console.log(Response);
+                    console.log("titi");
+                })
+                .success(function (Response){
+                    console.log(Response);
+                    console.log("toto");
+                })
             })
 
             //Quand on change le lieu, les infos (rue, latitude, longitude) changent

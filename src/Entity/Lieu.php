@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\LieuRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=LieuRepository::class)
@@ -18,11 +19,14 @@ class Lieu
     private $id;
 
     /**
+     * @Assert\NotBlank(message="Veuillez donnez un nom au lieu")
+     * @Assert\Length(min=2, minMessage="Le nom du lieu doit comporter au moins 2 caractères", max=30, maxMessage="Le nom du lieu ne doit pas comporter plus de 30 caractères")
      * @ORM\Column(type="string", length=30)
      */
     private $nom;
 
     /**
+     * @Assert\Length(max=30, maxMessage="Le nom du lieu ne doit pas comporter plus de 30 caractères")
      * @ORM\Column(type="string", length=30, nullable=true)
      */
     private $rue;
