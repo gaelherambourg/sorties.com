@@ -6,10 +6,71 @@
     <h1>Créer une sortie</h1>
     <div class="containerForm">
         <div class="sortieForm">
-{#            {{ form(sortie_form) }}#}
+            {# {{ form(sortie_form) }} #}
             {{ form_start(sortie_form) }}
+            {{ form_row(sortie_form.nom) }}
+            {{ form_row(sortie_form.datedebut) }}
+            {{ form_row(sortie_form.datecloture) }}
+            {{ form_row(sortie_form.nbinscriptionsmax) }}
+            {{ form_row(sortie_form.duree) }}
+            {{ form_row(sortie_form.descriptioninfos) }}
+            {{ form_row(sortie_form.Campus) }}
+            {{ form_row(sortie_form.Ville) }}
+            {{ form_row(sortie_form.lieux_no_lieu) }}
+            {{ form_row(sortie_form.Rue, {'attr': {'value':lieu.rue}}) }}
+            {{ form_row(sortie_form.Latitude, {'attr': {'value':lieu.latitude}}) }}
+            {{ form_row(sortie_form.Longitude, {'attr': {'value':lieu.longitude}}) }}
 
             {{ form_end(sortie_form) }}
+            <button id="ajoutLieu" name="ajoutLieu">Ajout Lieu</button>
         </div>
+{#        <div id="popupAjout" style="display: none">#}
+{#            <div class="popAjout">#}
+{#            <div id="close">x</div>#}
+
+{#                    <label for="nomLieu">Nom :</label>#}
+{#                    <input type="text" id="nomLieu" name="nomLieu">#}
+{#                    <label for="RueLieu">Rue :</label>#}
+{#                    <input type="text" id="RueLieu" name="RueLieu">#}
+{#                    <label for="LatitudeLieu">Latitude :</label>#}
+{#                    <input type="text" id="LatitudeLieu" name="LatitudeLieu">#}
+{#                    <label for="LongitudeLieu">Longitude :</label>#}
+{#                    <input type="text" id="LongitudeLieu" name="LongitudeLieu">#}
+
+{#                    <input type="submit" name="btnAjoutLieu" value="Ajouter Lieu">#}
+
+{#            </div>#}
+{#        </div>#}
     </div>
+{% endblock %}
+{% block js %}
+    <script>
+        $(document).ready(function () {
+
+            //quand on clique sur le bouton ajoutLieu, on change le select en input text et on vide les champs Rue, Latitude et Longitude
+            $("#ajoutLieu").click(function () {
+                $("#form_sortie_lieux_no_lieu").replaceWith("<input type='text' id='nomLieu' name='nomLieu'>");
+                $("#form_sortie_Rue").val("");
+                $("#form_sortie_Latitude").val("");
+                $("#form_sortie_Longitude").val("");
+                // $("#popupAjout").toggle("slide");
+
+                //recuperer la valeur de l'input
+                //  let keyworld = $("#ajoutLieu").val();
+
+                {# //ajax #}
+                {# $.ajax({ #}
+                {# "url": "{{ path('ajout_lieu') }}", #}
+                {# "data": { #}
+                {# "keyword": keyworld #}
+                {# } #}
+                {# }) #}
+                {# .done(function (response){ #}
+                {# console.log(response); #}
+                // })
+            });
+        });
+
+
+    </script>
 {% endblock %}
