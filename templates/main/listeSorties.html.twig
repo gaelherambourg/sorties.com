@@ -15,12 +15,18 @@
         </div>
 
 
+
+
+        {% if sorties is null %}
+            <h2>Aucune sortie n'a été trouvée</h2>
+        {% else %}
+
        <table rules="all">
            <thead style="background-color: #999999">
                 <tr>
                     <th>Nom de la sortie</th>
                     <th>Date de la sortie</th>
-                    <th>Clôture</th>
+                    <th>Clôture des inscriptions</th>
                     <th>Inscrits/Places</th>
                     <th>Etat</th>
                     <th>Inscrit</th>
@@ -31,12 +37,11 @@
            <tbody>
             {% for sortie in sorties %}
 
+                {% set participe =false %}
 
                 {% for participant in sortie.participants %}
                     {% if  participant.id ==app.user.id%}
                         {% set participe =true %}
-                    {% else %}
-                        {% set participe =false %}
                     {% endif %}
                 {% endfor %}
 
@@ -58,7 +63,7 @@
 
        </table>
 
-
+        {% endif %}
 
 
         <div>
