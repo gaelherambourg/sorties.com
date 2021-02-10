@@ -54,7 +54,5 @@ class LieuRepository extends ServiceEntityRepository
             ->setParameter('val', $setVal)
             ->getQuery()
             ->getResult();
-
-
     }
 }

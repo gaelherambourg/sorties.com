@@ -108,14 +108,20 @@
                 .done(function (Response){
                         console.log(Response);
                         console.log("tutu");
+                        let lieu = Response;
+                        $("#form_sortie_lieux_no_lieu").append('<option value="'+lieu.id+'">'+lieu.nom+'</option>');
+                        $("#form_sortie_lieux_no_lieu option[value=" + lieu.id + "]").prop("selected", true);
+                        $("#form_sortie_Rue").val(lieu.rue);
+                        $("#form_sortie_Latitude").val(lieu.latitude);
+                        $("#form_sortie_Longitude").val(lieu.longitude);
+
+                        $(".divAjoutLieu").toggle("fast");
+                        $(".divLieu").toggle("fast");
+
                 })
                 .fail(function (Response){
                     console.log(Response);
                     console.log("titi");
-                })
-                .success(function (Response){
-                    console.log(Response);
-                    console.log("toto");
                 })
             })
 
