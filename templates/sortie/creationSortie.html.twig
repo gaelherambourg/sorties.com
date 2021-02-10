@@ -16,58 +16,105 @@
             {{ form_row(sortie_form.descriptioninfos) }}
             {{ form_row(sortie_form.Campus) }}
             {{ form_row(sortie_form.Ville) }}
+            <div class="divLieu">
             {{ form_row(sortie_form.lieux_no_lieu) }}
             {{ form_row(sortie_form.Rue, {'attr': {'value':lieu.rue}}) }}
             {{ form_row(sortie_form.Latitude, {'attr': {'value':lieu.latitude}}) }}
             {{ form_row(sortie_form.Longitude, {'attr': {'value':lieu.longitude}}) }}
+            </div>
+            <div class="divAjoutLieu" style="display: none">
 
+                <label for="nomLieu">Lieu :</label>
+                <input type="text" id="nomLieu" name="nomLieu"/>
+                <label for="rueLieu">Rue :</label>
+                <input type="text" id="rueLieu" name="rueLieu"/>
+                <label for="latitudeLieu">Latitude :</label>
+                <input type="text" id="latitudeLieu" name="latitudeLieu"/>
+                <label for="longitudeLieu">Longitude :</label>
+                <input type="text" id="longitudeLieu" name="longitudeLieu"/>
+                <button id="ajoutLieu" name="ajoutLieu">Ajout Lieu</button>
+            </div>
             {{ form_end(sortie_form) }}
-            <button id="ajoutLieu" name="ajoutLieu">Ajout Lieu</button>
+            <button id="ouvrirAjoutLieu" name="ouvrirAjoutLieu">+</button>
         </div>
-{#        <div id="popupAjout" style="display: none">#}
-{#            <div class="popAjout">#}
-{#            <div id="close">x</div>#}
-
-{#                    <label for="nomLieu">Nom :</label>#}
-{#                    <input type="text" id="nomLieu" name="nomLieu">#}
-{#                    <label for="RueLieu">Rue :</label>#}
-{#                    <input type="text" id="RueLieu" name="RueLieu">#}
-{#                    <label for="LatitudeLieu">Latitude :</label>#}
-{#                    <input type="text" id="LatitudeLieu" name="LatitudeLieu">#}
-{#                    <label for="LongitudeLieu">Longitude :</label>#}
-{#                    <input type="text" id="LongitudeLieu" name="LongitudeLieu">#}
-
-{#                    <input type="submit" name="btnAjoutLieu" value="Ajouter Lieu">#}
-
-{#            </div>#}
-{#        </div>#}
     </div>
 {% endblock %}
-{% block js %}
+{% block javascripts %}
     <script>
+
+        //fonction ajax
+        function ajax(url, callbackfunction, method='GET') {
+            let req = new XMLHttpRequest();
+            req.open(method, url, true);
+            req.onload = callbackfunction;
+            req.send();
+        }
+
+
         $(document).ready(function () {
 
-            //quand on clique sur le bouton ajoutLieu, on change le select en input text et on vide les champs Rue, Latitude et Longitude
-            $("#ajoutLieu").click(function () {
-                $("#form_sortie_lieux_no_lieu").replaceWith("<input type='text' id='nomLieu' name='nomLieu'>");
-                $("#form_sortie_Rue").val("");
-                $("#form_sortie_Latitude").val("");
-                $("#form_sortie_Longitude").val("");
-                // $("#popupAjout").toggle("slide");
+            //Quand on change la ville dans le select, la liste des lieux disponibles changent et les infos du lieu également
+            $("#form_sortie_Ville").change(function (){
+                let selVal = ($("#form_sortie_Ville option:selected").val());
 
-                //recuperer la valeur de l'input
-                //  let keyworld = $("#ajoutLieu").val();
+                ajax("{{ path('change_select_lieu')~"?selVal=" }}"+selVal, function (){
+                    // console.log(this.responseText);
+                    let lieux = JSON.parse(this.responseText);
+                    console.log(lieux);
+                    $("#form_sortie_lieux_no_lieu").empty();
+                    for (let i=0; i<lieux.length;i++ ){
+                        console.log(lieux[i].nom);
+                        $("#form_sortie_lieux_no_lieu").append('<option value="'+lieux[i].id+'">'+lieux[i].nom+'</option>');
+                    }
+                    $("#form_sortie_Rue").val(lieux[0].rue);
+                    $("#form_sortie_Latitude").val(lieux[0].latitude);
+                    $("#form_sortie_Longitude").val(lieux[0].longitude);
+                })
+            });
 
-                {# //ajax #}
-                {# $.ajax({ #}
-                {# "url": "{{ path('ajout_lieu') }}", #}
-                {# "data": { #}
-                {# "keyword": keyworld #}
-                {# } #}
-                {# }) #}
-                {# .done(function (response){ #}
-                {# console.log(response); #}
-                // })
+            //quand on clique sur le +, on masque les infos rempli de lieu et on decouvre des champs text permettant l'ajout d'un nouveau lieu
+            $("#ouvrirAjoutLieu").click(function () {
+                $(".divAjoutLieu").toggle("fast");
+                $(".divLieu").toggle("fast");
+            });
+
+            //Quand on clique sur le bouton nouveau lieu, on declenche les verifications et l'ajout d'un nouveau lieu
+            $("#ajoutLieu").click(function (event){
+                event.preventDefault();
+                let nom = $("#nomLieu").val();
+                let rue = $("#rueLieu").val();
+                let latitude = $("#latitudeLieu").val();
+                let longitude = $("#longitudeLieu").val();
+                let idVille = $("#form_sortie_Ville option:selected").val();
+
+                $.ajax({
+                    "url": "{{ path('ajout_lieu') }}",
+                    "data": {
+                        "nom": nom,
+                        "rue": rue,
+                        "latitude": latitude,
+                        "longitude": longitude,
+                        "idVille": idVille
+                    }
+                }).done(function (response){
+                        console.log(response);
+                        console.log("tutu");
+                    }
+                )
+            })
+
+            //Quand on change le lieu, les infos (rue, latitude, longitude) changent
+            $("#form_sortie_lieux_no_lieu").change(function () {
+                let selVal = ($("#form_sortie_lieux_no_lieu option:selected").val());
+
+                ajax("{{ path('change_infos_lieu')~"?selVal=" }}"+selVal, function (){
+                    // console.log(this.responseText);
+                    let lieu = JSON.parse(this.responseText);
+                    console.log(lieu);
+                    $("#form_sortie_Rue").val(lieu.rue);
+                    $("#form_sortie_Latitude").val(lieu.latitude);
+                    $("#form_sortie_Longitude").val(lieu.longitude);
+                })
             });
         });
 

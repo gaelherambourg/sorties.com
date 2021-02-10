@@ -28,7 +28,6 @@ class SortieController extends AbstractController
         //$user = $this->getUser();
 
         $lieu = $entityManager->find(Lieu::class,4);
-        dump($lieu);
 
         //Créer une instance du form, en lui associant notre entité
         $form = $this->createForm(FormSortieType::class, $sortie);
