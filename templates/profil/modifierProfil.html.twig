@@ -5,6 +5,7 @@
 {% block body %}
     <h1>Mon profil</h1>
 
+
     {{ form_start(profil_form) }}
 
     {{ form_row(profil_form.pseudo) }}
@@ -21,7 +22,7 @@
         </fieldset>
     </div>
 
-    <button type="submit" class="btn">Enregistrer les modifications</button>
+    <button type="submit" class="btn" formnovalidate>Enregistrer les modifications</button>
     <button type="reset" class="btn">Annuler les modifications</button>
 
 

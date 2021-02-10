@@ -18,7 +18,7 @@ class ListeController extends AbstractController
      */
    /* public function index(): Response
     {
-        return $this->render('liste/index.html.twig', [
+        return $this->render('liste/ajoutLieu.html.twig', [
             'controller_name' => 'ListeController',
         ]);
     }*/

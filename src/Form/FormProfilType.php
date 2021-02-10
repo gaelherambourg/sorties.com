@@ -37,17 +37,14 @@ class FormProfilType extends AbstractType
                 'type'=> PasswordType::class,
                 'mapped' => false,
                 'invalid_message' => 'Mot de passe de confirmation différent.',
-                'first_options' => array('label' => ' ', 'attr' =>
-                    ['placeholder' => 'Nouveau mot de passe (6 caractères min)']),
+                'first_options' => array('label' => ' ',
+                    'attr' => ['placeholder' => 'Nouveau mot de passe (6 caractères min)']),
                 'second_options' => array('label' => ' ',
                     'attr' => ['placeholder' => 'Confirmer le nouveau mot de passe.']),
                 'constraints' => [
-                    new NotBlank([
-                        'message' => 'Merci de renseigner un mot de passe.',
-                    ]),
                     new Length([
                         'min' => 6,
-                        'minMessage' => 'Votre mot de passe doit comporter au moins {{ 6 }} characters',
+                        'minMessage' => 'Votre mot de passe doit comporter au moins 6 caractères.',
                         // max length allowed by Symfony for security reasons
                         'max' => 4096,
                     ]),

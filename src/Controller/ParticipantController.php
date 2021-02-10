@@ -33,12 +33,34 @@ class ParticipantController extends AbstractController
 
         /*
          * Si le formulaire est soumis et valide, ET si l'utilisateur a entré
-         * un nouveau mot de passe, ce dernier est hashé
+         * un nouveau mot de passe, ce dernier est hashé. Sinon, le mdp
+         * demeurera le même.
          */
         if ($form->isSubmitted() && $form->isValid())
         {
-            if(!$form->get('plainPassword')->getData())
-            {dump($form);}
+            if(!empty($form->get('plainPassword')->getData()))
+            {$participant->setMotPasse(
+                $passwordEncoder->encodePassword(
+                    $participant,
+                    $form->get('plainPassword')->getData()
+                )
+            );
+            }
+
+            /*
+             * Comme il s'agit simplement d'éventuelles modifications, pas besoin de persist().
+             * Le flush() suffira à enregistra en base les champs modifiés.
+             */
+            $entityManager->flush();
+
+
+            /*
+             * En cas de validation, l'utilisateur est redirigé vers la page d'accueil.
+             * Un message (via addFLash() ) l'y informera de l'enregistrement des nouvelles données.
+             */
+            $this->addFlash('success', 'Vos coordonnées ont bien été modifiées.');
+            return $this->redirectToRoute('main_home');
+
         }
 
 

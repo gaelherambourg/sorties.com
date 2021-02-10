@@ -17,7 +17,9 @@
         {{ form_row(registrationForm.campusNoCampus) }}
         {{ form_row(registrationForm.mail) }}
 
-        {{ form_row(registrationForm.plainPassword) }}
+        {{ form_row(registrationForm.plainPassword, {
+            label: 'Mot de passe :'
+        }) }}
 
 
         <button type="submit" class="btn">Register</button>
