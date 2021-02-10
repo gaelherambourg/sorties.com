@@ -15,7 +15,8 @@
     <body>
 
     {% if app.user %}
-        <a href="{{ path('listeSorties') }}" title="Accueil">Accueil</a>
+        <a href="{{ path('AccueilSorties') }}" title="Accueil">Accueil</a>
+        <a href="{{ path('modif_profil') }}" title="profil utilisateur">Mon profil</a>
         <a href="{{ path('app_logout') }}" title="deconnection">Se déconnecter</a>
         <div>
             Bonjour, {{app.user.pseudo}}

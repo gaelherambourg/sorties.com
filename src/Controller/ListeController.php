@@ -27,7 +27,7 @@ class ListeController extends AbstractController
 
     /**
      * affiche la page avec l'ensemble des sorties
-     * @Route("/liste", name="listeSorties")
+     * @Route("/", name="AccueilSorties")
      */
     public function listSorties(Request $request):Response
     {
