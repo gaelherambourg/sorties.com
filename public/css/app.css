@@ -1,0 +1,25 @@
+/* BARRE DE NAVIGATION */
+
+ @media (min-width: 768px) {
+     .navbar-brand.abs
+     {
+         position: absolute;
+         width: 100%;
+         left: 0;
+         text-align: center;
+     }
+ }
+
+ .navbar{
+     height: 150px;
+     background: darkgoldenrod url("http://localhost/Sortir.com/sorties.com/public/img/city_night.jpg")
+     no-repeat center fixed;
+     background-size: cover;
+ }
+
+/* BOUTONS */
+.btn {
+    background-color: sandybrown;
+    border-radius: 10px;
+}
+
