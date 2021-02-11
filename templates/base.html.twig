@@ -1,29 +1,51 @@
-<!DOCTYPE html>
-<html lang="fr">
-    <head>
-        <meta charset="UTF-8">
-        <title>{% block title %}premier essai!{% endblock %}</title>
-        {% block stylesheets %}{% endblock %}
+    <!DOCTYPE html>
+    <html lang="fr">
+        <head>
+            <meta charset="UTF-8">
+            <title>{% block title %}SORTIR{% endblock %}</title>
+            <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+            <link rel="stylesheet" href="{{ asset('css/app.css') }}">
+            {% block stylesheets %}{% endblock %}
 
 
-        {% block javascripts %}{% endblock %}
-    </head>
-    <body>
+            {% block javascripts %}{% endblock %}
+        </head>
+        <body>
+        <header>
+            <nav class="navbar sticky-top navbar-light bg light">
+                <a class="navbar-brand abs" href="{{ path('listeSorties') }}">
+                    <img src="{{ asset('img/Logo-lisible.png') }}" alt="LOGO Sortir.com">
+                </a>
 
-    {% if app.user %}
-        <a href="{{ path('listeSorties') }}" title="Accueil">Accueil</a>
-        <a href="{{ path('app_logout') }}" title="deconnection">Se déconnecter</a>
-        <div>
-            Bonjour, {{app.user.pseudo}}
-        </div>
-    {% else %}
-        <a href="{{ path('app_login') }}" title="identification">S'identifier</a>
-        <a href="{{ path('app_register') }}" title="inscription">S'incrire</a>
-    {% endif %}
 
-        {% block body %}{% endblock %}
-    </body>
-</html>
+        {% if app.user %}
+
+                    <ul class="navbar-nav">
+                        <li class="nav-item">
+                            <a href="{{ path('listeSorties') }}" class="nav-link" title="Accueil">Accueil</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ path('modif_profil') }}" class="nav-link" title="profil">Mon profil</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ path('app_logout') }}" class="nav-link" title="deconnection">Se déconnecter</a>
+                        </li>
+                    </ul>
+
+                    <div class="right">Bonjour, {{app.user.pseudo}}</div>
+
+        {#
+        {% else %}
+            <a href="{{ path('app_login') }}" title="identification">S'identifier</a>
+            <a href="{{ path('app_register') }}" title="inscription">S'incrire</a>
+        #}
+        {% endif %}
+            </nav>
+        </header>
+
+            {% block body %}{% endblock %}
+        </body>
+    </html>
 
 
 

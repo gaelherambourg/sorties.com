@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+{% block title %}Profil de {{ participant.pseudo }}{% endblock %}
+
+
+{% block body %}
+
+<h1>{{ participant.pseudo }}</h1>
+
+    <div class="coordonnees"> {{ participant.prenom }} {{ participant.nom }}</div>
+
+    {% if participant.telephone%}
+        <div class="coordonnees">Téléphone : {{ participant.telephone }}</div>
+    {% endif %}
+
+    <div class="coordonnees">Email : {{ participant.mail}} </div>
+
+    <div class="coordonnees">Campus : {{ participant.campusNoCampus.nom }}</div>
+
+    <a href="{{ path('listeSorties') }}">
+        <button class="btn">Retour</button>
+    </a>
+
+
+
+
+
+
+
+
+
+
+
+
+{% endblock %}
+
+
+
