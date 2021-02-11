@@ -47,4 +47,12 @@ class LieuRepository extends ServiceEntityRepository
         ;
     }
     */
+    public function rechercherLieuxParVille($setVal)
+    {
+        return $this->createQueryBuilder('l')
+            ->andWhere('l.villes_no_ville = :val')
+            ->setParameter('val', $setVal)
+            ->getQuery()
+            ->getResult();
+    }
 }

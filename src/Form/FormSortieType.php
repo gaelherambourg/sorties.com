@@ -61,9 +61,20 @@ class FormSortieType extends AbstractType
                 "class"=>Lieu::class,
                 "choice_label"=>"nom"
             ])
+            ->add('Rue', TextType::class, [
+                "label"=> "Rue :",
+                "mapped"=>false
+            ])
+            ->add('Latitude', TextType::class, [
+                "label"=> "Latitude :",
+                "mapped"=>false
+            ])
+            ->add('Longitude', TextType::class, [
+                "label"=> "Longitude :",
+                "mapped"=>false
+            ])
             ->add('Enregistrer', SubmitType::class, [
                 "attr"=>["value"=>"Enregistrer"]
-
             ])
             ->add('Publier', SubmitType::class, [
                 "attr"=>["value"=>"Publier"]

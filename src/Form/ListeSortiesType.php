@@ -18,11 +18,7 @@ class ListeSortiesType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('campus',EntityType::class, [
-                'class'=> Campus::class,
-                'choice_label'=> 'nom',
-                'label'=>'Campus : '
-            ])
+
             ->add('recherche', SearchType::class,[
                 'mapped'=>false,
                 'label' => 'Le nom de la sortie contient :'
