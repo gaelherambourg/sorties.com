@@ -59,7 +59,7 @@ class ParticipantController extends AbstractController
              * Un message (via addFLash() ) l'y informera de l'enregistrement des nouvelles données.
              */
             $this->addFlash('success', 'Vos coordonnées ont bien été modifiées.');
-            return $this->redirectToRoute('main_home');
+            return $this->redirectToRoute('AccueilSorties');
 
         }
 
