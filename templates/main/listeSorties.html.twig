@@ -8,6 +8,7 @@
 
         <h1>Sorties disponibles</h1>
         <h2>Date du jour :{{ "now"|date("d/m/Y") }}</h2>
+        <h4>{{ app.user.pseudo }}</h4>
 
 
         <div>
@@ -21,8 +22,8 @@
             <h2>Aucune sortie n'a été trouvée</h2>
         {% else %}
 
-       <table rules="all">
-           <thead style="background-color: #999999">
+       <table rules="all" >
+           <thead style="background-color: #999999" align="center">
                 <tr>
                     <th>Nom de la sortie</th>
                     <th>Date de la sortie</th>
@@ -58,6 +59,7 @@
                 {% endif %}
 
                 {% set routeInscription = ""%}
+                {%  set dateJour = "now"|date("d/m/Y H:i:s") %}
 
                 {% if participe %}
                     {% set titreInscription = "Se désister"%}
@@ -67,6 +69,13 @@
                     {% set titreInscription = "S'inscrire"%}
                 {% endif %}
 
+                {% if sortie.datecloture|date("d/m/Y H:i:s") < dateJour %}
+                    {% set titreInscription = ""%}
+                {% endif %}
+
+                {% if sortie.etatsortie != 2 %}
+                    {% set titreInscription = ""%}
+                {% endif %}
 
                 <tr align="center">
                     <td>{{ sortie.nom}}</td>
@@ -86,7 +95,6 @@
        </table>
 
         {% endif %}
-
 
         <div>
             <a href="{{ path('sortie_creation') }}" title="View pic detail"/><button>Créer une sortie</button></a>
