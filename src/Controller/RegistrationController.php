@@ -6,6 +6,7 @@ use App\Entity\Participant;
 use App\Form\RegistrationFormType;
 use App\Security\AppAuthenticator;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -20,7 +21,10 @@ class RegistrationController extends AbstractController
     public function register(Request $request,
                              UserPasswordEncoderInterface $passwordEncoder,
                              GuardAuthenticatorHandler $guardHandler,
-                             AppAuthenticator $authenticator): Response
+                             AppAuthenticator $authenticator,
+                             //Route définie dans config/services.yaml
+                             string $uploadDir
+                            ): Response
     {
         //Création d'une instance vide liée au formulaire d'inscription
         $participant = new Participant();
@@ -46,8 +50,25 @@ class RegistrationController extends AbstractController
                 )
             );
 
-            //on assigne aux users le rôle ROLE_USER par défaut
+            //On assigne aux users le rôle ROLE_USER par défaut
             $participant->setRoles(array("ROLE_USER"));
+
+            //Récupération de la photo de profil, si elle a été soumise
+            /** @var UploadedFile $photo */
+            $photo = $form->get('photo')->getData();
+
+            /*
+             * S'il y a photo, on hashe le nom du dossier uploadé,
+             * pour éviter les attaques. GuessExtension inspecte le
+             * fichier et déduit l'extension
+             */
+            if($photo) {
+                $nouveauNomPhoto = md5(uniqid()) . "." . $photo->guessExtension();
+                //déplace le fichier dans public/img
+                $photo->move($uploadDir, $nouveauNomPhoto);
+                //remplit la propriété nomPhoto de l'objet Participant
+                $participant->setNomPhoto($nouveauNomPhoto);
+            }
 
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($participant);
