@@ -6,6 +6,7 @@
     <h1>Créer une sortie</h1>
     <div class="containerForm">
         <div class="sortieForm">
+            <div class="divLieu">
             {# {{ form(sortie_form) }} #}
             {{ form_start(sortie_form) }}
             {{ form_row(sortie_form.nom) }}
@@ -16,11 +17,13 @@
             {{ form_row(sortie_form.descriptioninfos) }}
             {{ form_row(sortie_form.Campus) }}
             {{ form_row(sortie_form.Ville) }}
-            <div class="divLieu">
+
             {{ form_row(sortie_form.lieux_no_lieu) }}
             {{ form_row(sortie_form.Rue, {'attr': {'value':lieu.rue}}) }}
             {{ form_row(sortie_form.Latitude, {'attr': {'value':lieu.latitude}}) }}
             {{ form_row(sortie_form.Longitude, {'attr': {'value':lieu.longitude}}) }}
+
+            {{ form_end(sortie_form) }}
             </div>
             <div class="divAjoutLieu" style="display: none">
                 {{ form_start(lieu_form) }}
@@ -39,7 +42,7 @@
 {#                    <button id="ajoutLieu" name="ajoutLieu">Ajout Lieu</button>#}
 {#                </form>#}
             </div>
-            {{ form_end(sortie_form) }}
+
             <button id="ouvrirAjoutLieu" name="ouvrirAjoutLieu">+</button>
         </div>
     </div>

@@ -39,7 +39,7 @@ class SortieController extends AbstractController
         //prends les données du formulaire et les hydrates dans mon entité
         $form->handleRequest($request);
 
-        $orga1 = $entityManager->find(Participant::class,2);
+        $orga1 = $entityManager->find(Participant::class,$this->getUser()->getId());
 
         //est ce que le formulaire est soumis et valide
         if($form->isSubmitted() && $form->isValid()){
@@ -71,7 +71,7 @@ class SortieController extends AbstractController
             $this->addFlash('success', 'La sortie a bien été ajouté !');
 
             //Créer une redirection vers une autre page
-            return $this->redirectToRoute('listeSorties');
+            return $this->redirectToRoute('AccueilSorties');
         }
 
 
