@@ -55,7 +55,7 @@
                     <td>{{ sortie.participants|length }}/{{ sortie.nbinscriptionsmax }}</td>
                     <td>{{ sortie.getEtatsNoEtat().libelle }}</td>
                     <td>{{ participe ? 'X':'' }}</td>
-                    <td>{{ sortie.getOrganisateur().pseudo }}</td>
+                    <td><a href="{{ path('affiche_profil', {id:sortie.getOrganisateur().id} )}}" title="détails de l'envie">{{ sortie.getOrganisateur().pseudo }}</a></td>
                     <td></td>
                 </tr>
             {% endfor %}
