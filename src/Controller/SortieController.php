@@ -30,8 +30,6 @@ class SortieController extends AbstractController
         $lieu2 = new Lieu();
         $form2 = $this->createForm(FormLieuType::class, $lieu2);
 
-        $lieu = $entityManager->find(Lieu::class,4);
-
         //Créer une instance du form, en lui associant notre entité
         $form = $this->createForm(FormSortieType::class, $sortie);
         //->add('author',null,['attr'=>['value'=>$this->getUser()->getPseudo()]]); //Pré remplir le champs Author avec le pseudo de l'utilisateur connecté
@@ -77,7 +75,6 @@ class SortieController extends AbstractController
 
         return $this->render('sortie/creationSortie.html.twig', [
             "sortie_form"=> $form->createView(),
-            "lieu" => $lieu,
             "lieu_form"=> $form2->createView()
         ]);
     }
