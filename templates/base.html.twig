@@ -22,7 +22,7 @@
         {% block javascripts %}{% endblock %}
     </head>
     <body>
-    <div id="main">
+    <div id="page">
     <header>
         <nav class="navbar navbar-expand-md navbar-dark">
             <div class="navbar-collapse collapse w-100 order-1 order-md-0 dual-collapse2">
@@ -62,6 +62,16 @@
     </header>
 
     <main>
+        {# Pour afficher et personnaliser tous les messages flash #}
+        {% for label, messages in app.flashes %}
+            <div class="container">
+                {% for message in messages %}
+                    <div class="alert alert-{{ label }}">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            </div>
+        {% endfor %}
     {% block body %}{% endblock %}
 
 
