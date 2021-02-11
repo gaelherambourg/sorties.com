@@ -18,11 +18,11 @@ class FormLieuType extends AbstractType
             ->add('rue')
             ->add('latitude')
             ->add('longitude')
-//            ->add('villes_no_ville', EntityType::class, [
-//                "label"=>"Ville :",
-//                "class"=>Ville::class,
-//                "choice_label"=>'nom'
-//            ])
+            ->add('villes_no_ville', EntityType::class, [
+                "label"=>"Ville :",
+                "class"=>Ville::class,
+                "choice_label"=>'nom'
+            ])
         ;
     }
 
