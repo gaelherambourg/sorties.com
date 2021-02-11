@@ -47,6 +47,26 @@
 
                 {{ participe}}
 
+                {% set routeDetail = ""%}
+
+                {% if sortie.getOrganisateur().id == app.user.id %}
+                    {% set titre = "Modifier"%}
+                    {% set routeDetail = "affiche_profil"%}
+                {% else %}
+                    {% set routeDetail = "affiche_profil"%}
+                    {% set titre = "Afficher"%}
+                {% endif %}
+
+                {% set routeInscription = ""%}
+
+                {% if participe %}
+                    {% set titreInscription = "Se désister"%}
+                    {% set routeInscription = "desistement_sortie"%}
+                {% else %}
+                    {% set routeInscription = "inscription_sortie"%}
+                    {% set titreInscription = "S'inscrire"%}
+                {% endif %}
+
 
                 <tr align="center">
                     <td>{{ sortie.nom}}</td>
@@ -55,8 +75,10 @@
                     <td>{{ sortie.participants|length }}/{{ sortie.nbinscriptionsmax }}</td>
                     <td>{{ sortie.getEtatsNoEtat().libelle }}</td>
                     <td>{{ participe ? 'X':'' }}</td>
-                    <td><a href="{{ path('affiche_profil', {id:sortie.getOrganisateur().id} )}}" title="détails de l'envie">{{ sortie.getOrganisateur().pseudo }}</a></td>
-                    <td></td>
+                    <td><a href="{{ path("affiche_profil", {id:sortie.getOrganisateur().id} )}}" title="détails de l'utilisateur">{{ sortie.getOrganisateur().pseudo }}</a></td>
+                    <td><a href="{{ path(''~routeDetail~'', {id:sortie.getOrganisateur().id} )}}" title="détails de l'utilisateur">{{ titre }}</a>
+                        <a href="{{ path(''~routeInscription~'', {id:sortie.id} )}}" title="détails de l'utilisateur">{{ titreInscription }}</a>
+                    </td>
                 </tr>
             {% endfor %}
            </tbody>
@@ -67,7 +89,7 @@
 
 
         <div>
-            <button ><a href="{{ path('sortie_creation') }}" title="View pic detail"/>Créer une sortie</button>
+            <a href="{{ path('sortie_creation') }}" title="View pic detail"/><button>Créer une sortie</button></a>
         </div>
 
 
