@@ -213,6 +213,9 @@ class Sortie
         return $this->participants;
     }
 
+    /**
+     *
+     */
     public function addParticipant(Participant $participant): self
     {
         if (!$this->participants->contains($participant)) {
@@ -290,6 +293,30 @@ class Sortie
         if($date < new \DateTime() || $date > $this->getDatedebut()){
             $context->buildViolation('La date doit être supérieure à la date du jour et inférieure à la date de la sortie')
                 ->atPath('datecloture')
+                ->addViolation();
+        }
+    }
+
+    /**
+     * @Assert\Callback
+     */
+    public function validationInscription(ExecutionContextInterface $context)
+    {
+        if($this->getDatecloture()< new \DateTime()){
+            $context->buildViolation('Les inscriptions sont closes')
+                ->atPath('addParticipant')
+                ->addViolation();
+        }
+    }
+
+    /**
+     * @Assert\Callback
+     */
+    public function validationDesistement(ExecutionContextInterface $context)
+    {
+        if($this->getEtatsNoEtat() == 4){
+            $context->buildViolation('Vous ne pouvez pas vous désister. La sortie est en cours')
+                ->atPath('removeParticipant')
                 ->addViolation();
         }
     }
