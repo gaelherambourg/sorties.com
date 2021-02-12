@@ -32,11 +32,15 @@ class Lieu
     private $rue;
 
     /**
+     * @Assert\NotBlank(message="Veuillez donnez une latitude")
+     * @Assert\Type(type="float", message="La ")
      * @ORM\Column(type="float", nullable=true)
      */
     private $latitude;
 
     /**
+     * @Assert\NotBlank(message="Veuillez donner une longitude")
+     * @Assert\Type(type="float", message="La long")
      * @ORM\Column(type="float", nullable=true)
      */
     private $longitude;

@@ -94,6 +94,7 @@ class Sortie
     private $etats_no_etat;
 
     /**
+     * @Assert\NotBlank(message="Veuillez choisir ou créer un lieu")
      * @ORM\ManyToOne(targetEntity=Lieu::class)
      * @ORM\JoinColumn(nullable=false)
      */
