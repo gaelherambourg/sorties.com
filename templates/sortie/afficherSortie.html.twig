@@ -58,11 +58,25 @@
             </div>
         </div>
 
+        {% if sortie.participants is not empty %}
         <div>
-
+            <table rules="all">
+                <thead style="background-color: #999999" align="center">
+                <tr>
+                    <td>Pseudo</td>
+                    <td>Nom</td>
+                </tr>
+                </thead>
+                {% for participant in sortie.participants %}
+                    <tr align="center">
+                        <td>{{ participant.pseudo }}</td>
+                        <td>{{ participant.nom }}</td>
+                    </tr>
+                {% endfor %}
+            </table>
 
         </div>
-
+        {% endif %}
     </div>
 {% endblock %}
 {% block javascripts %}
