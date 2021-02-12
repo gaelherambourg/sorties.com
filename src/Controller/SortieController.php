@@ -9,6 +9,7 @@ use App\Entity\Sortie;
 use App\Entity\Ville;
 use App\Form\FormLieuType;
 use App\Form\FormSortieType;
+use App\Repository\LieuRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -21,14 +22,23 @@ class SortieController extends AbstractController
      * @Route("/sortie/creation", name="sortie_creation")
      */
     public function creationSortie(Request $request,
-                                   EntityManagerInterface $entityManager): Response
+                                   EntityManagerInterface $entityManager, LieuRepository $lieuRepository): Response
     {
         //Création d'une instance de notre entité, qui sera eventuellement sauvegarder en base de données
         $sortie = new Sortie();
+
         //retourne l'entité user de l'utilisateur connecté
         //$user = $this->getUser();
         $lieu2 = new Lieu();
         $form2 = $this->createForm(FormLieuType::class, $lieu2);
+
+        $lieux = $lieuRepository->findAll();
+        //dump($lieux);
+        if(!empty($lieux))
+        {
+            $sortie->setLieuxNoLieu($lieux[0]);
+            dump($sortie);
+        }
 
         //Créer une instance du form, en lui associant notre entité
         $form = $this->createForm(FormSortieType::class, $sortie);
@@ -75,6 +85,7 @@ class SortieController extends AbstractController
 
         return $this->render('sortie/creationSortie.html.twig', [
             "sortie_form"=> $form->createView(),
+            "sortie"=> $sortie,
             "lieu_form"=> $form2->createView()
         ]);
     }

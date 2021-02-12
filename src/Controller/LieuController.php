@@ -61,20 +61,37 @@ class LieuController extends AbstractController
     {
         $errors = [];
 
+        $regChiffre = '/^-?\d+(?:[.,]\d+)?$/';
+
         $nouveauLieu = new Lieu();
 
         $form = $this->createForm(FormLieuType::class, $nouveauLieu);
 
-        $form->handleRequest($request);
+        $nom = $request->get('nom');
+        $rue = $request->get('rue');
+        $latitude = $request->get('latitude');
+        $longitude = $request->get('longitude');
+        $idVille = $request->get('idVille');
 
-        $form->submit(["nom"=>$request->get('nom'),
-                        "rue"=>$request->get('rue'),
-                        "latitude"=>$request->get('latitude'),
-                        "longitude"=>$request->get('longitude'),
-                        "villes_no_ville"=>$request->get('idVille')]);
+        if (preg_match($regChiffre,$latitude)){
+            $nouveauLieu->setLatitude($latitude);
+        }else{
+            array_push($errors, "Erreur lors de la saisie de la latitude");
+        }
+        if (preg_match($regChiffre,$longitude)){
+            $nouveauLieu->setLongitude($longitude);
+        }else{
+            array_push($errors, "La Longitude doit être un nombre");
+        }
+        if (!empty($nom)){
+            $nouveauLieu->setNom($nom);
+        }else{
+            array_push($errors, "Veuillez donner un nom au lieu");
+        }
+        $nouveauLieu->setRue($rue);
+        $nouveauLieu->setVillesNoVille($entityManager->find(Ville::class, $idVille));
 
-        if($form->isSubmitted() && $form->isValid()) {
-
+        if(empty($errors)){
             $entityManager->persist($nouveauLieu);
             $entityManager->flush();
 
@@ -83,9 +100,8 @@ class LieuController extends AbstractController
             return new JsonResponse($json, 200, [], true);
         }else
         {
-
-            $json1 = $serializer->serialize("erreur", 'json');
-            return new JsonResponse($json1, 403, [], true );
+            $json2 = $serializer->serialize($errors, 'json');
+            return new JsonResponse($json2, Response::HTTP_BAD_REQUEST, [], true);
         }
 
     }
