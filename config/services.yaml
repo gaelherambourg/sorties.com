@@ -5,7 +5,7 @@
 # https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
     # Route nécessaire à l'upload d'images
-    upload_dir: '%kernel.project_dir%/public/img'
+    upload_dir: '%kernel.project_dir%/public/img/'
 
 services:
     # default configuration for services in *this* file

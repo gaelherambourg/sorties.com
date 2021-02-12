@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Participant;
 use App\Form\RegistrationFormType;
 use App\Security\AppAuthenticator;
+use claviska\SimpleImage;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
@@ -68,6 +69,18 @@ class RegistrationController extends AbstractController
                 $photo->move($uploadDir, $nouveauNomPhoto);
                 //remplit la propriété nomPhoto de l'objet Participant
                 $participant->setNomPhoto($nouveauNomPhoto);
+
+                /*
+                 * On utilise la librairie de manipulation d'image Claviska :
+                 * https://github.com/claviska/SimpleImage
+                 */
+                $img = new SimpleImage();
+                //retrouve l'image à redimensionner
+                $img->fromFile($uploadDir . $nouveauNomPhoto)
+                    //la redimensionne au plus grand dans un carrée 200 X 200
+                    ->bestFit(200, 200)
+                    //et la sauvegarde dans un répertoire de public/img
+                    ->toFile($uploadDir . "small/" .$nouveauNomPhoto );
             }
 
             $entityManager = $this->getDoctrine()->getManager();
