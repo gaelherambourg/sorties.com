@@ -1,25 +1,71 @@
+body{
+    margin: 0;
+    padding: 0;
+}
+
+body, html{
+    height:100%;
+}
+
+#page{
+    min-height:100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+main{
+    flex-grow: 1;
+}
+
 /* BARRE DE NAVIGATION */
 
- @media (min-width: 768px) {
-     .navbar-brand.abs
-     {
-         position: absolute;
-         width: 100%;
-         left: 0;
-         text-align: center;
-     }
- }
+.navbar{
+    margin: 0;
+    padding: 0;
+}
 
- .navbar{
-     height: 150px;
-     background: darkgoldenrod url("http://localhost/Sortir.com/sorties.com/public/img/city_night.jpg")
-     no-repeat center fixed;
-     background-size: cover;
- }
+.navbar-brand{
+    margin: 0;
+    padding: 0;
+}
+
+header{
+    height: 150px;
+    background: darkgoldenrod url("http://localhost/Sortir.com/sorties.com/public/img/city_night_cut.jpg")
+    no-repeat top;
+    background-size: cover;
+    margin: 0;
+    padding: 0;
+}
+
+/* FOOTER */
+footer{
+    background: darkgoldenrod url("http://localhost/Sortir.com/sorties.com/public/img/city_night_cut.jpg")
+    no-repeat bottom;
+    background-size: cover;
+    color: white;
+    margin-top: 10px;
+    bottom: 0;
+    width: 100%;
+}
 
 /* BOUTONS */
+
 .btn {
-    background-color: sandybrown;
+    background-color: darkgoldenrod;
     border-radius: 10px;
+}
+
+/* ALERTES FLASH */
+.alert
+{padding: 20px;
+    font-weight: bold;
+    text-align: center;
+    margin: 20px 0;
+    border-radius: 5px;
+}
+
+.alert-success{
+    color: green;
 }
 

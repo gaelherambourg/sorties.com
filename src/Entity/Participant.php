@@ -82,6 +82,11 @@ class Participant implements UserInterface
      */
     private $roles = [];
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $nomPhoto;
+
     public function __construct()
     {
         $this->sorties = new ArrayCollection();
@@ -269,6 +274,18 @@ class Participant implements UserInterface
     public function eraseCredentials()
     {
         // TODO: Implement eraseCredentials() method.
+    }
+
+    public function getNomPhoto(): ?string
+    {
+        return $this->nomPhoto;
+    }
+
+    public function setNomPhoto(?string $nomPhoto): self
+    {
+        $this->nomPhoto = $nomPhoto;
+
+        return $this;
     }
 
 }
