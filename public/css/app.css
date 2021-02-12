@@ -1,4 +1,4 @@
-/* ELEMENTS GENERAUX*/
+/* ELEMENTS GENERAUX */
 
 body{
     margin: 0;
@@ -19,7 +19,10 @@ main{
     flex-grow: 1;
 }
 
-/* BALISES TITRE */
+
+
+/* BALISES D'ELEMENTS */
+
 h1{
     text-align: center;
 }
@@ -37,6 +40,30 @@ h1{
     padding: 0;
 }
 
+/* ELEMENTS DU MAIN */
+
+.affichProfil{
+    text-align: center;
+}
+
+.register{
+    text-align: center;
+}
+
+hr{
+    border-top: 3px gray double;
+}
+
+/* ELEMENTS DE FORMULAIRE */
+
+#form_login{
+    max-width: 50%;
+    margin: auto;
+}
+
+.login{
+    text-align: center;
+}
 
 /* FOOTER */
 footer{
