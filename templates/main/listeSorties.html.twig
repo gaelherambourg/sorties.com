@@ -22,6 +22,12 @@
             <h2>Aucune sortie n'a été trouvée</h2>
         {% else %}
 
+        {% if(tabErreurs is defined) %}
+            {% for erreur in tabErreurs%}
+                <h2>{{ erreur }}</h2>
+            {% endfor%}
+        {% endif %}
+
        <table rules="all" >
            <thead style="background-color: #999999" align="center">
                 <tr>
@@ -66,16 +72,18 @@
                     {% set routeInscription = "desistement_sortie"%}
                 {% else %}
                     {% set routeInscription = "inscription_sortie"%}
-                    {% set titreInscription = "S'inscrire"%}
+                    {% set titreInscription = "S'inscrire"%}b
                 {% endif %}
 
                 {% if sortie.datecloture|date("d/m/Y H:i:s") < dateJour %}
                     {% set titreInscription = ""%}
                 {% endif %}
 
-                {% if sortie.etatsortie != 2 %}
+                {% if sortie.etatsNoEtat.id != 2 %}
                     {% set titreInscription = ""%}
                 {% endif %}
+
+
 
                 <tr align="center">
                     <td>{{ sortie.nom}}</td>

@@ -44,9 +44,14 @@ class SortieRepository extends ServiceEntityRepository
 
 
         if(!empty($search->getRecherche())){
-            $qb = $qb
-                ->andWhere('s.nom LIKE :recherche')
-                ->setParameter('recherche', "%{$search->getRecherche()}%");
+            if($search->getRecherche()==0){
+
+            }else{
+                $qb = $qb
+                    ->andWhere('s.nom LIKE :recherche')
+                    ->setParameter('recherche', "%{$search->getRecherche()}%");
+            }
+
         }
 
         if(!empty($search->getCampus())){
@@ -138,4 +143,22 @@ class SortieRepository extends ServiceEntityRepository
 //            ->execute()
 //            ;
 //    }
+    public function rechercherSortieParIdAvecLieuEtVilleAssocie($idSortie)
+    {
+        return $this->createQueryBuilder('s')
+            ->join('s.lieux_no_lieu', 'l')
+            ->addSelect('l')
+            ->join('l.villes_no_ville', 'v')
+            ->addSelect('v')
+            ->join('s.organisateur', 'p')
+            ->addSelect('p')
+            ->join('p.campus_no_campus', 'c')
+            ->addSelect('c')
+            ->andWhere('s.id = :val')
+            ->setParameter('val', $idSortie)
+            ->getQuery()
+            ->getOneOrNullResult()
+            ;
+
+    }
 }

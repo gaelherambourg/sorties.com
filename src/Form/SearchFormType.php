@@ -33,6 +33,7 @@ class SearchFormType extends AbstractType
             ->add('campus', ChoiceType::class, [
                 'choices'=>
                     [
+                        'Tous' =>0,
                         'Rennes'=>1,
                         'Nantes'=>2,
                         'Quimper'=>3,
