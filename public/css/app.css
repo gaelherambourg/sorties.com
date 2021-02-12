@@ -31,7 +31,7 @@ main{
 
 header{
     height: 150px;
-    background: darkgoldenrod url("http://localhost/Sortir.com/sorties.com/public/img/city_night_cut.jpg")
+    background: darkgoldenrod url("http://localhost/sorties.com/public/img/city_night_cut.jpg")
     no-repeat top;
     background-size: cover;
     margin: 0;
@@ -40,7 +40,7 @@ header{
 
 /* FOOTER */
 footer{
-    background: darkgoldenrod url("http://localhost/Sortir.com/sorties.com/public/img/city_night_cut.jpg")
+    background: darkgoldenrod url("http://localhost/sorties.com/public/img/city_night_cut.jpg")
     no-repeat bottom;
     background-size: cover;
     color: white;

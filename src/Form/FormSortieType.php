@@ -82,6 +82,9 @@ class FormSortieType extends AbstractType
             ->add('Annuler', SubmitType::class, [
                 "attr"=>["value"=>"Annuler"]
             ])
+            ->add('Supprimer', SubmitType::class, [
+                "attr"=>["value"=>"Supprimer"]
+            ])
 //            ->add('etatsortie')
 //            ->add('urlPhoto')
 //            ->add('participants')

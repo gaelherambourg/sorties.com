@@ -129,4 +129,13 @@ class SortieRepository extends ServiceEntityRepository
         ;
     }
     */
+//    public function update(?object $sortie)
+//    {
+//        return $this->createQueryBuilder('s')
+//            ->andWhere('s.exampleField = :val')
+//            ->setParameter('val', $value)
+//            ->getQuery()
+//            ->execute()
+//            ;
+//    }
 }

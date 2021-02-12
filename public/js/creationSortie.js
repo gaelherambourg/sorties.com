@@ -11,7 +11,9 @@ $(document).ready(function () {
     let idVilleSelect = $("#idVilleSelect").attr("data");
     console.log(idVilleSelect);
     $("#form_sortie_Ville option[value=" + idVilleSelect + "]").prop("selected", true);
-
+    $("#form_sortie_Rue").prop('disabled', true);
+    $("#form_sortie_Latitude").prop('disabled', true);
+    $("#form_sortie_Longitude").prop('disabled', true);
 
     //Quand on change la ville dans le select, la liste des lieux disponibles changent et les infos du lieu également
     $("#form_sortie_Ville").change(function (){
