@@ -8,6 +8,11 @@ function ajax(url, callbackfunction, method='GET') {
 
 $(document).ready(function () {
 
+    let idVilleSelect = $("#idVilleSelect").attr("data");
+    console.log(idVilleSelect);
+    $("#form_sortie_Ville option[value=" + idVilleSelect + "]").prop("selected", true);
+
+
     //Quand on change la ville dans le select, la liste des lieux disponibles changent et les infos du lieu également
     $("#form_sortie_Ville").change(function (){
         let selVal = ($("#form_sortie_Ville option:selected").val());
