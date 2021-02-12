@@ -44,9 +44,14 @@ class SortieRepository extends ServiceEntityRepository
 
 
         if(!empty($search->getRecherche())){
-            $qb = $qb
-                ->andWhere('s.nom LIKE :recherche')
-                ->setParameter('recherche', "%{$search->getRecherche()}%");
+            if($search->getRecherche()==0){
+
+            }else{
+                $qb = $qb
+                    ->andWhere('s.nom LIKE :recherche')
+                    ->setParameter('recherche', "%{$search->getRecherche()}%");
+            }
+
         }
 
         if(!empty($search->getCampus())){
