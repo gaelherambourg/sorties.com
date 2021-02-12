@@ -37,6 +37,11 @@ h1{
     padding: 0;
 }
 
+#tabErreurs{
+    color: #B0413E;
+    text-align: center;
+}
+
 
 /* FOOTER */
 footer{
