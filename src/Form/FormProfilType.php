@@ -21,16 +21,16 @@ class FormProfilType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('pseudo', null, ['label' => 'Pseudo :'])
-            ->add('nom', null, ['label'=>'Nom :'])
-            ->add('prenom', null, ['label'=>'Prénom :'])
+            ->add('pseudo', null, ['label' => 'Pseudo : '])
+            ->add('nom', null, ['label'=>'Nom : '])
+            ->add('prenom', null, ['label'=>'Prénom : '])
             ->add('campusNoCampus', EntityType::class, [
                 'class'=> Campus::class,
                 'choice_label'=> 'nom',
                 'label'=>'Campus : '
             ])
-            ->add('telephone', null, ['label'=>'Numéro de téléphone (optionnel) :'])
-            ->add('mail', EmailType::class, ['label'=>'Adresse email :'])
+            ->add('telephone', null, ['label'=>'Numéro de téléphone (optionnel) : '])
+            ->add('mail', EmailType::class, ['label'=>'Adresse email : '])
             ->add('plainPassword', RepeatedType::class, [
                 // instead of being set onto the object directly,
                 // this is read and encoded in the controller

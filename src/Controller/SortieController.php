@@ -168,4 +168,30 @@ class SortieController extends AbstractController
             "lieu_form"=> $form2->createView()
         ]);
     }
+
+    /**
+     * @Route("/sortie/afficher/{id}", name="sortie_afficher")
+     */
+    public function afficherSortie(Request $request,
+                                   EntityManagerInterface $entityManager,
+                                   LieuRepository $lieuRepository,
+                                   SortieRepository $sortieRepository){
+
+        $idSortie = $request->get('id');
+        dump($idSortie);
+        $sortie = new Sortie();
+
+        //Récupérer sortie à modifier avec le lieu et la ville associé
+        $sortie = $sortieRepository->rechercherSortieParIdAvecLieuEtVilleAssocie($idSortie);
+
+        dump($sortie);
+
+        return $this->render('sortie/afficherSortie.html.twig', [
+            "sortie"=> $sortie,
+        ]);
+
+    }
+
+
+
 }
