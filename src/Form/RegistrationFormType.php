@@ -40,6 +40,8 @@ class RegistrationFormType extends AbstractType
                 'type'=> PasswordType::class,
                 'mapped' => false,
                 'invalid_message' => 'Mot de passe de confirmation différent.',
+                'first_name' => 'pw',
+                'second_name' => 'conf',
                 'first_options' => array('label' => 'Mot de passe : '),
                 'second_options' => array('label' => 'Confirmation du mot de passe : '),
                 'constraints' => [
@@ -60,7 +62,8 @@ class RegistrationFormType extends AbstractType
              */
             ->add('photo', FileType::class, [
                 'mapped' => false,
-                'label' => 'Photo de profil : ',
+                'label' => 'Photo de profil (optionnelle) : ',
+                'required' => false,
                 'constraints' => [
                     //Contraintes de validations spécifiques aux images.
                     new Image([
