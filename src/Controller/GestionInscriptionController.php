@@ -30,14 +30,19 @@ class GestionInscriptionController extends AbstractController
 
         //creation d'un tableau de messages
         $tabErreurs = array();
-        //appel au service inscriptionValdator
-        $tabErreurs[]=$inscriptionValidator->validationInscription($sortie->getDatecloture());
-        $tabErreurs[]="oups";
-        dump($tabErreurs);
-        dump($idUser);
-        var_dump($idUser);
 
+        //appel aux services inscriptionValdator
+        $message=$inscriptionValidator->validationInscriptionDate($sortie->getDatecloture());
+        $message2 =$inscriptionValidator->validationInscriptionEtat($sortie->getEtatsNoEtat()->getId());
 
+        if($message){
+            $tabErreurs[]=$message;
+        }
+        if($message2){
+            $tabErreurs[]=$message2;
+        }
+
+        if(empty($tabErreurs)){
 
             $sortie->addParticipant($participant);
 
@@ -50,6 +55,13 @@ class GestionInscriptionController extends AbstractController
             $this->addFlash('succes', 'Votre inscription a bien été enregistrée');
 
             return $this->redirectToRoute('AccueilSorties');
+        }
+        else{
+            return $this->redirectToRoute('AccueilSorties',[
+                'tab'=>$tabErreurs
+            ]);
+        }
+
 
 
     }
@@ -57,7 +69,7 @@ class GestionInscriptionController extends AbstractController
     /**
      * @Route("/desistement/{id}", name="desistement_sortie", requirements={"id": "\d+"})
      */
-    public function SeDesisterSortie(SortieRepository $sortieRepository,ParticipantRepository $participantRepository,$id)
+    public function SeDesisterSortie(InscriptionValidator $inscriptionValidator,SortieRepository $sortieRepository,ParticipantRepository $participantRepository,$id)
     {
         //récupération de l'utilisateur connecté
         $idUser = $this->getUser()->getId();
@@ -67,16 +79,35 @@ class GestionInscriptionController extends AbstractController
         $sortie = $sortieRepository->find($id);
         $participant = $participantRepository->find($idUser);
 
-        $sortie->removeParticipant($participant);
+        //creation d'un tableau de messages
+        $tabErreurs = array();
+        //appel au service inscriptionValdator
+        $message=$inscriptionValidator->validationDesistement($sortie->getEtatsNoEtat()->getId());
 
-        //appel a entitymanager pour la sauvegarder ds la bdd
-        $entityManager = $this->getDoctrine()->getManager();
-        $entityManager->flush();
+        if($message){
+            $tabErreurs[]=$message;
+        }
 
-        //ajout d'un message de confirmation
-        $this->addFlash('succes', 'Votre désistement a bien été enregistré');
+        if(empty($tabErreurs)){
 
-        return $this->redirectToRoute('AccueilSorties');
+            $sortie->removeParticipant($participant);
+
+            //appel a entitymanager pour la sauvegarder ds la bdd
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->flush();
+
+            //ajout d'un message de confirmation
+            $this->addFlash('succes', 'Votre désistement a bien été enregistré');
+
+            return $this->redirectToRoute('AccueilSorties');
+        }
+        else{
+            return $this->redirectToRoute('AccueilSorties',[
+                'tab'=>$tabErreurs
+            ]);
+        }
+
+
 
     }
 

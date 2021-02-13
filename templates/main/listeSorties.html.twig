@@ -10,23 +10,23 @@
         <h2>Date du jour :{{ "now"|date("d/m/Y") }}</h2>
         <h4>{{ app.user.pseudo }}</h4>
 
+        <div id="tabErreurs">
+            {% if(tabErreurs is defined) %}
+                {% for erreur in tabErreurs%}
+                    <h2>{{ erreur }}</h2>
+                {% endfor%}
+            {% endif %}
+        </div>
 
         <div>
             {{ form(selection_form) }}
         </div>
 
 
-
-
         {% if sorties is empty %}
             <h2>Aucune sortie n'a été trouvée</h2>
         {% else %}
 
-        {% if(tabErreurs is defined) %}
-            {% for erreur in tabErreurs%}
-                <h2>{{ erreur }}</h2>
-            {% endfor%}
-        {% endif %}
 
        <table rules="all" >
            <thead style="background-color: #999999" align="center">
@@ -52,7 +52,6 @@
                     {% endif %}
                 {% endfor %}
 
-                {{ participe}}
 
                 {% set routeDetail = ""%}
 
@@ -75,13 +74,15 @@
                     {% set titreInscription = "S'inscrire"%}b
                 {% endif %}
 
-                {% if sortie.datecloture|date("d/m/Y H:i:s") < dateJour %}
+                {# a decommenter à la fin des tests #}
+              {#{% if sortie.datecloture|date("d/m/Y H:i:s") < dateJour %}
                     {% set titreInscription = ""%}
-                {% endif %}
+                {% endif %}#}
 
-                {% if sortie.etatsNoEtat.id != 2 %}
+                {# a decommenter à la fin des tests #}
+               {#  {% if sortie.etatsNoEtat.id != 2 %}
                     {% set titreInscription = ""%}
-                {% endif %}
+                {% endif %}#}
 
 
 
