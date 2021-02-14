@@ -2,6 +2,19 @@
 
 {% block title %}Connexion{% endblock %}
 
+{% block beforeContainer %}
+    {% if app.user %}
+        <div class="mb-3 logged">
+            <h5>Vous êtes déjà connecté au site sous le pseudo {{ app.user.username }}.</h5>
+            <p>
+                <a href="{{ path('app_logout') }}">Se déconnecter.</a>
+            </p>
+        </div>
+
+    {% endif %}
+
+{% endblock %}
+
 {% block body %}
 
 
@@ -10,11 +23,6 @@
         <div class="alert alert-danger">Votre identifiant ou mot de passe est incorrect.</div>
     {% endif %}
 
-    {% if app.user %}
-        <div class="mb-3">
-            You are logged in as {{ app.user.username }}, <a href="{{ path('app_logout') }}">Logout</a>
-        </div>
-    {% endif %}
 
     <h1 class="h3 mb-3 font-weight-normal">Merci de vous identifier</h1>
 

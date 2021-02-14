@@ -5,6 +5,7 @@ body{
     padding: 0;
 }
 
+
 body, html{
     height:100%;
 }
@@ -33,6 +34,10 @@ main{
 
 .modifPW{
     margin: auto;
+}
+
+body.container{
+    background-color: #ced7d8;
 }
 
 /* CONTAINERS BOOTSTRAPS */
@@ -101,6 +106,15 @@ input[type="checkbox"].remember:checked + label::before {
     color: darkgoldenrod;
 }
 
+.logged{
+    text-align: center;
+    font-family: Verdana, sans-serif;
+    margin: auto;
+    display: inline-block;
+    background: darkgoldenrod;
+    width: 100%;
+    padding-top: 5px;
+}
 
 /* ELEMENTS DE FORMULAIRE */
 
@@ -151,6 +165,9 @@ input[type="checkbox"].remember:checked + label::before {
     cursor: pointer;
 }
 
+.coordonnees{
+    text-align: center;
+}
 
 .custom-file-label{
     visibility: hidden;
@@ -172,6 +189,7 @@ footer{
     margin : 16px 0px 5px 0px;
     box-shadow: 1px 1px 12px darkgoldenrod;
 }
+
 .btn:hover{
     color: white;
 }
@@ -197,3 +215,14 @@ footer{
     color: green;
 }
 
+.disconnectBtn{
+    background-color: Transparent;
+    background-repeat:no-repeat;
+    border: none;
+    overflow: hidden;
+    outline:none;
+}
+
+.disconnectBtn:focus{
+    outline: none;
+}
