@@ -2,6 +2,8 @@
 
 {% block title %}Mon profil{% endblock %}
 
+{% block container %}pageMonProfil{% endblock%}
+
 {% block body %}
     <h1>Mon profil</h1>
 
@@ -17,7 +19,7 @@
             {% endif %}
         </div>
 
-        <div class="col-md-6 affichProfil">
+        <div class="col-md-3 affichProfil">
 
 
             {% form_theme profil_form 'bootstrap_4_layout.html.twig'%}
@@ -30,20 +32,26 @@
             {{ form_row(profil_form.telephone) }}
             {{ form_row(profil_form.mail) }}
             {{ form_row(profil_form.campusNoCampus) }}
+        </div>
 
-            <div class="modifPW">
-            <fieldset>
-                <legend>Souhaitez-vous modifier votre mot de passe ?</legend>
+            <div class="col-md-4 modifPW">
+            <fieldset class="border p-2">
+                <legend class="w-auto">Souhaitez-vous modifier votre mot de passe ?</legend>
+
                     {{ form_row(profil_form.plainPassword) }}
             </fieldset>
             </div>
 
-        <button type="submit" class="btn" formnovalidate>Enregistrer les modifications</button>
-        <button type="reset" class="btn">Annuler les modifications</button>
+        <div class="col-md-2"></div>
+
+        <div class="modifBtn">
+            <button type="submit" class="btn" formnovalidate>Enregistrer les modifications</button>
+            <button type="reset" class="btn">Annuler les modifications</button>
+        </div>
 
             {{ form_end(profil_form) }}
 
-        </div>
+
     </div>
 
 {% endblock %}
