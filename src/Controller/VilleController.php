@@ -6,6 +6,7 @@ use App\Entity\Ville;
 use App\Form\VilleFormType;
 use App\Repository\VilleRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -14,6 +15,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class VilleController extends AbstractController
 {
     /**
+     * @IsGranted("ROLE_USER")
      * @Route("/admin/ville", name="liste_ville")
      */
     public function listerVille(Request $request,
@@ -41,7 +43,7 @@ class VilleController extends AbstractController
             $entityManager->flush();
 
             //Créer un message en session
-            $this->addFlash('success', 'La ville a bien été modifié !');
+            $this->addFlash('success', 'La ville a bien été ajouté !');
 
             //Créer une redirection vers une autre page
             return $this->redirectToRoute('liste_ville');
