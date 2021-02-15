@@ -29,6 +29,27 @@ class InscriptionValidator
         return $message;
     }
 
+    public function validationInscriptionPlace($nbPlaces, $nbInscrits)
+    {
+        $message=null;
+        if($nbInscrits>=$nbPlaces){
+            $message="Il n'y a plus de place disponible pour cette sortie";
+        }
+        return $message;
+    }
+
+    public function validationInscriptionDoublon($idUser, $participants)
+    {
+        dump($participants);
+        $message=null;
+        foreach($participants as $participant){
+            if($participant->getId() ==$idUser){
+                $message="Vous êtes déjà inscrit à cette sortie";
+            }
+        }
+        return $message;
+    }
+
 
     public function validationDesistement($idEtatSortie)
     {
