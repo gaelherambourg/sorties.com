@@ -28,18 +28,31 @@ class GestionInscriptionController extends AbstractController
         $sortie = $sortieRepository->find($id);
         $participant = $participantRepository->find($idUser);
 
+        //recupération du nombre de places
+        $nbPlaces = $sortie->getNbinscriptionsmax();
+        //récupération du nombre d'inscription
+        $nbInscrits = count($sortie->getParticipants());
+
         //creation d'un tableau de messages
         $tabErreurs = array();
 
         //appel aux services inscriptionValdator
         $message=$inscriptionValidator->validationInscriptionDate($sortie->getDatecloture());
         $message2 =$inscriptionValidator->validationInscriptionEtat($sortie->getEtatsNoEtat()->getId());
+        $message3 = $inscriptionValidator->validationInscriptionPlace($nbPlaces,$nbInscrits);
+        $message4 = $inscriptionValidator->validationInscriptionDoublon($idUser, $sortie->getParticipants());
 
         if($message){
             $tabErreurs[]=$message;
         }
         if($message2){
             $tabErreurs[]=$message2;
+        }
+        if($message3){
+            $tabErreurs[]=$message3;
+        }
+        if($message4){
+            $tabErreurs[]=$message4;
         }
 
         if(empty($tabErreurs)){
