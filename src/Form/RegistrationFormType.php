@@ -68,11 +68,14 @@ class RegistrationFormType extends AbstractType
                     //Contraintes de validations spécifiques aux images.
                     new Image([
                         'maxSize' => '2000k',
-                        'maxSizeMessage' => 'Le fichier est trop volumineux.'
-                    ])
-                ]
-            ])
-        ;
+                        'maxSizeMessage' => 'Le fichier est trop volumineux.',
+                        'mimeTypes' => [
+                            'image/*'],
+                        'mimeTypesMessage' => 'Merci de joindre un fichier image valide (pdf, png, jpg...)'
+                        ])
+
+                    ]
+                ]);
     }
 
     public function configureOptions(OptionsResolver $resolver)
