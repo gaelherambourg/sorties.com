@@ -6,6 +6,12 @@
 
 <h1>{{ participant.pseudo }}</h1>
 
+    {% if participant.nomPhoto %}
+        <div class="picProfil">
+            <img src="../img/small/{{ participant.nomPhoto }}" alt="Photo de profil">
+        </div>
+    {% endif %}
+
     <div class="coordonnees"> {{ participant.prenom }} {{ participant.nom }}</div>
 
     {% if participant.telephone%}
@@ -16,10 +22,11 @@
 
     <div class="coordonnees">Campus : {{ participant.campusNoCampus.nom }}</div>
 
-    <a href="{{ path('AccueilSorties') }}">
-        <button class="btn">Retour</button>
-    </a>
-
+    <div class="coordonnees">
+        <a href="{{ path('AccueilSorties') }}">
+            <button class="btn">Retour</button>
+        </a>
+    </div>
 
 
 

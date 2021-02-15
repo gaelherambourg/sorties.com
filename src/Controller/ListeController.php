@@ -35,6 +35,8 @@ class ListeController extends AbstractController
 
        //$sorties = $sortiesRepo->findAll();
 
+        $tab2 = $request->get('tab');
+        dump($tab2);
         //intialisation des données
         $data = new SearchData();
         //creation du formulaire avec en parametre $data->modification de l'objet $data representant les données
@@ -80,6 +82,7 @@ class ListeController extends AbstractController
         return $this ->render('main/listeSorties.html.twig', [
             "sorties" => $sorties,
             "participe" =>$participe,
+            "tabErreurs"=>$tab2,
             "selection_form" => $form->createView()
         ]);
 

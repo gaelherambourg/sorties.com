@@ -2,46 +2,63 @@
 
 {% block title %}Connexion{% endblock %}
 
+{% block beforeContainer %}
+    {% if app.user %}
+        <div class="mb-3 logged">
+            <h5>Vous êtes déjà connecté au site sous le pseudo {{ app.user.username }}.</h5>
+            <p>
+                <a href="{{ path('app_logout') }}">Se déconnecter.</a>
+            </p>
+        </div>
+
+    {% endif %}
+
+{% endblock %}
+
 {% block body %}
-<form method="post">
+
+
+    <form method="post" id="form_login">
     {% if error %}
         <div class="alert alert-danger">Votre identifiant ou mot de passe est incorrect.</div>
     {% endif %}
 
-    {% if app.user %}
-        <div class="mb-3">
-            You are logged in as {{ app.user.username }}, <a href="{{ path('app_logout') }}">Logout</a>
-        </div>
-    {% endif %}
 
     <h1 class="h3 mb-3 font-weight-normal">Merci de vous identifier</h1>
-    <label for="inputEmail">Pseudo ou Email :</label>
-    <input type="text" value="{{ last_username }}" name="pseudo_ou_mail" id="inputEmail" class="form-control" autofocus>
-    <label for="inputPassword">Mot de passe :</label>
-    <input type="password" name="password" id="inputPassword" class="form-control">
-    <input type="checkbox" id="remember_me" name="_remember_me">
-    <label for="remember_me">Se souvenir de moi</label>
+
+        <div class="register font-weight-normal">
+            <h5>
+                Première visite du site ? Pour créer un compte,
+                <p>
+                <a href="{{ path('app_register') }}">
+                    cliquez sur ce lien.</button>
+                </a>
+                </p>
+            </h5>
+        </div>
+
+        <hr>
+
+        <label for="inputEmail">Pseudo ou Email :</label>
+            <input type="text" value="{{ last_username }}" name="pseudo_ou_mail" id="inputEmail" class="form-control" autofocus>
+
+        <label for="inputPassword">Mot de passe :</label>
+            <input type="password" name="password" id="inputPassword" class="form-control">
+
+        <input type="checkbox" id="remember_me" name="_remember_me" class="remember">
+        <label for="remember_me">Se souvenir de moi</label>
 
 
-    <input type="hidden" name="_csrf_token"
+        <input type="hidden" name="_csrf_token"
            value="{{ csrf_token('authenticate') }}"
-    >
+        >
+
+        <div class="login">
+            <button class="btn" type="submit" name="connexion" id="connexion">
+                Connexion
+            </button>
+        </div>
 
 
-    <button class="btn btn-lg btn-primary" type="submit" name="connexion" id="connexion">
-        Connexion
-    </button>
-
-    <hr>
-
-    <div class="register">
-        <p>Première visite du site ? Pour créer un compte,
-            <a href="{{ path('app_register') }}">
-            c'est par là !</button>
-            </a>
-        </p>
-    </div>
-
-
-</form>
+    </form>
 {% endblock %}

@@ -24,31 +24,33 @@ class RegistrationFormType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('pseudo', null, ['label' => 'Pseudo :'])
-            ->add('nom', null, ['label'=>'Nom :'])
-            ->add('prenom', null, ['label'=>'Prénom :'])
+            ->add('pseudo', null, ['label' => 'Pseudo : '])
+            ->add('nom', null, ['label'=>'Nom : '])
+            ->add('prenom', null, ['label'=>'Prénom : '])
             ->add('campusNoCampus', EntityType::class, [
                     'class'=> Campus::class,
                     'choice_label'=> 'nom',
                     'label'=>'Campus : '
             ])
-            ->add('telephone', null, ['label'=>'Numéro de téléphone (optionnel) :'])
-            ->add('mail', EmailType::class, ['label'=>'Adresse email :'])
+            ->add('telephone', null, ['label'=>'Numéro de téléphone (optionnel) : '])
+            ->add('mail', EmailType::class, ['label'=>'Adresse email : '])
             ->add('plainPassword', RepeatedType::class, [
                 // instead of being set onto the object directly,
                 // this is read and encoded in the controller
                 'type'=> PasswordType::class,
                 'mapped' => false,
                 'invalid_message' => 'Mot de passe de confirmation différent.',
-                'first_options' => array('label' => 'Mot de passe :'),
-                'second_options' => array('label' => 'Confirmation du mot de passe :'),
+                'first_name' => 'pw',
+                'second_name' => 'conf',
+                'first_options' => array('label' => 'Mot de passe : '),
+                'second_options' => array('label' => 'Confirmation du mot de passe : '),
                 'constraints' => [
                     new NotBlank([
                         'message' => 'Merci de renseigner un mot de passe.',
                     ]),
                     new Length([
                         'min' => 6,
-                        'minMessage' => 'Votre mot de passe doit comporter au moins {{ 6 }} characters',
+                        'minMessage' => 'Votre mot de passe doit comporter au moins 6 caractères.',
                         // max length allowed by Symfony for security reasons
                         'max' => 4096,
                     ]),
@@ -60,16 +62,20 @@ class RegistrationFormType extends AbstractType
              */
             ->add('photo', FileType::class, [
                 'mapped' => false,
-                'label' => 'Photo de profil : ',
+                'label' => 'Photo de profil (optionnelle) : ',
+                'required' => false,
                 'constraints' => [
                     //Contraintes de validations spécifiques aux images.
                     new Image([
                         'maxSize' => '2000k',
-                        'maxSizeMessage' => 'Le fichier est trop volumineux.'
-                    ])
-                ]
-            ])
-        ;
+                        'maxSizeMessage' => 'Le fichier est trop volumineux.',
+                        'mimeTypes' => [
+                            'image/*'],
+                        'mimeTypesMessage' => 'Merci de joindre un fichier image valide (pdf, png, jpg...)'
+                        ])
+
+                    ]
+                ]);
     }
 
     public function configureOptions(OptionsResolver $resolver)

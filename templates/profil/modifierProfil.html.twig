@@ -2,40 +2,58 @@
 
 {% block title %}Mon profil{% endblock %}
 
+{% block container %}pageMonProfil{% endblock%}
+
 {% block body %}
     <h1>Mon profil</h1>
+
+
+
     <div class="row">
-    <div class="col-sm">
-    <div class="picProfil">
-        <img src="img/small/{{ app.user.nomPhoto }}" alt="Photo de profil">
+
+        <div class="col-md-3">
+            {% if app.user.nomPhoto %}
+            <div class="picProfil">
+                <img src="img/small/{{ app.user.nomPhoto }}" alt="Photo de profil">
+            </div>
+            {% endif %}
+        </div>
+
+        <div class="col-md-3 affichProfil">
+
+
+            {% form_theme profil_form 'bootstrap_4_layout.html.twig'%}
+
+            {{ form_start(profil_form) }}
+
+            {{ form_row(profil_form.pseudo) }}
+            {{ form_row(profil_form.nom) }}
+            {{ form_row(profil_form.prenom) }}
+            {{ form_row(profil_form.telephone) }}
+            {{ form_row(profil_form.mail) }}
+            {{ form_row(profil_form.campusNoCampus) }}
+        </div>
+
+            <div class="col-md-4 modifPW">
+            <fieldset class="border p-2">
+                <legend class="w-auto">Souhaitez-vous modifier votre mot de passe ?</legend>
+
+                    {{ form_row(profil_form.plainPassword) }}
+            </fieldset>
+            </div>
+
+        <div class="col-md-2"></div>
+
+        <div class="modifBtn">
+            <button type="submit" class="btn" formnovalidate>Enregistrer les modifications</button>
+            <button type="reset" class="btn">Annuler les modifications</button>
+        </div>
+
+            {{ form_end(profil_form) }}
+
+
     </div>
-    </div>
 
-    <div class="col-xl">
-    {{ form_start(profil_form) }}
-
-    {{ form_row(profil_form.pseudo) }}
-    {{ form_row(profil_form.nom) }}
-    {{ form_row(profil_form.prenom) }}
-    {{ form_row(profil_form.telephone) }}
-    {{ form_row(profil_form.mail) }}
-    {{ form_row(profil_form.campusNoCampus) }}
-
-    <div class="modifPW">
-        <fieldset>
-            <legend>Souhaitez-vous modifier votre mot de passe ?</legend>
-    {{ form_row(profil_form.plainPassword) }}
-        </fieldset>
-    </div>
-
-    <button type="submit" class="btn" formnovalidate>Enregistrer les modifications</button>
-    <button type="reset" class="btn">Annuler les modifications</button>
-
-
-
-    {{ form_end(profil_form) }}
-    </div>
-    </div>
 {% endblock %}
 
 
