@@ -201,9 +201,9 @@ class SortieController extends AbstractController
     public function annulerSortie(EntityManagerInterface $entityManager,EtatRepository $etatRepository,Request $request):Response
     {
         //pour test
-        $id=25;
+        //$id=25;
         //a decommenter
-        //$id = $request->get('id');
+        $id = $request->get('id');
         //on récupère l'entité sortie à annuler
         $sortie = new Sortie;
         $sortie2 = new Sortie;
