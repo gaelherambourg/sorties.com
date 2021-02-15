@@ -10,6 +10,7 @@ use App\Entity\Ville;
 use App\Form\FormAnnulationSortieType;
 use App\Form\FormLieuType;
 use App\Form\FormSortieType;
+use App\Repository\EtatRepository;
 use App\Repository\LieuRepository;
 use App\Repository\SortieRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -142,7 +143,7 @@ class SortieController extends AbstractController
             {
                 $entityManager->remove($sortie);
                 $entityManager->flush();
-                $this->addFlash('success', 'La sortie a bien été supprimée !');
+                $this->addFlash('success', 'La sortie a bien été supprimé !');
                 return $this->redirectToRoute('AccueilSorties');
             }
             //Si le formulaire a été soumis avec le bouton Annuler, on retourne vers la page d'accueil
@@ -156,7 +157,7 @@ class SortieController extends AbstractController
             $entityManager->flush();
 
             //Créer un message en session
-            $this->addFlash('success', 'La sortie a bien été modifiée !');
+            $this->addFlash('success', 'La sortie a bien été modifié !');
 
             //Créer une redirection vers une autre page
             return $this->redirectToRoute('AccueilSorties');
@@ -197,14 +198,16 @@ class SortieController extends AbstractController
     /**
      * @Route("/sortie/annulation/{id}", name="sortie_annulation")
      */
-    public function annulerSortie(Request $request,SortieRepository $sortieRepository, $id):Response
+    public function annulerSortie(EntityManagerInterface $entityManager,EtatRepository $etatRepository,Request $request):Response
     {
         //pour test
-        $id=25;
+        //$id=25;
+        //a decommenter
+        $id = $request->get('id');
         //on récupère l'entité sortie à annuler
         $sortie = new Sortie;
         $sortie2 = new Sortie;
-        $sortie = $sortieRepository->find($id);
+        $sortie = $entityManager->find(Sortie::class,$id);
 
         //on stocke la description dans une variable
         $description_origine = $sortie->getDescriptioninfos();
@@ -221,7 +224,19 @@ class SortieController extends AbstractController
         $description_finale = $description_origine."\n\nMotif de l'annulation :\n".$description_motif;
         dump($description_finale);
 
-        if($form -> isSubmitted())
+        if($form -> isSubmitted()){
+            //on hydrate l'entité avec la nouvelle description et on change l'etat->6 pour annulée
+            $sortie->setDescriptioninfos($description_finale);
+            $etat = new Etat();
+            $etat = $etatRepository->find(6);
+            $sortie->setEtatsNoEtat($etat);
+
+            $entityManager->persist($sortie);
+            $entityManager->flush();
+
+            //redirection vers la page d'accueil
+            return $this->redirectToRoute('AccueilSorties');
+        }
 
 
         return $this->render('sortie/annulerSortie.html.twig',[
