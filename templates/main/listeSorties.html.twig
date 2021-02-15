@@ -87,9 +87,9 @@
 
                         {% if sortie.getOrganisateur().id == app.user.id %}
                             {% set titre = "Modifier"%}
-                            {% set routeDetail = "affiche_profil"%}
+                            {% set routeDetail = "sortie_modif"%}
                         {% else %}
-                            {% set routeDetail = "affiche_profil"%}
+                            {% set routeDetail = "sortie_afficher"%}
                             {% set titre = "Afficher"%}
                         {% endif %}
 
@@ -124,7 +124,7 @@
                             <td>{{ sortie.getEtatsNoEtat().libelle }}</td>
                             <td>{{ participe ? 'X':'' }}</td>
                             <td><a href="{{ path("affiche_profil", {id:sortie.getOrganisateur().id} )}}" title="détails de l'utilisateur">{{ sortie.getOrganisateur().pseudo }}</a></td>
-                            <td><a href="{{ path(''~routeDetail~'', {id:sortie.getOrganisateur().id} )}}" title="détails de l'utilisateur">{{ titre }}</a>
+                            <td><a href="{{ path(''~routeDetail~'', {id:sortie.id} )}}" title="détails de l'utilisateur">{{ titre }}</a>
                                 <a href="{{ path(''~routeInscription~'', {id:sortie.id} )}}" title="détails de l'utilisateur">{{ titreInscription }}</a>
                             </td>
                         </tr>
