@@ -226,3 +226,87 @@ footer{
 .disconnectBtn:focus{
     outline: none;
 }
+
+/* ajout page Accueil*/
+
+.accueil{
+    max-width: 100%;
+    margin-right:unset ;
+    margin-left: unset;
+    margin-top: 30px;
+}
+
+#tabErreurs{
+    text-align: center;
+    color: #B0413E;
+}
+
+#LigneForm{
+    margin-top: 10px;
+}
+
+#titreAccueil{
+    margin-bottom: 30px;
+}
+
+h4{
+    text-align: center;
+}
+
+#checkBoxForm{
+    padding-top: 50px;
+}
+
+#ValidationForm{
+    align-items: center;
+}
+
+#btnRechercher{
+    align-self: center;
+    padding-left: 220px;
+    padding-top: 40px;
+}
+
+#btnCreeListe{
+
+    padding-left: 47%;
+    margin-top: 40px;
+}
+
+#tabSorties{
+    margin-top: 40px;
+    margin-bottom: 40px;
+}
+
+#datedeb_date{
+    width: 160px;
+}
+
+#datedeb_time{
+    width: 55px;
+}
+
+#datefin_date{
+    width: 160px;
+}
+
+#datefin_time{
+    width: 55px;
+}
+
+.Label_DateDeb{
+    display: initial;
+}
+
+#recherche{
+    width: 160px;
+}
+
+#campus{
+    width: 160px;
+}
+
+.col-form-label{
+
+}
+
