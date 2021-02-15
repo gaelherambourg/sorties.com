@@ -19,6 +19,14 @@ class VilleRepository extends ServiceEntityRepository
         parent::__construct($registry, Ville::class);
     }
 
+    public function search(string $keyword)
+    {
+        $queryBuilder = $this->createQueryBuilder('v');
+        $queryBuilder->andWhere('v.nom LIKE :kv')
+            ->setParameter(':kv', $keyword."%");
+        return $queryBuilder->getQuery()->getResult();
+    }
+
     // /**
     //  * @return Ville[] Returns an array of Ville objects
     //  */

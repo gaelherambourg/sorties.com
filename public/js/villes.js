@@ -66,5 +66,49 @@ $(document).ready(function () {
 
     })
 
+    $("#searchVille").on("keyup", function(event){
+        //event.preventDefault();
+
+        //récupère la valeur de l'input
+        let keyword = $("#searchVille").val();
+
+        //ajax
+        $.ajax({
+            "url": $("#searchVille").attr("data-path"),
+            "data": {
+                "keyword": keyword
+            }
+        })
+            .done(function(response){
+                console.log(response);
+                $("#ville-list").empty();
+                let urlVilleDetail = $('#villedetailUrl').attr("data-path");
+                for(let i = 0; i < response.length; i++){
+                    $("#ville-list").append('<button class="rechercheVille" data-Ville="'+response[i].id+'">'+ response[i].nom +'</button>');
+                }
+            });
+    });
+
+
+    $('.containerVille').unbind().on('click', '.rechercheVille', function (event){
+        console.log("titi");
+        let idVille = $(this).attr("data-Ville");
+        console.log(idVille);
+
+        $.ajax({
+
+            "url": $(".urlVille").attr("data-path"),
+            "data": {
+                "idVille": idVille
+            }
+        })
+            .done(function (Response) {
+                console.log(Response);
+                let ville = Response
+                $('#ville_form_nom').val(ville.nom);
+                $('#ville_form_codePostal').val(ville.codePostal);
+                $('.listVille').append('<button data-v="'+ville.id+'" id="modifVille">Enregistrer</button>')
+            })
+    })
 
 });
