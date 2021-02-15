@@ -1,0 +1,45 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Gérer les villes{% endblock %}
+
+{% block body %}
+    <h1>Gérer les villes</h1>
+
+    {% if villes is not empty %}
+        <div>
+            <table rules="all">
+                <thead style="background-color: #999999" align="center">
+                <tr>
+                    <td>Ville</td>
+                    <td>Code postal</td>
+                    <td>Actions</td>
+                </tr>
+                </thead>
+                {% for ville in villes %}
+                    <tr align="center">
+                        <td>{{ ville.nom }}</td>
+                        <td>{{ ville.codePostal }}</td>
+                        <td><a href="">Modifier</a> </td>
+                    </tr>
+                {% endfor %}
+                <tr>
+                    {{ form_start(ville_form) }}
+                        <td>{{ form_row(ville_form.nom) }}</td>
+                        <td>{{ form_row(ville_form.codePostal) }}</td>
+                        <td>{{ form_row((ville_form.Ajouter)) }}</td>
+                    {{ form_end(ville_form) }}
+                </tr>
+            </table>
+
+        </div>
+    {%  else %}
+        <div>
+            Aucune ville n'est encore présente.
+        </div>
+    {% endif %}
+
+
+{% endblock %}
+{% block javascripts %}
+    <script type="text/javascript" src="{{ asset('js/villes.js') }}"></script>
+{% endblock %}
