@@ -60,7 +60,7 @@
             <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
                 {% if app.user %}
                     <ul class="navbar-nav ml-auto">
-                        {# <li class="nav-item">
+                        {# <li class="nav-item active">
                 <a class="nav-link">Bonjour, {{app.user.pseudo}}</a>
             </li>
                         #}
@@ -118,6 +118,7 @@
 
     {% block js %}{% endblock %}
     </div>
+
     <!-- Fenêtre pop-up de confirmation de déconnection -->
     <div class="modal fade" id="disconnect" tabindex="-1" role="dialog"
          aria-labelledby="disconnectLabel" aria-hidden="true">

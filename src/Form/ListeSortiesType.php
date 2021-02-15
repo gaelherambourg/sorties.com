@@ -36,21 +36,24 @@ class ListeSortiesType extends AbstractType
             ])
             ->add('organisateur', CheckboxType::class, [
                 'mapped'=>false,
-                'label' => "Sorties dont je suis l'organisateur/trice :"
+                'label' => "Sorties dont je suis l'organisateur/trice"
             ])
             ->add('inscrit', CheckboxType::class, [
                 'mapped'=>false,
-                'label' => "Sorties auxquelles je suis inscrit/e:"
+                'label' => "Sorties auxquelles je suis inscrit/e"
             ])
             ->add('pasInscrit', CheckboxType::class, [
                 'mapped'=>false,
-                'label' => "Sorties auxquelles je ne suis pas inscrit/e :"
+                'label' => "Sorties auxquelles je ne suis pas inscrit/e"
             ])
             ->add('passees', CheckboxType::class, [
                 'mapped'=>false,
-                'label' => "Sorties passées :"
+                'label' => "Sorties passées"
             ])
-            ->add('submit', SubmitType::class,  ["label"=>"Rechercher"])
+            ->add('submit', SubmitType::class,  ["label"=>"Rechercher",
+                "row_attr" => [ "class" => "btn"]
+                ]
+            )
 
         ;
     }

@@ -39,14 +39,19 @@
     </div>
 
         <div class="choixPic">
-            {{ form_errors(registrationForm.photo) }}
+
             {{ form_label(registrationForm.photo) }}
             {{ form_widget(registrationForm.photo) }}
         </div>
 
 
         <div class="registerBtn">
-            <button type="submit" class="btn">S'enregistrer</button>
+
+            <a href="{{ path('app_login') }}">
+                <button class="btn" type="button"><i class="fa fa-times"></i> Retour</button>
+            </a>
+
+            <button type="submit" class="btn"><i class="fa fa-check"></i> S'enregistrer</button>
         </div>
     {{ form_end(registrationForm) }}
 
