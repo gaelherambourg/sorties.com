@@ -3,6 +3,7 @@
 body{
     margin: 0;
     padding: 0;
+    background-color: #e5e5dc;
 }
 
 
@@ -55,6 +56,7 @@ body.container{
 
 h1{
     text-align: center;
+    color: #26495c;
 }
 
 .modifPW>div {
@@ -89,11 +91,11 @@ hr{
     border-top: 3px darkgoldenrod double;
 }
 
-input[type="checkbox"].remember {
+input[type="checkbox"] {
     display: none;
 }
 
-input[type="checkbox"].remember + label::before {
+input[type="checkbox"] + label::before {
     font-family: FontAwesome;
     content: '\f096';
     font-size: 1.2em;
@@ -101,9 +103,14 @@ input[type="checkbox"].remember + label::before {
     color: darkgoldenrod;
     vertical-align: middle;
 }
-input[type="checkbox"].remember:checked + label::before {
+input[type="checkbox"]:checked + label::before {
     content:'\f046';
     color: darkgoldenrod;
+}
+
+#checkBoxForm{
+    padding: inherit;
+    margin: auto;
 }
 
 .logged{
@@ -139,6 +146,8 @@ input[type="checkbox"].remember:checked + label::before {
     border: 1px solid darkgoldenrod;
 }
 
+
+
 #form_login{
     max-width: 50%;
     margin: auto;
@@ -156,7 +165,7 @@ input[type="checkbox"].remember:checked + label::before {
     opacity: 100%;
     width: auto;
     border-radius: .25rem;
-    border: 1px solid #ced4da;
+    border: 1px solid darkgoldenrod;
     padding: .375rem .75rem;
     margin-bottom: 16px;
 }
@@ -171,6 +180,19 @@ input[type="checkbox"].remember:checked + label::before {
 
 .custom-file-label{
     visibility: hidden;
+}
+
+
+/* ELEMENTS DE TABLEAUX*/
+
+thead{
+    text-align: center;
+    background-color: darkgoldenrod;
+}
+
+tbody{
+    background-color: #26495c;
+    color: white;
 }
 
 /* FOOTER */
@@ -202,17 +224,10 @@ footer{
     text-align: center;
 }
 
-/* ALERTES FLASH */
-.alert
-{padding: 20px;
-    font-weight: bold;
-    text-align: center;
-    margin: 20px 0;
-    border-radius: 5px;
-}
-
-.alert-success{
-    color: green;
+.rechercherBtn {
+    width: 200px;
+    height: 100px;
+    margin: auto;
 }
 
 .disconnectBtn{
@@ -226,6 +241,40 @@ footer{
 .disconnectBtn:focus{
     outline: none;
 }
+
+#btnRechercher{
+    text-align: center;
+}
+
+/* ALERTES FLASH */
+.alert
+{padding: 20px;
+    font-weight: bold;
+    text-align: center;
+    margin: 20px 0;
+    border-radius: 5px;
+}
+
+.alert-success{
+    color: green;
+}
+
+/* Fenêtre POP-UP */
+
+.modal-header{
+    background-color: #26495c ;
+    color: #e5e5dc;
+}
+
+.modal-body{
+    background-color: #e5e5dc;
+}
+
+.modal-footer{
+    background-color: #e5e5dc;
+}
+
+
 
 /* ajout page Accueil*/
 
@@ -253,19 +302,20 @@ h4{
     text-align: center;
 }
 
-#checkBoxForm{
-    padding-top: 50px;
-}
 
 #ValidationForm{
     align-items: center;
 }
 
+
+
+/*
 #btnRechercher{
     align-self: center;
     padding-left: 220px;
     padding-top: 40px;
 }
+*/
 
 #btnCreeListe{
 
@@ -279,19 +329,19 @@ h4{
 }
 
 #datedeb_date{
-    width: 160px;
+    width: auto;
 }
 
 #datedeb_time{
-    width: 55px;
+    width: auto;
 }
 
 #datefin_date{
-    width: 160px;
+    width: auto;
 }
 
 #datefin_time{
-    width: 55px;
+    width: auto;
 }
 
 .Label_DateDeb{
@@ -299,11 +349,11 @@ h4{
 }
 
 #recherche{
-    width: 160px;
+    width: auto;
 }
 
 #campus{
-    width: 160px;
+    width: auto;
 }
 
 .col-form-label{

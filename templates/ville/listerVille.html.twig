@@ -6,8 +6,8 @@
     <h1>Gérer les villes</h1>
 
     {% if villes is not empty %}
-        <div>
-            <table rules="all">
+        <div data-path="{{ path('suppr_ville') }}" class="supprVille">
+            <table rules="all"class="listVille">
                 <thead style="background-color: #999999" align="center">
                 <tr>
                     <td>Ville</td>
@@ -17,9 +17,12 @@
                 </thead>
                 {% for ville in villes %}
                     <tr align="center">
-                        <td>{{ ville.nom }}</td>
-                        <td>{{ ville.codePostal }}</td>
-                        <td><a href="">Modifier</a> </td>
+                        <td class="tdNomVille">{{ ville.nom }}</td>
+                        <td class="tdCodePostalVille">{{ ville.codePostal }}</td>
+                        <td>
+                            <button data-ville="{{ ville.id }}" class="modifier">Modifier</button>
+                            <button data-ville="{{ ville.id }}" class="supprimer">Supprimer</button>
+                        </td>
                     </tr>
                 {% endfor %}
                 <tr>
@@ -30,7 +33,8 @@
                     {{ form_end(ville_form) }}
                 </tr>
             </table>
-
+            <input class="urlVille" type="hidden" data-path="{{ path('recupVille') }}">
+            <input class="urlVilleModif" type="hidden" data-path="{{ path('modifVille') }}">
         </div>
     {%  else %}
         <div>
