@@ -72,8 +72,9 @@ class SortieRepository extends ServiceEntityRepository
         }
 
         if($search->isPasInscrit()){
+
             $qb = $qb
-                ->andWhere('ps.id != :participant')
+                ->andWhere(':participant NOT MEMBER OF s.participants')
                 ->setParameter('participant', "{$id}");
         }
 

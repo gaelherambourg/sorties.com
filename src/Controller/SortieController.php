@@ -7,6 +7,7 @@ use App\Entity\Lieu;
 use App\Entity\Participant;
 use App\Entity\Sortie;
 use App\Entity\Ville;
+use App\Form\FormAnnulationSortieType;
 use App\Form\FormLieuType;
 use App\Form\FormSortieType;
 use App\Repository\LieuRepository;
@@ -141,7 +142,7 @@ class SortieController extends AbstractController
             {
                 $entityManager->remove($sortie);
                 $entityManager->flush();
-                $this->addFlash('success', 'La sortie a bien été supprimé !');
+                $this->addFlash('success', 'La sortie a bien été supprimée !');
                 return $this->redirectToRoute('AccueilSorties');
             }
             //Si le formulaire a été soumis avec le bouton Annuler, on retourne vers la page d'accueil
@@ -155,7 +156,7 @@ class SortieController extends AbstractController
             $entityManager->flush();
 
             //Créer un message en session
-            $this->addFlash('success', 'La sortie a bien été modifié !');
+            $this->addFlash('success', 'La sortie a bien été modifiée !');
 
             //Créer une redirection vers une autre page
             return $this->redirectToRoute('AccueilSorties');
@@ -192,6 +193,42 @@ class SortieController extends AbstractController
 
     }
 
+
+    /**
+     * @Route("/sortie/annulation/{id}", name="sortie_annulation")
+     */
+    public function annulerSortie(Request $request,SortieRepository $sortieRepository, $id):Response
+    {
+        //pour test
+        $id=25;
+        //on récupère l'entité sortie à annuler
+        $sortie = new Sortie;
+        $sortie2 = new Sortie;
+        $sortie = $sortieRepository->find($id);
+
+        //on stocke la description dans une variable
+        $description_origine = $sortie->getDescriptioninfos();
+        dump($description_origine);
+
+        //on recupere le motif d'annulation
+        $form = $this->createForm(FormAnnulationSortieType::class, $sortie2);
+        $form->handleRequest($request);
+
+        $description_motif=$sortie2->getDescriptioninfos();
+        dump($description_motif);
+
+        //on associe les deux descriptions
+        $description_finale = $description_origine."\n\nMotif de l'annulation :\n".$description_motif;
+        dump($description_finale);
+
+        if($form -> isSubmitted())
+
+
+        return $this->render('sortie/annulerSortie.html.twig',[
+            "sortie"=> $sortie,
+            "annulation_form"=>$form->createView()
+        ]);
+    }
 
 
 }
