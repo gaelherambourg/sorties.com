@@ -18,12 +18,17 @@
 
         <div {% block container %} accueil {%endblock %}">
 
+        {% form_theme selection_form 'bootstrap_4_layout.html.twig'%}
+        {% form_theme selection_form 'bootstrap_4_layout.html.twig'%}
+
+        <h4>Filtrer les sorties</h4>
+
         <div >
             {{ form_start(selection_form) }}
             <div class="row"  id="LigneForm">
 
                 <div class="col-5">
-                    <h4>Filtrer les sorties</h4>
+
                     {{ form_row(selection_form.campus)}}
                     {{ form_row(selection_form.recherche)}}
                     <div class="row"  id="LigneForm">
@@ -43,7 +48,7 @@
                 </div>
                 <div class="col-4" id="ValidationForm">
                     <h4>Nous sommes le :{{ "now"|date("d/m/Y") }}</h4>
-                    <h4>Bienvenu {{ app.user.pseudo }}</h4>
+                    <h4>Bienvenue {{ app.user.pseudo }}</h4>
                     <div id="btnRechercher">
                         {{ form_row(selection_form.submit)}}
                     </div>
@@ -58,9 +63,13 @@
                 <h2>Aucune sortie n'a été trouvée</h2>
             {% else %}
 
-               <table rules="all" align="center" id="tabSorties">
+               {#
+               <table rules="all" align="center" id="tabSorties" class="table">
                    <thead style="background-color: #999999" align="center">
-                        <tr>
+               #}
+                <table rules="all" align="center" id="tabSorties" class="table">
+                    <thead>
+                <tr>
                             <th>Nom de la sortie</th>
                             <th>Date de la sortie</th>
                             <th>Clôture des inscriptions</th>
@@ -136,7 +145,7 @@
             {% endif %}
         </div>
         <div>
-            <a href="{{ path('sortie_creation') }}" title="View pic detail"id="btnCreeListe"/><button>Créer une sortie</button></a>
+            <a href="{{ path('sortie_creation') }}" title="View pic detail"id="btnCreeListe"/><button class="btn">Créer une sortie</button></a>
         </div>
 
         </div>
