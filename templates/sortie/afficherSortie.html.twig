@@ -69,7 +69,7 @@
                 </thead>
                 {% for participant in sortie.participants %}
                     <tr align="center">
-                        <td>{{ participant.pseudo }}</td>
+                        <td><a href="{{ path("affiche_profil", {id:participant.id} )}}" title="détails du participant">{{ participant.pseudo }}</a></td>
                         <td>{{ participant.nom }}</td>
                     </tr>
                 {% endfor %}
