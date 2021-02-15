@@ -7,24 +7,31 @@
 {% block body %}
     <h1>Mon profil</h1>
 
+    {% form_theme profil_form 'bootstrap_4_layout.html.twig'%}
+
 
 
     <div class="row">
 
         <div class="col-md-3">
+            {{ form_start(profil_form) }}
             {% if app.user.nomPhoto %}
             <div class="picProfil">
                 <img src="img/small/{{ app.user.nomPhoto }}" alt="Photo de profil">
             </div>
             {% endif %}
+            <div class="choixPic">
+
+                {{ form_label(profil_form.photo, app.user.nomPhoto ?
+                    'Modifier votre image de profil :' : 'Ajouter une image de profil :') }}
+                {{ form_widget(profil_form.photo) }}
+            </div>
         </div>
 
         <div class="col-md-3 affichProfil">
 
 
-            {% form_theme profil_form 'bootstrap_4_layout.html.twig'%}
 
-            {{ form_start(profil_form) }}
 
             {{ form_row(profil_form.pseudo) }}
             {{ form_row(profil_form.nom) }}

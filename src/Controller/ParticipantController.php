@@ -5,10 +5,13 @@ namespace App\Controller;
 
 
 use App\Form\FormProfilType;
+use claviska\SimpleImage;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
@@ -20,7 +23,9 @@ class ParticipantController extends AbstractController
      */
     public function modifierProfil(Request $request,
                                    UserPasswordEncoderInterface $passwordEncoder,
-                                   EntityManagerInterface $entityManager)
+                                   EntityManagerInterface $entityManager,
+                                   //Route définie dans config/services.yaml
+                                   string $uploadDir): Response
     {
         //Récupérer les données de l'utilisateur connecté
         $participant = $this->getUser();
@@ -39,17 +44,50 @@ class ParticipantController extends AbstractController
         if ($form->isSubmitted() && $form->isValid())
         {
             if(!empty($form->get('plainPassword')->getData()))
-            {$participant->setMotPasse(
+            $participant->setMotPasse(
                 $passwordEncoder->encodePassword(
                     $participant,
                     $form->get('plainPassword')->getData()
                 )
             );
+
+
+            //Récupération de la photo de profil, si elle a été soumise
+            /** @var UploadedFile $photoN */
+            $photoN = $form->get('photo')->getData();
+            dump($photoN);
+            /*
+             * S'il y a photo, on hashe le nom du dossier uploadé,
+             * pour éviter les attaques. GuessExtension inspecte le
+             * fichier et déduit l'extension
+             */
+            if($photoN) {
+                $nouveauNomPhoto = md5(uniqid()) . "." . $photoN->guessExtension();
+                dump($nouveauNomPhoto);
+                //déplace le fichier dans public/img
+                $photoN->move($uploadDir, $nouveauNomPhoto);
+                //remplit ou remplace la propriété nomPhoto de l'objet Participant
+                $participant->setNomPhoto($nouveauNomPhoto);
+
+                /*
+                 * On utilise la librairie de manipulation d'image Claviska :
+                 * https://github.com/claviska/SimpleImage
+                 */
+                $img = new SimpleImage();
+                //retrouve l'image à redimensionner
+                $img->fromFile($uploadDir . $nouveauNomPhoto)
+                    //la redimensionne au plus grand dans un carrée 200 X 200
+                    ->bestFit(200, 200)
+                    //et la sauvegarde dans un répertoire de public/img
+                    ->toFile($uploadDir . "small/" .$nouveauNomPhoto );
             }
+
+
+
 
             /*
              * Comme il s'agit simplement d'éventuelles modifications, pas besoin de persist().
-             * Le flush() suffira à enregistra en base les champs modifiés.
+             * Le flush() suffira à enregistrer en base les champs modifiés.
              */
             $entityManager->flush();
 
