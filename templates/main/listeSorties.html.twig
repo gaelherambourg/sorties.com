@@ -7,8 +7,6 @@
     <section class="sorties-liste">
 
         <h1>Sorties disponibles</h1>
-        <h2>Date du jour :{{ "now"|date("d/m/Y") }}</h2>
-        <h4>{{ app.user.pseudo }}</h4>
 
         <div id="tabErreurs">
             {% if(tabErreurs is defined) %}
@@ -18,96 +16,130 @@
             {% endif %}
         </div>
 
-        <div>
-            {{ form(selection_form) }}
+        <div {% block container %} accueil {%endblock %}">
+
+        <div >
+            {{ form_start(selection_form) }}
+            <div class="row"  id="LigneForm">
+
+                <div class="col-5">
+                    <h4>Filtrer les sorties</h4>
+                    {{ form_row(selection_form.campus)}}
+                    {{ form_row(selection_form.recherche)}}
+                    <div class="row"  id="LigneForm">
+                        <div class="col-6">
+                            {{ form_row(selection_form.datedeb)}}
+                        </div>
+                        <div class="col-6">
+                            {{ form_row(selection_form.datefin)}}
+                        </div>
+                    </div>
+                </div>
+                <div class="col-3" id="checkBoxForm">
+                    {{ form_row(selection_form.organisateur)}}
+                    {{ form_row(selection_form.inscrit)}}
+                    {{ form_row(selection_form.pasInscrit)}}
+                    {{ form_row(selection_form.passees)}}
+                </div>
+                <div class="col-4" id="ValidationForm">
+                    <h4>Nous sommes le :{{ "now"|date("d/m/Y") }}</h4>
+                    <h4>Bienvenu {{ app.user.pseudo }}</h4>
+                    <div id="btnRechercher">
+                        {{ form_row(selection_form.submit)}}
+                    </div>
+                </div>
+                {{ form_end(selection_form) }}
+            </div>
         </div>
 
+        <div class="row" id="listing">
 
-        {% if sorties is empty %}
-            <h2>Aucune sortie n'a été trouvée</h2>
-        {% else %}
+            {% if sorties is empty %}
+                <h2>Aucune sortie n'a été trouvée</h2>
+            {% else %}
 
-           <table rules="all" >
-               <thead style="background-color: #999999" align="center">
-                    <tr>
-                        <th>Nom de la sortie</th>
-                        <th>Date de la sortie</th>
-                        <th>Clôture des inscriptions</th>
-                        <th>Inscrits/Places</th>
-                        <th>Etat</th>
-                        <th>Inscrit</th>
-                        <th>Organisateur</th>
-                        <th>Actions</th>
-                    </tr>
-               </thead>
-               <tbody>
-                {% for sortie in sorties %}
+               <table rules="all" align="center" id="tabSorties">
+                   <thead style="background-color: #999999" align="center">
+                        <tr>
+                            <th>Nom de la sortie</th>
+                            <th>Date de la sortie</th>
+                            <th>Clôture des inscriptions</th>
+                            <th>Inscrits/Places</th>
+                            <th>Etat</th>
+                            <th>Inscrit</th>
+                            <th>Organisateur</th>
+                            <th>Actions</th>
+                        </tr>
+                   </thead>
+                   <tbody>
+                    {% for sortie in sorties %}
 
-                    {% set participe =false %}
+                        {% set participe =false %}
 
-                    {% for participant in sortie.participants %}
-                        {% if  participant.id ==app.user.id%}
-                            {% set participe =true %}
+                        {% for participant in sortie.participants %}
+                            {% if  participant.id ==app.user.id%}
+                                {% set participe =true %}
+                            {% endif %}
+                        {% endfor %}
+
+
+                        {% set routeDetail = ""%}
+
+                        {% if sortie.getOrganisateur().id == app.user.id %}
+                            {% set titre = "Modifier"%}
+                            {% set routeDetail = "affiche_profil"%}
+                        {% else %}
+                            {% set routeDetail = "affiche_profil"%}
+                            {% set titre = "Afficher"%}
                         {% endif %}
+
+                        {% set routeInscription = ""%}
+                        {%  set dateJour = "now"|date("d/m/Y H:i:s") %}
+
+                        {% if participe %}
+                            {% set titreInscription = "Se désister"%}
+                            {% set routeInscription = "desistement_sortie"%}
+                        {% else %}
+                            {% set routeInscription = "inscription_sortie"%}
+                            {% set titreInscription = "S'inscrire"%}
+                        {% endif %}
+
+                        {# a decommenter à la fin des tests #}
+                      {#{% if sortie.datecloture|date("d/m/Y H:i:s") < dateJour %}
+                            {% set titreInscription = ""%}
+                        {% endif %}#}
+
+                        {# a decommenter à la fin des tests #}
+                       {#  {% if sortie.etatsNoEtat.id != 2 %}
+                            {% set titreInscription = ""%}
+                        {% endif %}#}
+
+
+
+                        <tr align="center">
+                            <td>{{ sortie.nom}}</td>
+                            <td>{{ sortie.datedebut|date("d/m/Y H:i:s") }}</td>
+                            <td>{{ sortie.datecloture|date("d/m/Y H:i:s")  }}</td>
+                            <td>{{ sortie.participants|length }}/{{ sortie.nbinscriptionsmax }}</td>
+                            <td>{{ sortie.getEtatsNoEtat().libelle }}</td>
+                            <td>{{ participe ? 'X':'' }}</td>
+                            <td><a href="{{ path("affiche_profil", {id:sortie.getOrganisateur().id} )}}" title="détails de l'utilisateur">{{ sortie.getOrganisateur().pseudo }}</a></td>
+                            <td><a href="{{ path(''~routeDetail~'', {id:sortie.getOrganisateur().id} )}}" title="détails de l'utilisateur">{{ titre }}</a>
+                                <a href="{{ path(''~routeInscription~'', {id:sortie.id} )}}" title="détails de l'utilisateur">{{ titreInscription }}</a>
+                            </td>
+                        </tr>
                     {% endfor %}
+                   </tbody>
 
+               </table>
 
-                    {% set routeDetail = ""%}
-
-                    {% if sortie.getOrganisateur().id == app.user.id %}
-                        {% set titre = "Modifier"%}
-                        {% set routeDetail = "affiche_profil"%}
-                    {% else %}
-                        {% set routeDetail = "affiche_profil"%}
-                        {% set titre = "Afficher"%}
-                    {% endif %}
-
-                    {% set routeInscription = ""%}
-                    {%  set dateJour = "now"|date("d/m/Y H:i:s") %}
-
-                    {% if participe %}
-                        {% set titreInscription = "Se désister"%}
-                        {% set routeInscription = "desistement_sortie"%}
-                    {% else %}
-                        {% set routeInscription = "inscription_sortie"%}
-                        {% set titreInscription = "S'inscrire"%}
-                    {% endif %}
-
-                    {# a decommenter à la fin des tests #}
-                  {#{% if sortie.datecloture|date("d/m/Y H:i:s") < dateJour %}
-                        {% set titreInscription = ""%}
-                    {% endif %}#}
-
-                    {# a decommenter à la fin des tests #}
-                   {#  {% if sortie.etatsNoEtat.id != 2 %}
-                        {% set titreInscription = ""%}
-                    {% endif %}#}
-
-
-
-                    <tr align="center">
-                        <td>{{ sortie.nom}}</td>
-                        <td>{{ sortie.datedebut|date("d/m/Y H:i:s") }}</td>
-                        <td>{{ sortie.datecloture|date("d/m/Y H:i:s")  }}</td>
-                        <td>{{ sortie.participants|length }}/{{ sortie.nbinscriptionsmax }}</td>
-                        <td>{{ sortie.getEtatsNoEtat().libelle }}</td>
-                        <td>{{ participe ? 'X':'' }}</td>
-                        <td><a href="{{ path("affiche_profil", {id:sortie.getOrganisateur().id} )}}" title="détails de l'utilisateur">{{ sortie.getOrganisateur().pseudo }}</a></td>
-                        <td><a href="{{ path(''~routeDetail~'', {id:sortie.getOrganisateur().id} )}}" title="détails de l'utilisateur">{{ titre }}</a>
-                            <a href="{{ path(''~routeInscription~'', {id:sortie.id} )}}" title="détails de l'utilisateur">{{ titreInscription }}</a>
-                        </td>
-                    </tr>
-                {% endfor %}
-               </tbody>
-
-           </table>
-
-        {% endif %}
-
+            {% endif %}
+        </div>
         <div>
             <a href="{{ path('sortie_creation') }}" title="View pic detail"/><button>Créer une sortie</button></a>
         </div>
 
+        </div>
 
     </section>
 {% endblock %}

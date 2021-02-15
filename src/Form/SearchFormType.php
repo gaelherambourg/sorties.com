@@ -52,12 +52,14 @@ class SearchFormType extends AbstractType
                 'required'=>false,
                 "date_widget"=>"single_text",
                 "time_widget"=>"single_text",
+                'label_attr'=> ['class' =>'Label_DateDeb'],
                 'label' => 'Entre :'
             ])
             ->add('datefin',DateTimeType::class,[
                 'required'=>false,
                 "date_widget"=>"single_text",
                 "time_widget"=>"single_text",
+                'label_attr'=> ['class' =>'Label_DateCloture'],
                 'label' => 'Et :'
             ])
             ->add('organisateur', CheckboxType::class, [
