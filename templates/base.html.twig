@@ -35,6 +35,11 @@
             <div class="navbar-collapse collapse w-100 order-1 order-md-0 dual-collapse2">
                 {% if app.user %}
                     <ul class="navbar-nav mr-auto">
+                        {% if 'ROLE_ADMIN' in app.user.roles %}
+                            <li class="nav-item active">
+                                <a href="{{ path('liste_ville') }}" class="nav-link" title="Villes">Villes</a>
+                            </li>
+                        {% endif %}
                         <li class="nav-item active">
                             <a href="{{ path('AccueilSorties') }}" class="nav-link" title="Accueil">Accueil</a>
                         </li>
@@ -113,6 +118,7 @@
 
     {% block js %}{% endblock %}
     </div>
+
     <!-- Fenêtre pop-up de confirmation de déconnection -->
     <div class="modal fade" id="disconnect" tabindex="-1" role="dialog"
          aria-labelledby="disconnectLabel" aria-hidden="true">
