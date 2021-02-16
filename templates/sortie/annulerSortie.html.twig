@@ -6,6 +6,14 @@
 
     <h1>Annuler une sortie</h1>
 
+    <div id="tabErreurs">
+        {% if(tab is defined) %}
+            {% for erreur in tab%}
+                <h2>{{ erreur }}</h2>
+            {% endfor%}
+        {% endif %}
+    </div>
+
     <div>
         Nom de la sortie : {{ sortie.nom }}
     </div>

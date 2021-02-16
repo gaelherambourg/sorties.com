@@ -6,7 +6,9 @@
 
     <section class="sorties-liste">
 
+
         <h1>Sorties disponibles</h1>
+
 
         <div id="tabErreurs">
             {% if(tabErreurs is defined) %}
@@ -21,9 +23,13 @@
         {% form_theme selection_form 'bootstrap_4_layout.html.twig'%}
         {% form_theme selection_form 'bootstrap_4_layout.html.twig'%}
 
-        <h4>Filtrer les sorties</h4>
+            <!--<h4>Filtrer les sorties</h4>-->
 
-        <div >
+        <div>
+            <button onclick="afficherFiltre()"id="btnFiltre">Trier les sorties</button>
+        </div>
+
+        <div id="filtre">
             {{ form_start(selection_form) }}
             <div class="row"  id="LigneForm">
 
@@ -102,11 +108,13 @@
                             {% set titre = "Afficher"%}
                         {% endif %}
 
-
-                        {% set titreAnnulation = ""%}
+                        {# a supprimer après test #}
+                        {% set titreAnnulation = "Annuler"%}
+                        {# a decommenter après test #}
+                        {#  {% set titreAnnulation = ""%}
                         {% if sortie.getOrganisateur().id == app.user.id %}
                             {% set titreAnnulation = "Annuler"%}
-                        {% endif %}
+                        {% endif %}#}
 
                         {% set routeInscription = ""%}
                         {%  set dateJour = "now"|date("d/m/Y H:i:s") %}

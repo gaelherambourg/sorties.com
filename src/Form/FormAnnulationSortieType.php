@@ -14,23 +14,14 @@ class FormAnnulationSortieType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-           // ->add('nom')
-            //->add('datedebut')
-            //->add('duree')
-           // ->add('datecloture')
-           // ->add('nbinscriptionsmax')
+
             ->add('descriptioninfos',TextareaType::class,[
                'label' => 'Motif :'
            ])
             ->add('Enregistrer', SubmitType::class,  [
                 "attr"=>["class"=>"btnAnnulationEnregistrer"]
                 ])
-           // ->add('etatsortie')
-           // ->add('urlPhoto')
-           // ->add('participants')
-           // ->add('organisateur')
-           // ->add('etats_no_etat')
-           // ->add('lieux_no_lieu')
+
         ;
     }
 
