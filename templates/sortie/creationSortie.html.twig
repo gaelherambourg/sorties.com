@@ -9,8 +9,8 @@
     {% form_theme lieu_form 'bootstrap_4_layout.html.twig' %}
     <div class="containerForm">
         <div class="sortieForm" data-path="{{ path('change_infos_lieu')~"?selVal=" }}">
-            <div class="divLieu">
-                <div class=" col-12 row" data-path="{{ path('change_select_lieu')~"?selVal=" }}">
+            <div class="divLieu" data-path="{{ path('change_select_lieu')~"?selVal=" }}">
+                <div class="col-12 row">
                     <div class="col-6">
                         {# {{ form(sortie_form) }} #}
                         {{ form_start(sortie_form) }}
@@ -24,7 +24,7 @@
                     <div class="col-6">
                         <div class="form-group">
                             <label for="nomCampus">Campus : </label>
-                            <input class="form-control" type="text" style="display: inline"
+                            <input class="form-control" id="inputCampus" disabled="disabled" type="text" style="display: inline"
                                    value="{{ app.user.campusNoCampus.nom }}"/>
                         </div>
                         {% if lieuTrouve == true %}

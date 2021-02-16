@@ -170,15 +170,4 @@ class VilleController extends AbstractController
 
     }
 
-    /**
-     * @IsGranted("ROLE_ADMIN")
-     * @Route("/admin/detail_ville", name="detailVille")
-     */
-    public function detailVille(Request $request,
-                                    SerializerInterface $serializer,
-                                    EntityManagerInterface $entityManager,
-                                    VilleRepository $villeRepository): Response
-    {
-
-    }
 }

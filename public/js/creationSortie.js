@@ -130,9 +130,17 @@ function changeVilleSelect(){
                 console.log(lieux[i].nom);
                 $("#form_sortie_lieux_no_lieu").append('<option value="'+lieux[i].id+'">'+lieux[i].nom+'</option>');
             }
-            $("#form_sortie_Rue").val(lieux[0].rue);
-            $("#form_sortie_Latitude").val(lieux[0].latitude);
-            $("#form_sortie_Longitude").val(lieux[0].longitude);
+            if(lieux.length == 0){
+                $("#form_sortie_Rue").val("");
+                $("#form_sortie_Latitude").val("");
+                $("#form_sortie_Longitude").val("");
+            }else
+            {
+                $("#form_sortie_Rue").val(lieux[0].rue);
+                $("#form_sortie_Latitude").val(lieux[0].latitude);
+                $("#form_sortie_Longitude").val(lieux[0].longitude);
+            }
+
         })
     });
 
