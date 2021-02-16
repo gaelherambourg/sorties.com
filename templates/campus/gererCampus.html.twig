@@ -9,34 +9,37 @@
 
     {% if tousCampus is not empty %}
         <div data-path="{{ path('supprCampus') }}" class="supprimerCampus">
-    <table class="tabCampus">
-        <thead>
-            <tr>
-                <th>Campus</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
+            <table class="tabCampus">
+                <thead>
+                <tr>
+                    <th>Campus</th>
+                    <th>Actions</th>
+                </tr>
+                </thead>
 
-        <tbody>
-            {% for campus in tousCampus%}
-            <tr>
-                <td>{{ campus.nom }}</td>
-                <td>
-                    <button data-campus="{{ campus.id }}" class="btn">Modifier</button>
-                    <button data-campus="{{ campus.id }}" class="btn supprCampus" title="Suppression du campus"
-                            {# data-toggle="modal" data-target="#supprCampus" #}
-                    >Supprimer</button>
-                </td>
-            </tr>
-            {% endfor %}
-            <tr>
-            {{ form_start(form_campus) }}
-                <td>{{ form_row(form_campus.nom) }}</td>
-                <td>{{ form_row(form_campus.Ajouter) }}</td>
-            {{ form_end(form_campus) }}
-            </tr>
-        </tbody>
-    </table>
+                <tbody>
+                {% for campus in tousCampus%}
+                    <tr>
+                        <td id="{{ campus.id }}">{{ campus.nom }}</td>
+                        <td>
+                            <button data-nom="{{ campus.nom }}" data-id="{{ campus.id }}"
+                                    class="btn modifCampus"
+                                    data-toggle="modal" data-target="#modifCampus">Modifier</button>
+                            <button data-campus="{{ campus.id }}" class="btn supprCampus" title="Suppression du campus"
+                                    {# data-toggle="modal" data-target="#supprCampus" #}
+                            >Supprimer</button>
+                        </td>
+                    </tr>
+                {% endfor %}
+                <tr>
+                    {{ form_start(form_campus) }}
+                    <td>{{ form_row(form_campus.nom) }}</td>
+                    <td>{{ form_row(form_campus.Ajouter) }}</td>
+                    {{ form_end(form_campus) }}
+                </tr>
+                </tbody>
+            </table>
+            <input class="urlCampusModif" type="hidden" data-path="{{ path('modifCampus') }}">
         </div>
     {% else %}
         <div>
@@ -54,7 +57,7 @@
 
 
 
-        </tbody>
+    </tbody>
 
 
 
@@ -67,22 +70,24 @@
 
 
     <!-- Fenêtre pop-up de confirmation de suppression -->
-    <div class="modal fade" id="supprCampus" tabindex="-1" role="dialog"
-         aria-labelledby="supprCampusLabel" aria-hidden="true">
+    <div class="modal fade" id="modifCampus" tabindex="-1" role="dialog"
+         aria-labelledby="modifCampusLabel" aria-hidden="true" data-backdrop="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="supprCampusLabel">Supprimer ce campus ?</h5>
+                    <h5 class="modal-title" id="modifCampusLabel">Modifier le campus</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class="modal-body">
-                    Ce campus sera effacé de la base de données.
+                    <label for="nomCampus">Nom à modifier : </label>
+                    <input class="nomCampus" name="nomCampus" id="nomCampus">
+                    <p style="visibility: hidden" id="idCampus"></p>
                 </div>
                 <div class="modal-footer">
                     <button class="btn" data-dismiss="modal"><i class="fa fa-times"></i> Annuler</button>
-                    <button class="btn"><i class="fa fa-check"></i> Confirmer</button>
+                    <button class="btn campusAModif"><i class="fa fa-check"></i> Modifier le nom</button>
                 </div>
             </div>
         </div>
