@@ -430,3 +430,15 @@ h4{
 .modifSortieBtn .form-group .btn-primary{
     width: 150px;
 }
+
+/*trier*/
+
+#divbtnfiltre{
+    text-align: center;
+    width: 100%;
+}
+
+
+#filtre{
+    display: none;
+}
