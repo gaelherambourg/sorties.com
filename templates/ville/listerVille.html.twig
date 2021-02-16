@@ -6,10 +6,10 @@
     <h1>Gérer les villes</h1>
     <div class="containerVille">
     {% if villes is not empty %}
-        <div>
+        <div class="divRecherche">
             <input type="search" id="searchVille" name="searchVille" data-path="{{ path('rechercherVille') }}" placeholder="Rechercher une ville">
             <input type="hidden" id="villedetailUrl" data-path="{{ path('detailVille', {id:0}) }}">
-            <div id="ville-list"></div>
+            <div class="ville-list"></div>
         </div>
         <div data-path="{{ path('suppr_ville') }}" class="supprVille">
             <table rules="all"class="listVille">
