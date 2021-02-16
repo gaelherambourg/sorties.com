@@ -373,3 +373,60 @@ h4{
 
 }
 
+
+/* Ecran Gérer Ville  */
+.rechercheVille{
+    display: block;
+    border: none;
+    background-color: #e5e5dc;
+    color: darkgoldenrod;
+}
+.rechercheVille::after{
+    border: none;
+}
+.ville-list{
+    position: absolute;
+    background-color: #e5e5dc;
+}
+
+/* Créer une sortie */
+.divAjoutLieu{
+    width: 60%;
+    margin: auto;
+}
+
+.creerSortieBtn{
+    margin: auto;
+    width: 50%;
+
+}
+.creerSortieBtn .form-group{
+    margin: auto;
+}
+.creerSortieBtn .form-group .btn-primary{
+    width: 150px;
+}
+#ouvrirAjoutLieu{
+    margin-left: 200px;
+    margin-top: 24px;
+    bottom: 0;
+    height:40px;
+    width: 200px;
+}
+#form_sortie_lieux_no_lieu{
+    width: 180%;
+}
+.lieuDiv{
+    display: inline-flex;
+}
+.modifSortieBtn{
+    margin: auto;
+    width: 70%;
+
+}
+.modifSortieBtn .form-group{
+    margin: auto;
+}
+.modifSortieBtn .form-group .btn-primary{
+    width: 150px;
+}

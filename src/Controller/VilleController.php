@@ -148,4 +148,26 @@ class VilleController extends AbstractController
             }
         }
     }
+
+    /**
+     * @IsGranted("ROLE_ADMIN")
+     * @Route("/admin/rechercher_ville", name="rechercherVille")
+     */
+    public function rechercherVille(Request $request,
+                               SerializerInterface $serializer,
+                               EntityManagerInterface $entityManager,
+                               VilleRepository $villeRepository): Response
+    {
+
+        $keyword = $_GET['keyword'];
+
+        $villes = $villeRepository->search($keyword);
+
+        //on convertit les champs du groupe wish_list en json
+        $json = $serializer->serialize($villes, 'json');
+        //le true sert à spécifier que nos données sont déjà en JSON
+        return new JsonResponse($json, 200, [], true);
+
+    }
+
 }

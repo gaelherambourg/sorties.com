@@ -4,9 +4,13 @@
 
 {% block body %}
     <h1>Modifier la sortie {{ sortie.nom }}</h1>
+    {% form_theme sortie_form 'bootstrap_4_layout.html.twig' %}
+    {% form_theme lieu_form 'bootstrap_4_layout.html.twig' %}
     <div class="containerForm">
         <div class="sortieForm" data-path="{{ path('change_infos_lieu')~"?selVal=" }}">
             <div class="divLieu" data-path="{{ path('change_select_lieu')~"?selVal=" }}">
+                <div class="col-12 row">
+                    <div class="col-6">
                 {{ form_start(sortie_form) }}
                 {{ form_row(sortie_form.nom) }}
                 {{ form_row(sortie_form.datedebut) }}
@@ -14,13 +18,38 @@
                 {{ form_row(sortie_form.nbinscriptionsmax) }}
                 {{ form_row(sortie_form.duree) }}
                 {{ form_row(sortie_form.descriptioninfos) }}
-                {{ form_row(sortie_form.Campus) }}
+                 </div>
+                    <div class="col-6">
+                        <div class="form-group">
+                <label  for="nomCampus">Campus : </label>
+               <input class="form-control" id="inputCampus" disabled="disabled" type="text" style="display: inline"
+                                   value="{{ app.user.campusNoCampus.nom }}"/>
+                                   </div>
                 {{ form_row(sortie_form.Ville) }}
+                <div class="lieuDiv">
                 {{ form_row(sortie_form.lieux_no_lieu, {'attr': {'value':sortie.lieuxNoLieu.nom}})}}
+                <button class="btn-primary btn" id="ouvrirAjoutLieu" name="ouvrirAjoutLieu">Ajouter un lieu</button>
+                            </div>
                 {{ form_row(sortie_form.Rue, {'attr': {'value':sortie.lieuxNoLieu.rue}})}}
                 {{ form_row(sortie_form.Latitude, {'attr': {'value':sortie.lieuxNoLieu.latitude}})}}
                 {{ form_row(sortie_form.Longitude, {'attr': {'value':sortie.lieuxNoLieu.longitude}})}}
-                {{ form_end(sortie_form) }}
+
+                </div>
+                </div>
+
+                <div class="modifSortieBtn row">
+                    {{ form_row(sortie_form.Enregistrer) }}
+                    {{ form_row(sortie_form.Publier) }}
+                    {{ form_row(sortie_form.Supprimer) }}
+                    <div class="form-group">
+                        <button class="btn-primary btn" data-path="{{ path('AccueilSorties') }}" id="annulerSortie"
+                                name="Annuler">Annuler
+                        </button>
+                    </div>
+                    {{ form_end(sortie_form) }}
+
+
+                </div>
 
             </div>
             <div class="divAjoutLieu" data-path="{{ path('ajout_lieu') }}" style="display: none">
@@ -28,11 +57,11 @@
                 {{ form_start(lieu_form) }}
                 {{ form_row(lieu_form.villes_no_ville) }}
                 {{ form_widget(lieu_form) }}
-                <button id="ajoutLieu" name="ajoutLieu">Ajout Lieu</button>
+                <button class="btn-primary btn" id="ajoutLieu" name="ajoutLieu">Ajout Lieu</button>
+                <button class="btn-primary btn" id="annulerLieu" name="annulerLieu">Annuler Ajout</button>
                 {{ form_end(lieu_form) }}
             </div>
 
-            <button id="ouvrirAjoutLieu" name="ouvrirAjoutLieu">+</button>
             <input id="idVilleSelect" type="hidden" data="{{ sortie.lieuxNoLieu.villesNoVille.id }}">
         </div>
     </div>
