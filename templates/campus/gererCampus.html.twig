@@ -1,10 +1,96 @@
 {% extends 'base.html.twig' %}
 
+{% block title %}ADMIN - Gérer les campus{% endblock %}
+
+
+
 {% block body %}
+    <h1>Gérer les campus</h1>
 
+    {% if tousCampus is not empty %}
+        <div data-path="{{ path('supprCampus') }}" class="supprimerCampus">
+    <table class="tabCampus">
+        <thead>
+            <tr>
+                <th>Campus</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            {% for campus in tousCampus%}
+            <tr>
+                <td>{{ campus.nom }}</td>
+                <td>
+                    <button data-campus="{{ campus.id }}" class="btn">Modifier</button>
+                    <button data-campus="{{ campus.id }}" class="btn supprCampus" title="Suppression du campus"
+                            {# data-toggle="modal" data-target="#supprCampus" #}
+                    >Supprimer</button>
+                </td>
+            </tr>
+            {% endfor %}
+            <tr>
+            {{ form_start(form_campus) }}
+                <td>{{ form_row(form_campus.nom) }}</td>
+                <td>{{ form_row(form_campus.Ajouter) }}</td>
+            {{ form_end(form_campus) }}
+            </tr>
+        </tbody>
+    </table>
+        </div>
+    {% else %}
+        <div>
+            Il n'y a aucun campus en base.
+        </div>
+    {% endif %}
+
+
+
+
+
+
+
+
+
+
+
+        </tbody>
+
+
+
+
+    </table>
+
+
+
+
+
+
+    <!-- Fenêtre pop-up de confirmation de suppression -->
+    <div class="modal fade" id="supprCampus" tabindex="-1" role="dialog"
+         aria-labelledby="supprCampusLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="supprCampusLabel">Supprimer ce campus ?</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    Ce campus sera effacé de la base de données.
+                </div>
+                <div class="modal-footer">
+                    <button class="btn" data-dismiss="modal"><i class="fa fa-times"></i> Annuler</button>
+                    <button class="btn"><i class="fa fa-check"></i> Confirmer</button>
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock %}
 
-{% block title %}
 
+
+{% block javascripts %}
+    <script type="text/javascript" src="{{ asset('js/campus.js') }}"></script>
 {% endblock %}
-
