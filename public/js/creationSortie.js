@@ -16,13 +16,34 @@ $(document).ready(function () {
 
     //quand on clique sur le +, on masque les infos rempli de lieu et on decouvre des champs text permettant l'ajout d'un nouveau lieu
     cliqueSurBoutonDeroulerNouveauLieu();
+    annulerAjoutLieu();
 
     //Quand on clique sur le bouton nouveau lieu, on declenche les verifications et l'ajout d'un nouveau lieu
     ajoutLieuAjax();
 
     //Quand on change le lieu, les infos (rue, latitude, longitude) changent
     changeLieuSelect();
+
+    //Revenir sur la page d'accueil
+    annulerSortie();
+
 });
+
+function annulerAjoutLieu(){
+    $("#ouvrirAjoutLieu").click(function (e) {
+        e.preventDefault();
+        $(".divAjoutLieu").toggle("fast");
+        $(".divLieu").toggle("fast");
+    });
+}
+
+function annulerSortie(){
+    $("#annulerSortie").click(function (e){
+        e.preventDefault();
+        $(location).attr("href", $("#annulerSortie").attr("data-path"))
+        console.log($("#annulerSortie").attr("data-path"));
+    })
+}
 
 function chargementLieuVille(){
 
@@ -136,7 +157,8 @@ function changeLieuSelect(){
 
 function cliqueSurBoutonDeroulerNouveauLieu(){
 
-    $("#ouvrirAjoutLieu").click(function () {
+    $("#annulerLieu").click(function (e) {
+        e.preventDefault();
         $(".divAjoutLieu").toggle("fast");
         $(".divLieu").toggle("fast");
     });

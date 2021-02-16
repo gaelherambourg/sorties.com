@@ -14,7 +14,8 @@
                 {{ form_row(sortie_form.nbinscriptionsmax) }}
                 {{ form_row(sortie_form.duree) }}
                 {{ form_row(sortie_form.descriptioninfos) }}
-                {{ form_row(sortie_form.Campus) }}
+                <label  for="nomCampus">Campus : </label>
+                <div style="display: inline"> {{ app.user.campusNoCampus.nom }}</div>
                 {{ form_row(sortie_form.Ville) }}
                 {{ form_row(sortie_form.lieux_no_lieu, {'attr': {'value':sortie.lieuxNoLieu.nom}})}}
                 {{ form_row(sortie_form.Rue, {'attr': {'value':sortie.lieuxNoLieu.rue}})}}

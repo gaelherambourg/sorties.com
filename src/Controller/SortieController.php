@@ -52,6 +52,7 @@ class SortieController extends AbstractController
 
         $orga1 = $entityManager->find(Participant::class,$this->getUser()->getId());
 
+
         //est ce que le formulaire est soumis et valide
         if($form->isSubmitted() && $form->isValid()){
 
@@ -68,11 +69,7 @@ class SortieController extends AbstractController
             {
                 $sortie->setEtatsNoEtat($entityManager->find(Etat::class,2));
             }
-            //Si le formulaire a été soumis avec le bouton Annuler, on retourne vers la page d'accueil
-            else
-            {
-                return $this->redirectToRoute('main_home');
-            }
+
 
             //déclenche l'insert en bdd
             $entityManager->persist($sortie);

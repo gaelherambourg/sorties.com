@@ -44,12 +44,12 @@ class FormSortieType extends AbstractType
             ->add('descriptioninfos', TextareaType::class, [
                 "label"=>"Descriptions et infos :"
             ])
-            ->add('Campus', EntityType::class, [
-                "label"=>"Campus :",
-                "class"=>Campus::class,
-                "choice_label"=>'nom',
-                "mapped"=>false
-            ])
+//            ->add('Campus', EntityType::class, [
+//                "label"=>"Campus :",
+//                "class"=>Campus::class,
+//                "choice_label"=>'nom',
+//                "mapped"=>false
+//            ])
             ->add('Ville', EntityType::class, [
                 "label"=>"Ville :",
                 "class"=>Ville::class,
@@ -79,9 +79,9 @@ class FormSortieType extends AbstractType
             ->add('Publier', SubmitType::class, [
                 "attr"=>["value"=>"Publier"]
             ])
-            ->add('Annuler', SubmitType::class, [
-                "attr"=>["value"=>"Annuler"]
-            ])
+//            ->add('Annuler', SubmitType::class, [
+//                "attr"=>["value"=>"Annuler"],
+//            ])
             ->add('Supprimer', SubmitType::class, [
                 "attr"=>["value"=>"Supprimer"]
             ])

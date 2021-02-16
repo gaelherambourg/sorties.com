@@ -44,6 +44,13 @@
     {%  else %}
         <div>
             Aucune ville n'est encore présente.
+            <div>
+                {{ form_start(ville_form) }}
+                {{ form_row(ville_form.nom, {'attr': {'placeholder':"Nom de la ville"}}) }}
+                {{ form_row(ville_form.codePostal, {'attr': {'placeholder':"Code Postal de la ville"}}) }}
+                {{ form_row((ville_form.Ajouter)) }}
+                {{ form_end(ville_form) }}
+            </div>
         </div>
     {% endif %}
 
