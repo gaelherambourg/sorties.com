@@ -224,7 +224,7 @@ class SortieController extends AbstractController
         $description_finale = $description_origine."\n\nMotif de l'annulation :\n".$description_motif;
         dump($description_finale);
 
-        if($form -> isSubmitted()){
+        if($form -> isSubmitted() && $form->isValid()){
             //on hydrate l'entité avec la nouvelle description et on change l'etat->6 pour annulée
             $sortie->setDescriptioninfos($description_finale);
             $etat = new Etat();
