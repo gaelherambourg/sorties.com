@@ -21,9 +21,8 @@ $(document).ready(function () {
             })
             //Sinon, un message d'erreur est transmis à l'utilisateur.
             .fail(function (Fail){
-                console.log("titi");
                 //Impossible de supprimer ce campus.
-                $(".supprVille").prepend("<div class='error'>Impossible de supprimer ce campus.</div>");
+                $(".supprCampus").prepend("<div class='error'>Impossible de supprimer ce campus.</div>");
             })
 
     })
