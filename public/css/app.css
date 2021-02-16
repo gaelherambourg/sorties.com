@@ -419,3 +419,26 @@ h4{
 .lieuDiv{
     display: inline-flex;
 }
+.modifSortieBtn{
+    margin: auto;
+    width: 70%;
+
+}
+.modifSortieBtn .form-group{
+    margin: auto;
+}
+.modifSortieBtn .form-group .btn-primary{
+    width: 150px;
+}
+
+/*trier*/
+
+#divbtnfiltre{
+    text-align: center;
+    width: 100%;
+}
+
+
+#filtre{
+    display: none;
+}

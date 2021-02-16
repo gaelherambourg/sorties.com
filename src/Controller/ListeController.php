@@ -58,23 +58,6 @@ class ListeController extends AbstractController
         $sorties = $sortiesRepo->trouverToutesSorties($data,$id, $date);
         dump($sorties);
 
-        //création d'une instance de la classe form
-        //$form =$this->createForm(ListeSortiesType::class);
-        //recuperation des données soumises dans la requête
-       // $form ->handleRequest($request);
-        //données stockées si le formulaire a été soumis
-       // $data = $form->getData();
-
-       // dump($data);
-
-
-        //on verifie la validation du form
-        //if($form->isSubmitted()&& $form->isValid())
-       // {
-        //  $sorties = $sortiesRepo->filterSorties($data["campus"],$data["nom"],$data["datedebut"],$data["datecloture"],
-          //               $data["organisateur"], $data["inscrit"],$data["pasInscrit"],$data["passees"]);
-
-       // }
 
 
         $participe =false;

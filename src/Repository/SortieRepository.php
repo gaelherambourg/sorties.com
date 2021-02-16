@@ -36,6 +36,11 @@ class SortieRepository extends ServiceEntityRepository
         $qb ->leftJoin('s.participants', 'ps')
             ->addSelect('ps');
 
+        //seulement les sorties datant de moins d'un mois
+        $qb = $qb
+             ->andWhere(' :dateActuelle < s.datedebut')
+             ->setParameter('dateActuelle',new \DateTime('-1 month'));
+
         //ajout des filtres existants
 
         dump($search->getCampus());

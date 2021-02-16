@@ -24,6 +24,9 @@ class GestionInscriptionController extends AbstractController
 
         //récupération de l'utilisateur connecté
         $idUser = $this->getUser()->getId();
+        //recuperation du role de l'utilisateur connecté
+        $role = $this->getUser()->getRoles();
+
 
         $sortie = $sortieRepository->find($id);
         $participant = $participantRepository->find($idUser);
@@ -36,7 +39,7 @@ class GestionInscriptionController extends AbstractController
         //creation d'un tableau de messages
         $tabErreurs = array();
 
-        //appel aux services inscriptionValdator
+        //appel aux services inscriptionValidator
         $message=$inscriptionValidator->validationInscriptionDate($sortie->getDatecloture());
         $message2 =$inscriptionValidator->validationInscriptionEtat($sortie->getEtatsNoEtat()->getId());
         $message3 = $inscriptionValidator->validationInscriptionPlace($nbPlaces,$nbInscrits);
