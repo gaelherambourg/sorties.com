@@ -22,7 +22,9 @@ class FormAnnulationSortieType extends AbstractType
             ->add('descriptioninfos',TextareaType::class,[
                'label' => 'Motif :'
            ])
-            ->add('submit', SubmitType::class,  ["label"=>"Enregistrer"])
+            ->add('Enregistrer', SubmitType::class,  [
+                "attr"=>["class"=>"btnAnnulationEnregistrer"]
+                ])
            // ->add('etatsortie')
            // ->add('urlPhoto')
            // ->add('participants')

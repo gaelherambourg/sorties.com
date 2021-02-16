@@ -76,7 +76,7 @@ class SearchFormType extends AbstractType
             ])
             ->add('passees', CheckboxType::class, [
                 'required'=>false,
-                'label' => "Sorties passées :"
+                'label' => "Sorties passées "
             ])
             ->add('submit', SubmitType::class,  ["label"=>"Rechercher",
                 'attr' => [

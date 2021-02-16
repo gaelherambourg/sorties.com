@@ -8,10 +8,12 @@ use App\Entity\Campus;
 use App\Entity\Participant;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\Image;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
@@ -49,6 +51,26 @@ class FormProfilType extends AbstractType
                         'max' => 4096,
                     ]),
                 ],
+            ])
+
+            /*
+             * Ce champ n'est la propriété de l'entité (nom_photo). C'est un champ crée
+             * pour contenir le fichier. D'où son mapped à false
+             */
+            ->add('photo', FileType::class, [
+                'mapped' => false,
+                'required' => false,
+                'constraints' => [
+                    //Contraintes de validations spécifiques aux images.
+                    new Image([
+                        'maxSize' => '2000k',
+                        'maxSizeMessage' => 'Le fichier est trop volumineux.',
+                        'mimeTypes' => [
+                            'image/*'],
+                        'mimeTypesMessage' => 'Merci de joindre un fichier image valide (pdf, png, jpg...)'
+                    ])
+
+                ]
             ])
         ;
     }

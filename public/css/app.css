@@ -130,6 +130,7 @@ input[type="checkbox"]:checked + label::before {
 }
 .choixPic{
     text-align: center;
+    margin-top: 20px;
 }
 
 .picProfil{
@@ -146,7 +147,17 @@ input[type="checkbox"]:checked + label::before {
     border: 1px solid darkgoldenrod;
 }
 
+#form_profil_photo{
+    width: auto;
+    border-radius: .25rem;
+    border: 1px solid darkgoldenrod;
+    padding: .375rem .75rem;
+    margin-bottom: 16px;
+}
 
+#form_profil_photo:hover{
+    cursor: pointer;
+}
 
 #form_login{
     max-width: 50%;
@@ -168,6 +179,7 @@ input[type="checkbox"]:checked + label::before {
     border: 1px solid darkgoldenrod;
     padding: .375rem .75rem;
     margin-bottom: 16px;
+    position: initial;
 }
 
 .custom-file-input:hover{
@@ -214,6 +226,7 @@ footer{
 
 .btn:hover{
     color: white;
+    background-color: #26495c;
 }
 
 .modifBtn{
