@@ -373,3 +373,18 @@ h4{
 
 }
 
+
+/* Ecran Gérer Ville  */
+.rechercheVille{
+    display: block;
+    border: none;
+    background-color: #e5e5dc;
+    color: darkgoldenrod;
+}
+.rechercheVille::after{
+    border: none;
+}
+.ville-list{
+    position: absolute;
+    background-color: #e5e5dc;
+}

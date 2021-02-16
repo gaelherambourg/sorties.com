@@ -4,11 +4,16 @@
 
 {% block body %}
     <h1>Gérer les villes</h1>
-
+    <div class="containerVille">
     {% if villes is not empty %}
+        <div class="divRecherche">
+            <input type="search" id="searchVille" name="searchVille" data-path="{{ path('rechercherVille') }}" placeholder="Rechercher une ville">
+            <input type="hidden" id="villedetailUrl" data-path="{{ path('detailVille', {id:0}) }}">
+            <div class="ville-list"></div>
+        </div>
         <div data-path="{{ path('suppr_ville') }}" class="supprVille">
             <table rules="all"class="listVille">
-                <thead style="background-color: #999999" align="center">
+                <thead>
                 <tr>
                     <td>Ville</td>
                     <td>Code postal</td>
@@ -42,7 +47,7 @@
         </div>
     {% endif %}
 
-
+    </div>
 {% endblock %}
 {% block javascripts %}
     <script type="text/javascript" src="{{ asset('js/villes.js') }}"></script>
