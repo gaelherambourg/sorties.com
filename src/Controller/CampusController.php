@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Campus;
 use App\Form\CampusFormType;
+use App\Form\SearchCampusType;
 use App\Repository\CampusRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
@@ -16,6 +17,7 @@ use Symfony\Component\Serializer\SerializerInterface;
 
 class CampusController extends AbstractController
 {
+
     /**
      * @IsGranted ("ROLE_ADMIN")
      * @Route("/admin/campus", name="campus")
@@ -24,6 +26,14 @@ class CampusController extends AbstractController
                                  EntityManagerInterface $entityManager,
                                  CampusRepository $campusRepository): Response
     {
+        //Création du formulaire de recherche
+        $form = $this->createForm(SearchCampusType::class);
+        $form->handleRequest($request);
+
+        if($form->isSubmitted() && $form->isValid())
+        {}
+
+
         //Instanciation de l'entité Campus
         $campus = new Campus();
 
@@ -39,7 +49,7 @@ class CampusController extends AbstractController
         //Si soumission d'un formulaire valide :
         if($form_campus->isSubmitted() && $form_campus->isValid()) {
 
-            //le nouveau campus crée en BDD,
+            //le nouveau campus est crée en BDD,
             $entityManager->persist($campus);
             $entityManager->flush();
 
@@ -53,9 +63,12 @@ class CampusController extends AbstractController
 
         return $this->render('campus/gererCampus.html.twig', [
             'form_campus' => $form_campus->createView(),
-            'tousCampus' => $tousCampus
+            'tousCampus' => $tousCampus,
+            'form_searchC' => $form->createView()
         ]);
     }
+
+
 
     /**
      * @IsGranted ("ROLE_ADMIN")

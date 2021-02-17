@@ -4,10 +4,25 @@
 
 
 
+{% block container %}campusForm{% endblock %}
 {% block body %}
     <h1>Gérer les campus</h1>
 
+    <h3>Filtrer les sites</h3>
+
+
     {% if tousCampus is not empty %}
+
+        {{ form_start(form_searchC) }}
+        <div class="champSearchCampus">
+            {{ form_row(form_searchC.recherche) }}
+        </div>
+        <div class="btnSearchCampus">
+            {{ form_row(form_searchC.rechercher) }}
+        </div>
+        {{ form_end(form_searchC) }}
+
+        <div class="campusForm">
         <div data-path="{{ path('supprCampus') }}" class="supprimerCampus">
             <table class="tabCampus">
                 <thead>
@@ -40,6 +55,7 @@
                 </tbody>
             </table>
             <input class="urlCampusModif" type="hidden" data-path="{{ path('modifCampus') }}">
+        </div>
         </div>
     {% else %}
         <div>

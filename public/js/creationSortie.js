@@ -104,13 +104,12 @@ function ajoutLieuAjax(){
                 console.log(Response.responseJSON);
                 let erreurs = Response.responseJSON;
                 $(".erreur").remove();
-                $("#form_lieu").prepend('<div class="erreur"></div>')
+                $(".divAjoutLieu").prepend('<div class="erreur"></div>');
                 for (let i=0; i<erreurs.length;i++ ){
                     console.log(erreurs[i]);
                     $(".erreur").prepend('<p>' + erreurs[i] +'</p>');
                 }
 
-                console.log("essai");
             })
     })
 
