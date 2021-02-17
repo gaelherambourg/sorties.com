@@ -6,33 +6,36 @@
 
     <h1>Annuler une sortie</h1>
 
-    <div id="tabErreurs">
-        {% if(tab is defined) %}
-            {% for erreur in tab%}
-                <h2>{{ erreur }}</h2>
-            {% endfor%}
-        {% endif %}
+    <div id="formAnnulation">
+        <div>
+            Nom de la sortie : {{ sortie.nom }}
+        </div>
+        <div>
+            Date de la sortie : {{ sortie.datedebut|date("d/m/Y") }}
+        </div>
+        <div>
+            Campus : {{ sortie.organisateur.campusNoCampus.nom }}
+        </div>
+        <div>
+            Lieu de la sortie : {{ sortie.lieuxNoLieu.nom }}
+        </div>
+
+        <div>
+            {{ form_start(annulation_form) }}
+                <div id="motifTexte">
+                    {{ form_row(annulation_form.descriptioninfos) }}
+                </div>
+                <div>
+
+                    <button type="submit" class="btn">Enregistrer</button>
+                    <a href="{{ path('AccueilSorties') }}" title="annuler"id="btnannulation"/><button class="btn" type="reset">Annuler</button></a>
+                </div>
+
+            {{ form_end(annulation_form) }}
+        </div>
+
     </div>
 
-    <div>
-        Nom de la sortie : {{ sortie.nom }}
-    </div>
-    <div>
-        Date de la sortie : {{ sortie.datedebut|date("d/m/Y") }}
-    </div>
-    <div>
-        Campus : {{ sortie.organisateur.campusNoCampus.nom }}
-    </div>
-    <div>
-        Lieu de la sortie : {{ sortie.lieuxNoLieu.nom }}
-    </div>
-
-    <div>
-        {{ form(annulation_form) }}
-    </div>
-    <div>
-        <a href="{{ path('AccueilSorties') }}" title="annuler"id="btnannulation"/><button class="btn" type="reset">Annuler</button></a>
-    </div>
 
 
 

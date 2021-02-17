@@ -460,3 +460,16 @@ h4{
 .erreur{
     color: tomato;
 }
+.error{
+    color: tomato;
+}
+
+/*page annulation*/
+
+#formAnnulation{
+    text-align: center;
+}
+
+#motifTexte{
+    margin-top: 30px;
+}
