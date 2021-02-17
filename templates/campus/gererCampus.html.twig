@@ -7,7 +7,16 @@
 {% block body %}
     <h1>Gérer les campus</h1>
 
+    <h3>Filtrer les sites</h3>
+
+
     {% if tousCampus is not empty %}
+
+        {{ form_start(form_searchC) }}
+        {{ form_row(form_searchC.recherche) }}
+        {{ form_row(form_searchC.rechercher) }}
+        {{ form_end(form_searchC) }}
+
         <div data-path="{{ path('supprCampus') }}" class="supprimerCampus">
             <table class="tabCampus">
                 <thead>
