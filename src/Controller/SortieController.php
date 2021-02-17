@@ -242,7 +242,7 @@ class SortieController extends AbstractController
         }
 
         //on fait appel au service de validation Annulationvalidator pour verifier l'etat de la sortie
-        $idEtatSortie = $sortie->setEtatsNoEtat()->getId();
+        $idEtatSortie = $sortie->getEtatsNoEtat()->getId();
         $message2=null;
         $message2 = $annulationValidator->annulationSortieEnCours($idEtatSortie);
 
