@@ -4,56 +4,58 @@
 
 {% block body %}
     <h1>Gérer les villes</h1>
+    {% form_theme ville_form 'bootstrap_4_layout.html.twig' %}
     <div class="containerVille">
-    {% if villes is not empty %}
-        <div class="divRecherche">
-            <input type="search" id="searchVille" name="searchVille" data-path="{{ path('rechercherVille') }}" placeholder="Rechercher une ville">
-            <input type="hidden" id="villedetailUrl" data-path="{{ path('detailVille', {id:0}) }}">
-            <div class="ville-list"></div>
-        </div>
-        <div data-path="{{ path('suppr_ville') }}" class="supprVille">
-            <table rules="all"class="listVille">
-                <thead>
-                <tr>
-                    <td>Ville</td>
-                    <td>Code postal</td>
-                    <td>Actions</td>
-                </tr>
-                </thead>
-                {% for ville in villes %}
-                    <tr align="center">
-                        <td class="tdNomVille">{{ ville.nom }}</td>
-                        <td class="tdCodePostalVille">{{ ville.codePostal }}</td>
-                        <td>
-                            <button data-ville="{{ ville.id }}" class="modifier">Modifier</button>
-                            <button data-ville="{{ ville.id }}" class="supprimer">Supprimer</button>
-                        </td>
+        {% if villes is not empty %}
+        <div class="contentVille">
+            <div class="divRecherche">
+                <input type="search" id="searchVille" name="searchVille" data-path="{{ path('rechercherVille') }}"
+                       placeholder="Rechercher une ville">
+                <div class="ville-list"></div>
+            </div>
+            <div data-path="{{ path('suppr_ville') }}" class="supprVille">
+                <table rules="all" class="listVille">
+                    <thead>
+                    <tr>
+                        <td>Ville</td>
+                        <td>Code postal</td>
+                        <td>Actions</td>
                     </tr>
-                {% endfor %}
-                <tr>
-                    {{ form_start(ville_form) }}
+                    </thead>
+                    {% for ville in villes %}
+                        <tr align="center">
+                            <td class="tdNomVille">{{ ville.nom }}</td>
+                            <td class="tdCodePostalVille">{{ ville.codePostal }}</td>
+                            <td>
+                                <button data-ville="{{ ville.id }}" class="modifier btn">Modifier</button>
+                                <button data-ville="{{ ville.id }}" class="supprimer btn">Supprimer</button>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    <tr>
+                        {{ form_start(ville_form) }}
                         <td>{{ form_row(ville_form.nom) }}</td>
                         <td>{{ form_row(ville_form.codePostal) }}</td>
                         <td>{{ form_row((ville_form.Ajouter)) }}</td>
-                    {{ form_end(ville_form) }}
-                </tr>
-            </table>
-            <input class="urlVille" type="hidden" data-path="{{ path('recupVille') }}">
-            <input class="urlVilleModif" type="hidden" data-path="{{ path('modifVille') }}">
-        </div>
-    {%  else %}
-        <div>
-            Aucune ville n'est encore présente.
-            <div>
-                {{ form_start(ville_form) }}
-                {{ form_row(ville_form.nom, {'attr': {'placeholder':"Nom de la ville"}}) }}
-                {{ form_row(ville_form.codePostal, {'attr': {'placeholder':"Code Postal de la ville"}}) }}
-                {{ form_row((ville_form.Ajouter)) }}
-                {{ form_end(ville_form) }}
+                        {{ form_end(ville_form) }}
+                    </tr>
+                </table>
+                <input class="urlVille" type="hidden" data-path="{{ path('recupVille') }}">
+                <input class="urlVilleModif" type="hidden" data-path="{{ path('modifVille') }}">
             </div>
+            {% else %}
+                <div>
+                    Aucune ville n'est encore présente.
+                    <div>
+                        {{ form_start(ville_form) }}
+                        {{ form_row(ville_form.nom, {'attr': {'placeholder':"Nom de la ville"}}) }}
+                        {{ form_row(ville_form.codePostal, {'attr': {'placeholder':"Code Postal de la ville"}}) }}
+                        {{ form_row((ville_form.Ajouter)) }}
+                        {{ form_end(ville_form) }}
+                    </div>
+                </div>
+            {% endif %}
         </div>
-    {% endif %}
-
     </div>
 {% endblock %}
 {% block javascripts %}

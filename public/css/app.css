@@ -407,14 +407,14 @@ h4{
     width: 150px;
 }
 #ouvrirAjoutLieu{
-    margin-left: 200px;
+    margin-left: 10px;
     margin-top: 24px;
     bottom: 0;
     height:40px;
-    width: 200px;
+    width: 100%;
 }
 #form_sortie_lieux_no_lieu{
-    width: 180%;
+    width: 300px;
 }
 .lieuDiv{
     display: inline-flex;
@@ -441,4 +441,8 @@ h4{
 
 #filtre{
     display: none;
+}
+
+.erreur{
+    color: tomato;
 }
