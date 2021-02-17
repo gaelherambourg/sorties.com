@@ -36,6 +36,8 @@ function modifierCampus(){
                 let ligneAModif= document.getElementById(idCampus)
                 ligneAModif.innerText = nomCampus
                 $('#modifCampus').modal('hide')
+                setTimeout(function(){
+                    $('.alert').fadeOut();}, 5);
             })
     })
 }
@@ -80,6 +82,8 @@ function supprimerCampus(){
                 console.log(Response.status);
                 if (Response.status === "deleted"){
                     $(ligneASupprimer).remove();
+                    setTimeout(function(){
+                        $('.alert').fadeOut();}, 5);
                 }
             })
             //Sinon, un message d'erreur est transmis à l'utilisateur.

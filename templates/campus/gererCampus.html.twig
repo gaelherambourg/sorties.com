@@ -36,9 +36,9 @@
 
                 <tbody>
                 {% for campus in tousCampus%}
-                    <tr>
+                    <tr class="tabRow">
                         <td id="{{ campus.id }}">{{ campus.nom }}</td>
-                        <td>
+                        <td class="tabCase">
                             <button data-nom="{{ campus.nom }}" data-id="{{ campus.id }}"
                                     class="btn modifCampus"
                                     data-toggle="modal" data-target="#modifCampus">Modifier</button>
