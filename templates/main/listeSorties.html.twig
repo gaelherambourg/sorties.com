@@ -26,7 +26,7 @@
             <!--<h4>Filtrer les sorties</h4>-->
 
         <div id="divbtnfiltre">
-            <button onclick="afficherFiltre()"id="btnFiltre" class="btn" >Trier les sorties</button>
+            <button id="btnFiltre" class="btn" >Trier les sorties</button>
         </div>
 
         <div id="filtre">
@@ -53,8 +53,8 @@
                     {{ form_row(selection_form.passees)}}
                 </div>
                 <div class="col-4" id="ValidationForm">
-                    <h4>Nous sommes le :{{ "now"|date("d/m/Y") }}</h4>
-                    <h4>Bienvenue {{ app.user.pseudo }}</h4>
+                    <h4>Nous sommes le :{{ "now"|date("d/m/Y H:i:s") }}</h4>
+                    <h4>Bonjour {{ app.user.pseudo }}</h4>
                     <div id="btnRechercher">
                         {{ form_row(selection_form.submit)}}
                     </div>
@@ -97,28 +97,38 @@
                             {% endif %}
                         {% endfor %}
 
-
-                        {% set routeDetail = ""%}
-
-                        {% if sortie.getOrganisateur().id == app.user.id %}
-                            {% set titre = "Modifier"%}
-                            {% set routeDetail = "sortie_modif"%}
-                        {% else %}
-                            {% set routeDetail = "sortie_afficher"%}
+                        {# filtre afficher la sortie #}
+                        {% set titre = ""%}
+                        {% if sortie.getEtatsNoEtat().id !=1 %}
                             {% set titre = "Afficher"%}
                         {% endif %}
 
+
+                        {# filtre modifier la sortie #}
+                        {% set titreModif = ""%}
+                        {% if sortie.getOrganisateur().id == app.user.id and sortie.getEtatsNoEtat().id ==1%}
+                            {% set titreModif = "Modifier"%}
+                        {% endif %}
+
+
+                        {# récupération du role de l'utilisateur connecté #}
+                        {% set role = app.user.roles %}
+                        {%  set roleUser = role[0] %}
+
+
+                        {# filtre lien annulé #}
                         {# a supprimer après test #}
-                        {% set titreAnnulation = "Annuler"%}
+                        {#{% set titreAnnulation = "Annuler"%}#}
                         {# a decommenter après test #}
-                        {#  {% set titreAnnulation = ""%}
-                        {% if sortie.getOrganisateur().id == app.user.id %}
+                          {% set titreAnnulation = ""%}
+                        {% if sortie.getOrganisateur().id == app.user.id or roleUser =="ROLE_ADMIN"%}
                             {% set titreAnnulation = "Annuler"%}
-                        {% endif %}#}
+                        {% endif %}
 
                         {% set routeInscription = ""%}
                         {%  set dateJour = "now"|date("d/m/Y H:i:s") %}
 
+                        {# filtre lien inscription/desistement #}
                         {% if participe %}
                             {% set titreInscription = "Se désister"%}
                             {% set routeInscription = "desistement_sortie"%}
@@ -127,27 +137,47 @@
                             {% set titreInscription = "S'inscrire"%}
                         {% endif %}
 
+                        {# filtre lien inscription selon date cloture #}
                         {# a decommenter à la fin des tests #}
                       {#{% if sortie.datecloture|date("d/m/Y H:i:s") < dateJour %}
                             {% set titreInscription = ""%}
                         {% endif %}#}
 
+                        {# filtre lien inscription selon etat sortie #}
                         {# a decommenter à la fin des tests #}
-                       {#  {% if sortie.etatsNoEtat.id != 2 %}
+                         {% if sortie.etatsNoEtat.id != 2 %}
                             {% set titreInscription = ""%}
-                        {% endif %}#}
+                        {% endif %}
+
+                        {# filtre lien inscription selon place dispo #}
+                        {% if participe==false and sortie.participants|length==sortie.nbinscriptionsmax %}
+                            {% set titreInscription = ""%}
+                        {% endif %}
+
+                        {# filtre lien annulation selon etat sortie #}
+                        {% if sortie.getEtatsNoEtat().id !=4 %}
+                            {% set titreAnnulation = ""%}
+                        {% endif %}
+
+                        {# filtre lien publier sortie #}
+                        {% set titrePublication="" %}
+                        {% if sortie.getOrganisateur().id == app.user.id and sortie.getEtatsNoEtat().id ==1 %}
+                            {% set titrePublication = "Publier"%}
+                        {% endif %}
 
 
 
                         <tr align="center">
                             <td>{{ sortie.nom}}</td>
-                            <td>{{ sortie.datedebut|date("d/m/Y H:i:s") }}</td>
-                            <td>{{ sortie.datecloture|date("d/m/Y H:i:s")  }}</td>
+                            <td>{{ sortie.datedebut|date("d/m/Y H:i:s",false) }}</td>
+                            <td>{{ sortie.datecloture|date("d/m/Y H:i:s",false)  }}</td>
                             <td>{{ sortie.participants|length }}/{{ sortie.nbinscriptionsmax }}</td>
                             <td>{{ sortie.getEtatsNoEtat().libelle }}</td>
                             <td>{{ participe ? 'X':'' }}</td>
                             <td><a href="{{ path("affiche_profil", {id:sortie.getOrganisateur().id} )}}" title="détails de l'utilisateur">{{ sortie.getOrganisateur().pseudo }}</a></td>
-                            <td><a href="{{ path(''~routeDetail~'', {id:sortie.id} )}}" title="détails de la sortie">{{ titre }}</a>
+                            <td><a href="{{ path("sortie_afficher", {id:sortie.id} )}}" title="détails de la sortie">{{ titre }}</a>
+                                <a href="{{ path("sortie_modif", {id:sortie.id} )}}" title="modifier la sortie">{{ titreModif }}</a>
+                                <a href="{{ path("sortie_modif", {id:sortie.id} )}}" title="publier la sortie">{{ titrePublication }}</a>
                                 <a href="{{ path(''~routeInscription~'', {id:sortie.id} )}}" title="inscription/désistement">{{ titreInscription }}</a>
                                 <a href="{{ path("sortie_annulation", {id:sortie.id} )}}" title="annulation">{{ titreAnnulation }}</a>
                             </td>

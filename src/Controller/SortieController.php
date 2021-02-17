@@ -201,8 +201,7 @@ class SortieController extends AbstractController
                                   Request $request,
                                   AnnulationValidator $annulationValidator):Response
     {
-        //pour test
-        //$id=25;
+
         //a decommenter
         $id = $request->get('id');
         //on récupère l'entité sortie à annuler
@@ -214,8 +213,12 @@ class SortieController extends AbstractController
         $idUser = $this->getUser()->getId();
         //recuperation de l'id de l'organisateur de la sortie
         $idOrg = $sortie->getOrganisateur()->getId();
-        //recuperation du role de l'utilisateur connecté
+        //recuperation du role de l'utilisateur connecté. On recupere un tableau de roles
         $role = $this->getUser()->getRoles();
+        dump($role);
+        //role user (1seul role par user donc 1 seule ligne ds le tab)
+        $roleUser = $role[0];
+        dump($roleUser);
         //creation d'un tableau de messages
         $tabErreurs = array();
 
@@ -228,13 +231,23 @@ class SortieController extends AbstractController
         $form->handleRequest($request);
 
         //on fait appel au service de validation Annulationvalidator si l'user n'est pas admin
-        if($role!="ROLE_ADMIN"){
+        $message=null;
+        if($roleUser!="ROLE_ADMIN"){
             $message = $annulationValidator->annulationSortieOrganisateur($idUser,$idOrg);
             dump($message);
         }
 
         if($message){
             $tabErreurs[]=$message;
+        }
+
+        //on fait appel au service de validation Annulationvalidator pour verifier l'etat de la sortie
+        $idEtatSortie = $sortie->setEtatsNoEtat()->getId();
+        $message2=null;
+        $message2 = $annulationValidator->annulationSortieEnCours($idEtatSortie);
+
+        if($message2){
+            $tabErreurs[]=$message2;
         }
 
         if ($form->isSubmitted()) {
@@ -258,16 +271,18 @@ class SortieController extends AbstractController
                 $entityManager->flush();
 
                 //ajout d'un message de confirmation
-                $this->addFlash('succes', "L'annulation de la sortie a bien été prise en compte");
+                $this->addFlash('success', "L'annulation de la sortie a bien été prise en compte");
 
                 //redirection vers la page d'accueil
                 return $this->redirectToRoute('AccueilSorties');
             }
             else{
+                foreach ($tabErreurs as $erreur){
+                    $this->addFlash('error', $erreur);
+                }
+
                 //redirection vers la page d'accueil
-                return $this->redirectToRoute('AccueilSorties',[
-                        "tab"=>$tabErreurs
-                ]);
+                return $this->redirectToRoute('AccueilSorties');
             }
     }
 
