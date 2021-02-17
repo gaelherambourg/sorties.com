@@ -12,6 +12,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Serializer\SerializerInterface;
 
 class CampusController extends AbstractController
 {
@@ -66,10 +67,53 @@ class CampusController extends AbstractController
      */
     public function modifCampus(Request $request,
                                 EntityManagerInterface $entityManager,
+                                SerializerInterface $serializer,
                                 CampusRepository $campusRepository): Response
     {
-        //Récupération du Campus dont le bouton a été cliqué
+        //Récupération de l'ID dont le bouton a été cliqué
+        $idCampus = $request->get('idCampus');
+        //Récupération du nouveau nom inscrit dans le formulaire de modification
+        $nomCampus = $request->get('nomCampus');
 
+        //Récupération en BDD du Campus désigné
+        $campus = $entityManager->find(Campus::class, $idCampus);
+
+        //En cas de nouvelle proposition, on remplace le nom,
+        if(!empty($nomCampus)){
+            $campus->setNom($nomCampus);
+        }
+
+        if(!empty($campus->getNom())){
+            //puis on déclenche l'update en BDD.
+            $entityManager->persist($campus);
+            $entityManager->flush();
+
+            //Puis on le transforme en réponse Json pour affichage dynamique.
+            $json = $serializer->serialize($campus, 'json');
+
+            return  new JsonResponse($json, 200, [], true);
+        }
+    }
+
+    /**
+     * @IsGranted ("ROLE_ADMIN")
+     * @Route ("/admin/recup_campus", name="recupCampus")
+     */
+    public function recupCampus(Request $request,
+                                SerializerInterface $serializer,
+                                EntityManagerInterface $entityManager,
+                                CampusRepository $campusRepository): Response
+    {
+        $idCampus = $request->get('idCampus');
+
+        $campus= $entityManager->find(Campus::class, $idCampus);
+
+        if (!empty($campus)){
+
+            $json = $serializer->serialize($campus, 'json');
+
+            return new JsonResponse($json, 200, [], true);
+        }
     }
 
     /**

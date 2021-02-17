@@ -375,7 +375,6 @@ h4{
 
 
 /* Ecran Gérer Ville  */
-
 .rechercheVille{
     display: block;
     border: none;
@@ -431,6 +430,19 @@ h4{
 .modifSortieBtn .form-group .btn-primary{
     width: 150px;
 }
+
+/*trier*/
+
+#divbtnfiltre{
+    text-align: center;
+    width: 100%;
+}
+
+
+#filtre{
+    display: none;
+}
+
 .erreur{
     color: tomato;
 }

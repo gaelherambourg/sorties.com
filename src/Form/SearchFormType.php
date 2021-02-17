@@ -93,7 +93,7 @@ class SearchFormType extends AbstractType
             //class servant à représenter els données
             'data_class' => SearchData::class,
             //methode Get par defaut->parametres passent par l'url
-            'method' => 'GET',
+            'method' => 'POST',
             //on desactive la protection csrf car form de recherche -> pas de pb
             'csrf_protection' =>false
         ]);

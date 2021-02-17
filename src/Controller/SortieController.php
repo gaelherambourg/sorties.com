@@ -13,6 +13,7 @@ use App\Form\FormSortieType;
 use App\Repository\EtatRepository;
 use App\Repository\LieuRepository;
 use App\Repository\SortieRepository;
+use App\Services\AnnulationValidator;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -195,7 +196,10 @@ class SortieController extends AbstractController
     /**
      * @Route("/sortie/annulation/{id}", name="sortie_annulation")
      */
-    public function annulerSortie(EntityManagerInterface $entityManager,EtatRepository $etatRepository,Request $request):Response
+    public function annulerSortie(EntityManagerInterface $entityManager,
+                                  EtatRepository $etatRepository,
+                                  Request $request,
+                                  AnnulationValidator $annulationValidator):Response
     {
         //pour test
         //$id=25;
@@ -206,6 +210,15 @@ class SortieController extends AbstractController
         $sortie2 = new Sortie;
         $sortie = $entityManager->find(Sortie::class,$id);
 
+        //récupération de l'utilisateur connecté
+        $idUser = $this->getUser()->getId();
+        //recuperation de l'id de l'organisateur de la sortie
+        $idOrg = $sortie->getOrganisateur()->getId();
+        //recuperation du role de l'utilisateur connecté
+        $role = $this->getUser()->getRoles();
+        //creation d'un tableau de messages
+        $tabErreurs = array();
+
         //on stocke la description dans une variable
         $description_origine = $sortie->getDescriptioninfos();
         dump($description_origine);
@@ -214,32 +227,54 @@ class SortieController extends AbstractController
         $form = $this->createForm(FormAnnulationSortieType::class, $sortie2);
         $form->handleRequest($request);
 
-        $description_motif=$sortie2->getDescriptioninfos();
-        dump($description_motif);
-
-        //on associe les deux descriptions
-        $description_finale = $description_origine."\n\nMotif de l'annulation :\n".$description_motif;
-        dump($description_finale);
-
-        if($form -> isSubmitted() && $form->isValid()){
-            //on hydrate l'entité avec la nouvelle description et on change l'etat->6 pour annulée
-            $sortie->setDescriptioninfos($description_finale);
-            $etat = new Etat();
-            $etat = $etatRepository->find(6);
-            $sortie->setEtatsNoEtat($etat);
-
-            $entityManager->persist($sortie);
-            $entityManager->flush();
-
-            //redirection vers la page d'accueil
-            return $this->redirectToRoute('AccueilSorties');
+        //on fait appel au service de validation Annulationvalidator si l'user n'est pas admin
+        if($role!="ROLE_ADMIN"){
+            $message = $annulationValidator->annulationSortieOrganisateur($idUser,$idOrg);
+            dump($message);
         }
 
+        if($message){
+            $tabErreurs[]=$message;
+        }
 
-        return $this->render('sortie/annulerSortie.html.twig',[
-            "sortie"=> $sortie,
-            "annulation_form"=>$form->createView()
-        ]);
+        if ($form->isSubmitted()) {
+
+            if(empty($tabErreurs)) {
+
+                $description_motif = $sortie2->getDescriptioninfos();
+                dump($description_motif);
+
+                //on associe les deux descriptions
+                $description_finale = $description_origine . "\n\nMotif de l'annulation :\n" . $description_motif;
+                dump($description_finale);
+
+                //on hydrate l'entité avec la nouvelle description et on change l'etat->6 pour annulée
+                $sortie->setDescriptioninfos($description_finale);
+                $etat = new Etat();
+                $etat = $etatRepository->find(6);
+                $sortie->setEtatsNoEtat($etat);
+
+                $entityManager->persist($sortie);
+                $entityManager->flush();
+
+                //ajout d'un message de confirmation
+                $this->addFlash('succes', "L'annulation de la sortie a bien été prise en compte");
+
+                //redirection vers la page d'accueil
+                return $this->redirectToRoute('AccueilSorties');
+            }
+            else{
+                //redirection vers la page d'accueil
+                return $this->redirectToRoute('AccueilSorties',[
+                        "tab"=>$tabErreurs
+                ]);
+            }
+    }
+
+    return $this->render('sortie/annulerSortie.html.twig',[
+        "sortie"=> $sortie,
+        "annulation_form"=>$form->createView()
+    ]);
     }
 
 
