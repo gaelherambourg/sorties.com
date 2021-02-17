@@ -81,7 +81,7 @@ class LieuController extends AbstractController
         if (preg_match($regChiffre,$longitude)){
             $nouveauLieu->setLongitude($longitude);
         }else{
-            array_push($errors, "La Longitude doit être un nombre");
+            array_push($errors, "Erreur lors de la saisie de la longitude");
         }
         if (!empty($nom)){
             $nouveauLieu->setNom($nom);
