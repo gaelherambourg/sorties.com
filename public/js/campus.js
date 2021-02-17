@@ -7,6 +7,8 @@ $(document).ready(function () {
 
     modifierCampus();
 
+
+
 function modifCampusModal(){
     $('#modifCampus').on('show.bs.modal', function (event){
         let idCampus = $(event.relatedTarget).data('id')

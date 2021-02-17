@@ -1,5 +1,6 @@
 {% extends 'base.html.twig' %}
 
+
 {% block title %}ADMIN - Gérer les campus{% endblock %}
 
 
@@ -22,9 +23,10 @@
         </div>
         {{ form_end(form_searchC) }}
 
+
         <div class="campusForm">
         <div data-path="{{ path('supprCampus') }}" class="supprimerCampus">
-            <table class="tabCampus">
+            <table id="tabCampus" class="tabCampus">
                 <thead>
                 <tr>
                     <th>Campus</th>
@@ -59,10 +61,47 @@
         </div>
     {% else %}
         <div>
-            Il n'y a aucun campus en base.
+            {{ baseVide}}
         </div>
-    {% endif %}
 
+        {{ form_start(form_searchC) }}
+        <div class="champSearchCampus">
+            {{ form_row(form_searchC.recherche) }}
+        </div>
+        <div class="btnSearchCampus">
+            {{ form_row(form_searchC.rechercher) }}
+        </div>
+        {{ form_end(form_searchC) }}
+
+        <div class="campusForm">
+            <div data-path="{{ path('supprCampus') }}" class="supprimerCampus">
+                <table id="tabCampus" class="tabCampus">
+                    <thead>
+                        <tr>
+                            <th>Campus</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+
+                        <tr>
+                            {{ form_start(form_campus) }}
+                            <td>{{ form_row(form_campus.nom) }}</td>
+                            <td>{{ form_row(form_campus.Ajouter) }}</td>
+                            {{ form_end(form_campus) }}
+                        </tr>
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+
+
+
+
+    {% endif %}
 
 
 
@@ -113,5 +152,6 @@
 
 
 {% block javascripts %}
+
     <script type="text/javascript" src="{{ asset('js/campus.js') }}"></script>
 {% endblock %}
