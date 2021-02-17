@@ -125,6 +125,12 @@ input[type="checkbox"]:checked + label::before {
 
 /* ELEMENTS DE FORMULAIRE */
 
+.campusForm{text-align: center}
+
+.champSearchCampus, .btnSearchCampus {
+    display: inline-block;
+}
+
 .border{
     border: 1px solid darkgoldenrod !important;
 }
@@ -227,6 +233,14 @@ footer{
 .btn:hover{
     color: white;
     background-color: #26495c;
+}
+
+#search_campus_rechercher{
+    vertical-align: unset;
+}
+
+#campus_form_Ajouter{
+    margin-bottom: 21px;
 }
 
 .modifBtn{

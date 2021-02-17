@@ -30,6 +30,10 @@ class CampusController extends AbstractController
         $form = $this->createForm(SearchCampusType::class);
         $form->handleRequest($request);
 
+        if($form->isSubmitted() && $form->isValid())
+        {}
+
+
         //Instanciation de l'entité Campus
         $campus = new Campus();
 
