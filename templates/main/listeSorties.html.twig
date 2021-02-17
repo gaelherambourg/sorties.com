@@ -155,7 +155,7 @@
                         {% endif %}
 
                         {# filtre lien annulation selon etat sortie #}
-                        {% if sortie.getEtatsNoEtat().id !=4 %}
+                        {% if sortie.getEtatsNoEtat().id ==4 %}
                             {% set titreAnnulation = ""%}
                         {% endif %}
 
