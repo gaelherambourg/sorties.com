@@ -1,5 +1,8 @@
 $(document).ready(function () {
 
+    setTimeout(function(){
+        $('.alert').fadeOut();}, 4000);
+
     supprVille();
 
     cliqueSurBoutonModifier()
@@ -139,3 +142,4 @@ function cliqueListeRecherche(){
             })
     })
 }
+
