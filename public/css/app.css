@@ -463,6 +463,12 @@ h4{
     position: absolute;
     background-color: #e5e5dc;
 }
+#btnAjouterVille{
+    text-align: center;
+}
+.listVille{
+    width: 100%;
+}
 
 /* Créer une sortie */
 .divAjoutLieu{
@@ -533,4 +539,37 @@ h4{
 
 #motifTexte{
     margin-top: 30px;
+}
+.containerAfficherSortie{
+    margin: auto;
+    text-align: center;
+}
+.showParticipant{
+    margin: auto;
+    margin-top: 50px;
+
+}.gridParticipant{
+     border: 1px  solid darkgoldenrod;
+ }
+.titreGridParticipant{
+    background-color: darkgoldenrod;
+    color: black;
+    padding: -10px;
+}
+.contenuGridParticipant{
+    background-color: #26495c;
+    border: 0.2px  solid darkgoldenrod;
+    color: darkgoldenrod;
+}
+.infosSortie div{
+    text-align: right;
+}
+.infosSortie{
+    margin-top: 50px;
+}
+.aucunParticipant{
+    font-size: medium;
+    margin: auto;
+    margin-top: 50px;
+    font-weight: bold;
 }
