@@ -87,12 +87,12 @@ class CampusController extends AbstractController
     }
 
 
-
     /**
      * @IsGranted ("ROLE_ADMIN")
      * @Route ("/admin/modif_campus", name="modifCampus")
      * @param Request $request
      * @param EntityManagerInterface $entityManager
+     * @param SerializerInterface $serializer
      * @param CampusRepository $campusRepository
      * @return Response
      */
@@ -119,7 +119,7 @@ class CampusController extends AbstractController
             $entityManager->persist($campus);
             $entityManager->flush();
 
-            //Puis on le transforme en réponse Json pour affichage dynamique.
+            //Puis on informe la fonction JS du bon déroulé de l'update.
             $json = $serializer->serialize($campus, 'json');
 
             return  new JsonResponse($json, 200, [], true);
