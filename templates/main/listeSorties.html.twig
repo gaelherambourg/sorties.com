@@ -54,7 +54,6 @@
                 </div>
                 <div class="col-4" id="ValidationForm">
                     <h4>Nous sommes le :{{ "now"|date("d/m/Y H:i:s") }}</h4>
-                    <h4>Bonjour {{ app.user.pseudo }}</h4>
                     <div id="btnRechercher">
                         {{ form_row(selection_form.submit)}}
                     </div>
