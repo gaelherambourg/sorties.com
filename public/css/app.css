@@ -203,6 +203,11 @@ input[type="checkbox"]:checked + label::before {
     border: 1px solid darkgoldenrod;
 }
 
+#search_campus_recherche:hover {
+    background-color: darkgoldenrod;
+    color: white;
+}
+
 #search_campus_recherche:focus{
     background-color: #26495c;
     color: white;
