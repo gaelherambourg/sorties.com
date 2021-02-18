@@ -47,12 +47,27 @@ function annulerSortie(){
 
 function chargementLieuVille(){
 
-    let idVilleSelect = $("#idVilleSelect").attr("data");
-    console.log(idVilleSelect);
-    $("#form_sortie_Ville option[value=" + idVilleSelect + "]").prop("selected", true);
+    let selVal = $("#idVilleSelect").attr("data");
+    $("#form_sortie_lieux_no_lieu").empty();
+    console.log(selVal);
+    $("#form_sortie_Ville option[value=" + selVal + "]").prop("selected", true);
     $("#form_sortie_Rue").prop('disabled', true);
     $("#form_sortie_Latitude").prop('disabled', true);
     $("#form_sortie_Longitude").prop('disabled', true);
+
+    ajax($(".divLieu").attr("data-path")+selVal, function (){
+        // console.log(this.responseText);
+        let lieux = JSON.parse(this.responseText);
+        console.log(lieux);
+        for (let i=1; i<lieux.length;i++ ){
+            console.log(lieux[i]);
+            $("#form_sortie_lieux_no_lieu").append('<option value="'+lieux[i].id+'">'+lieux[i].nom+'</option>');
+
+        }
+        $("#form_sortie_lieux_no_lieu").append('<option value="'+lieux[0].id+'">'+lieux[0].nom+'</option>');
+        $("#form_sortie_lieux_no_lieu option[value=" + lieux[0].id + "]").prop("selected", true);
+
+    })
 
 }
 
@@ -82,8 +97,22 @@ function ajoutLieuAjax(){
         })
             .done(function (Response){
                 console.log(Response);
-                console.log("tutu");
                 let lieu = Response;
+                $("#form_sortie_lieux_no_lieu").empty();
+
+                ajax($(".divLieu").attr("data-path")+idVille, function (){
+                    // console.log(this.responseText);
+                    let lieux = JSON.parse(this.responseText);
+                    console.log(lieux);
+                    for (let i=0; i<lieux.length;i++ ){
+                        console.log(lieux[i]);
+                        if(lieux[i].id !== lieu.id)
+                        {
+                            $("#form_sortie_lieux_no_lieu").append('<option value="'+lieux[i].id+'">'+lieux[i].nom+'</option>');
+                        }
+                    }
+                })
+
                 $("#form_sortie_lieux_no_lieu").append('<option value="'+lieu.id+'">'+lieu.nom+'</option>');
                 $("#form_sortie_lieux_no_lieu option[value=" + lieu.id + "]").prop("selected", true);
                 $("#form_sortie_Rue").val(lieu.rue);

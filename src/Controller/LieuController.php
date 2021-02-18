@@ -50,6 +50,7 @@ class LieuController extends AbstractController
         return new JsonResponse($json, 200, [], true);
     }
 
+
     /**
      * @Route("/lieu/ajout_Lieu", name="ajout_lieu", methods={"POST"})
      */
