@@ -33,7 +33,7 @@ function cliqueSurBoutonModifier(){
                 let ville = Response
                 $('#ville_form_nom').val(ville.nom);
                 $('#ville_form_codePostal').val(ville.codePostal);
-                $('.listVille').append('<button data-v="'+ville.id+'" id="modifVille">Enregistrer</button>')
+                $('.listVille').append('<button class="btn btn-primary" data-v="'+ville.id+'" id="modifVille">Modifier la ville</button>')
             })
     })
 
@@ -138,7 +138,7 @@ function cliqueListeRecherche(){
                 let ville = Response
                 $('#ville_form_nom').val(ville.nom);
                 $('#ville_form_codePostal').val(ville.codePostal);
-                $('.listVille').append('<button data-v="'+ville.id+'" id="modifVille">Enregistrer</button>')
+                $('.listVille').append('<button class="btn btn-primary" data-v="'+ville.id+'" id="modifVille">Modifier la ville</button>')
             })
     })
 }
