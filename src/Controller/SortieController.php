@@ -92,8 +92,6 @@ class SortieController extends AbstractController
         ]);
     }
 
-
-
     /**
      * @Route("/sortie/modifier/{id}", name="sortie_modif")
      */
