@@ -28,8 +28,7 @@
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
         <link  rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
         <link rel="stylesheet" href="{{ asset('css/app.css') }}">
-        <!--<link rel="icon" href="{{ asset('img/Favicon.png') }}">-->
-        <link rel="icon" href="{{ asset('img/Favison-S.png') }}">
+        <link rel="icon" href="{{ asset('img/Favicon_ballon.png') }}">
         {% block stylesheets %}{% endblock %}
 
 
@@ -43,23 +42,27 @@
             <div class="navbar-collapse collapse w-100 order-1 order-md-0 dual-collapse2">
                 {% if app.user %}
                     <ul class="navbar-nav mr-auto">
-                        {% if 'ROLE_ADMIN' in app.user.roles %}
-                            <li class="nav-item active">
-                                <a href="{{ path('liste_ville') }}" class="nav-link" title="Villes">Villes</a>
-                            </li>
-                        {% endif %}
                         <li class="nav-item active">
                             <a href="{{ path('AccueilSorties') }}" class="nav-link" title="Accueil">Accueil</a>
                         </li>
                         <li class="nav-item active">
                             <a href="{{ path('modif_profil') }}" class="nav-link" title="Voir le détail de mon profil">Mon profil</a>
                         </li>
+                        {% if 'ROLE_ADMIN' in app.user.roles %}
+                        <li class="nav-item active">
+                            <a href="{{ path('liste_ville') }}" class="nav-link" title="Villes">Villes</a>
+                        </li>
+                        <li class="nav-item active">
+                            <a href="{{ path('campus') }}" class="nav-link" title="Campus">Campus</a>
+                        </li>
+                        {% endif %}
                     </ul>
                 {% endif %}
             </div>
             <div class="mx-auto order-0">
                 <a class="navbar-brand mx-auto" href="{{ path('AccueilSorties') }}">
-                    <img src="{{ asset('img/logo-final-transp.png') }}" alt="LOGO Sortir.com">
+                    <img src="{{ asset('img/Logo_plage.png') }}" alt="LOGO Sortir.com"
+                    id="logo">
                 </a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".dual-collapse2">
                     <span class="navbar-toggler-icon"></span>
@@ -68,11 +71,23 @@
             <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
                 {% if app.user %}
                     <ul class="navbar-nav ml-auto">
-                        {# <li class="nav-item active">
-                <a class="nav-link">Bonjour, {{app.user.pseudo}}</a>
-            </li>
-                        #}
                         <li class="nav-item active">
+                            <a class="nav-link" id="icon-li">
+                                {% if app.user.nomPhoto %}
+                                    <img src="img/icon/{{ app.user.nomPhoto }}" alt="" id="icon">
+                                {% endif %}
+                                </a>
+                        </li>
+
+
+                        <li class="nav-item active">
+                            <a class="nav-link" id="bienvenue">
+                                Bievenue, {{app.user.pseudo}}
+                            </a>
+                        </li>
+
+
+                        <li class="nav-item active" id="deconnecter">
 
                             <button type="button" class="nav-link disconnectBtn" title="Déconnection"
                             data-toggle="modal" data-target="#disconnect" data-backdop="false">Se déconnecter</button>

@@ -16,6 +16,7 @@ header{
     width: 100%;
     position: fixed;
     z-index: 1;
+    height: 145px;
 }
 
 #page{
@@ -76,6 +77,15 @@ h1{
     margin: 0;
     padding: 0;
 }
+
+#logo{
+    display: flex;
+    margin-top: 6px;
+}
+
+#icon{
+}
+
 
 /* ELEMENTS DU MAIN */
 
@@ -215,7 +225,7 @@ input[type="checkbox"]:checked + label::before {
 
 
 #form_profil_photo{
-    width: auto;
+    width: inherit;
     border-radius: .25rem;
     border: 1px solid darkgoldenrod;
     padding: .375rem .75rem;
