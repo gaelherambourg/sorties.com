@@ -96,6 +96,10 @@ class SortieRepository extends ServiceEntityRepository
                 ->setParameter('fin', $search->getDatefin());
         }
 
+        $qb = $qb
+            ->addOrderBy('s.etats_no_etat', 'ASC')
+            ->addOrderBy('s.datedebut', 'ASC');
+
 
         $query = $qb->getQuery();
         return $query->getResult();
