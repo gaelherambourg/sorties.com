@@ -80,6 +80,14 @@ class ParticipantController extends AbstractController
                     ->bestFit(200, 200)
                     //et la sauvegarde dans un répertoire de public/img
                     ->toFile($uploadDir . "small/" .$nouveauNomPhoto );
+
+                $icon = new SimpleImage();
+                //retrouve l'image à transformer en miniature
+                $icon->fromFile($uploadDir . $nouveauNomPhoto)
+                    //la redimensionne au plus grand dans une miniature de 32x32
+                    ->bestFit(40, 40)
+                    //et la sauvegarde dans un répertoire de public/img
+                    ->toFile($uploadDir . "icon/" .$nouveauNomPhoto );
             }
 
 
