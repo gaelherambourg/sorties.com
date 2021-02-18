@@ -18,9 +18,9 @@ class FormAnnulationSortieType extends AbstractType
             ->add('descriptioninfos',TextareaType::class,[
                'label' => 'Motif :'
            ])
-            ->add('Enregistrer', SubmitType::class,  [
-                "attr"=>["class"=>"btnAnnulationEnregistrer"]
-                ])
+           // ->add('Enregistrer', SubmitType::class,  [
+            //  "attr"=>["class"=>"btnAnnulationEnregistrer"]
+            //    ])
 
         ;
     }

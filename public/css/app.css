@@ -79,6 +79,10 @@ h1{
 
 /* ELEMENTS DU MAIN */
 
+.back{
+    text-align: center;
+}
+
 .affichProfil{
     text-align: center;
 }
@@ -125,6 +129,18 @@ input[type="checkbox"]:checked + label::before {
 
 /* ELEMENTS DE FORMULAIRE */
 
+.tabCase{
+    padding: 0 10px;
+}
+
+.campusForm{
+    text-align: center
+}
+
+.champSearchCampus, .btnSearchCampus {
+    display: inline-block;
+}
+
 .border{
     border: 1px solid darkgoldenrod !important;
 }
@@ -146,6 +162,57 @@ input[type="checkbox"]:checked + label::before {
 .form-group>input, .form-group>select, .form-control{
     border: 1px solid darkgoldenrod;
 }
+
+#form_login>input:hover, #form_login>select:hover{
+    background-color: darkgoldenrod;
+    color: white;
+}
+
+#form_login>input:focus, #form_login>select:focus{
+    background-color: #26495c;
+    color: white;
+}
+
+.form-group>input:hover, .form-group>select:hover{
+    background-color: darkgoldenrod;
+    color: white;
+}
+
+.form-group>input:focus, .form-group>select:focus{
+    background-color: #26495c;
+    color: white;
+}
+
+#registration_form_photo:focus{
+    background-color: darkgoldenrod;
+    color: white;
+}
+
+#registration_form_photo:hover{
+    background-color: darkgoldenrod;
+    color: white;
+}
+
+#registration_form_photo:focus{
+    background-color: #26495c;
+    color: white;
+}
+
+#search_campus_recherche{
+    border-radius: .25rem;
+    border: 1px solid darkgoldenrod;
+}
+
+#search_campus_recherche:hover {
+    background-color: darkgoldenrod;
+    color: white;
+}
+
+#search_campus_recherche:focus{
+    background-color: #26495c;
+    color: white;
+}
+
 
 #form_profil_photo{
     width: auto;
@@ -227,6 +294,14 @@ footer{
 .btn:hover{
     color: white;
     background-color: #26495c;
+}
+
+#search_campus_rechercher{
+    vertical-align: unset;
+}
+
+#campus_form_Ajouter{
+    margin-bottom: 21px;
 }
 
 .modifBtn{
@@ -445,4 +520,17 @@ h4{
 
 .erreur{
     color: tomato;
+}
+.error{
+    color: tomato;
+}
+
+/*page annulation*/
+
+#formAnnulation{
+    text-align: center;
+}
+
+#motifTexte{
+    margin-top: 30px;
 }

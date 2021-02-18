@@ -17,6 +17,16 @@ namespace App\Services;
 
        }
 
+       public function annulationSortieEnCours($idEtatSortie)
+       {
+           $message=null;
+           if($idEtatSortie == 4){
+               $message="Vous ne pouvez pas annuler une sortie en cours";
+           }
+           return $message;
+       }
+
+
 
 
     }

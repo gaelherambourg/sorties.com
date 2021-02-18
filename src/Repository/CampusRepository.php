@@ -19,6 +19,17 @@ class CampusRepository extends ServiceEntityRepository
         parent::__construct($registry, Campus::class);
     }
 
+    public function search($rechercheUser)
+    {
+        //Recherche de la saisie formulaire campus en BDD
+        $queryBuilder = $this->createQueryBuilder('c')
+                        ->andWhere('c.nom LIKE :ru')
+                        ->setParameter(':ru', '%'.$rechercheUser.'%');
+        return $queryBuilder->getQuery()->getResult();
+
+
+    }
+
     // /**
     //  * @return Campus[] Returns an array of Campus objects
     //  */
@@ -47,4 +58,5 @@ class CampusRepository extends ServiceEntityRepository
         ;
     }
     */
+
 }

@@ -52,13 +52,20 @@
         <div class="col-md-2"></div>
 
         <div class="modifBtn">
-            <button type="submit" class="btn" formnovalidate>Enregistrer les modifications</button>
-            <button type="reset" class="btn">Annuler les modifications</button>
+            <button type="submit" class="btn" formnovalidate><i class="fa fa-check"></i> Enregistrer les modifications</button>
+            <button type="reset" class="btn"><i class="fa fa-times"></i> Annuler les modifications</button>
         </div>
 
             {{ form_end(profil_form) }}
 
 
+
+    </div>
+
+    <div class="back">
+        <a href="{{ path('AccueilSorties') }}">
+            <button class="btn"><i class="fa fa-arrow-left"></i> Retour</button>
+        </a>
     </div>
 
 {% endblock %}

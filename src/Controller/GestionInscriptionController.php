@@ -68,14 +68,17 @@ class GestionInscriptionController extends AbstractController
             $entityManager->flush();
 
             //ajout d'un message de confirmation
-            $this->addFlash('succes', 'Votre inscription a bien été enregistrée');
+            $this->addFlash('success', 'Votre inscription a bien été enregistrée');
 
             return $this->redirectToRoute('AccueilSorties');
         }
         else{
-            return $this->redirectToRoute('AccueilSorties',[
-                'tab'=>$tabErreurs
-            ]);
+
+            foreach ($tabErreurs as $erreur){
+                $this->addFlash('error', $erreur);
+            }
+
+            return $this->redirectToRoute('AccueilSorties');
         }
 
 
@@ -113,14 +116,17 @@ class GestionInscriptionController extends AbstractController
             $entityManager->flush();
 
             //ajout d'un message de confirmation
-            $this->addFlash('succes', 'Votre désistement a bien été enregistré');
+            $this->addFlash('success', 'Votre désistement a bien été enregistré');
 
             return $this->redirectToRoute('AccueilSorties');
         }
         else{
-            return $this->redirectToRoute('AccueilSorties',[
-                'tab'=>$tabErreurs
-            ]);
+
+            foreach ($tabErreurs as $erreur){
+                $this->addFlash('error', $erreur);
+            }
+
+            return $this->redirectToRoute('AccueilSorties');
         }
 
 

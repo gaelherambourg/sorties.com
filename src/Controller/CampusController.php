@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Campus;
 use App\Form\CampusFormType;
+use App\Form\SearchCampusType;
 use App\Repository\CampusRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
@@ -16,6 +17,7 @@ use Symfony\Component\Serializer\SerializerInterface;
 
 class CampusController extends AbstractController
 {
+
     /**
      * @IsGranted ("ROLE_ADMIN")
      * @Route("/admin/campus", name="campus")
@@ -24,22 +26,47 @@ class CampusController extends AbstractController
                                  EntityManagerInterface $entityManager,
                                  CampusRepository $campusRepository): Response
     {
-        //Instanciation de l'entité Campus
+        //Création du formulaire de recherche
+        $form = $this->createForm(SearchCampusType::class);
+        $form->handleRequest($request);
+
+
+
+        //Sinon, instanciation de l'entité Campus
         $campus = new Campus();
 
-        //Liste de tous les campus en base
-        $tousCampus = $campusRepository->findAll();
+
+
 
         //création d'une ligne formulaire dans le tableau, pour Ajout nouveau campus
         $form_campus = $this->createForm(CampusFormType::class, $campus);
-
         //Récupération des données du tableau-form pour hydrater la nouvelle instanciation
         $form_campus->handleRequest($request);
 
-        //Si soumission d'un formulaire valide :
+        //Si validation du formulaire de recherche, récupération des campus en BDD
+        if($form->isSubmitted() && $form->isValid())
+        {
+            $rechercheUser = $form->get('recherche')->getData();
+
+            $campusRecherches =$campusRepository->search($rechercheUser);
+
+            return $this->render('campus/gererCampus.html.twig',[
+                'tousCampus'=> $campusRecherches,
+                'baseVide'=> 'Aucun campus en base ne correspond à votre recherche.',
+                'form_searchC' => $form->createView(),
+                'form_campus' => $form_campus->createView(),
+            ]);
+        }
+
+
+
+        //et on liste tous les campus en base
+        $tousCampus = $campusRepository->findAll();
+
+        //Si soumission du formulaire d'Ajout valide :
         if($form_campus->isSubmitted() && $form_campus->isValid()) {
 
-            //le nouveau campus crée en BDD,
+            //le nouveau campus est crée en BDD,
             $entityManager->persist($campus);
             $entityManager->flush();
 
@@ -53,9 +80,13 @@ class CampusController extends AbstractController
 
         return $this->render('campus/gererCampus.html.twig', [
             'form_campus' => $form_campus->createView(),
-            'tousCampus' => $tousCampus
+            'tousCampus' => $tousCampus,
+            'form_searchC' => $form->createView(),
+            'baseVide' => 'Il n\'y a aucun campus en base.'
         ]);
     }
+
+
 
     /**
      * @IsGranted ("ROLE_ADMIN")

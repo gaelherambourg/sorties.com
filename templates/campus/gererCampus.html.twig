@@ -1,15 +1,32 @@
 {% extends 'base.html.twig' %}
 
+
 {% block title %}ADMIN - Gérer les campus{% endblock %}
 
 
 
+{% block container %}campusForm{% endblock %}
 {% block body %}
     <h1>Gérer les campus</h1>
 
+    <h3>Filtrer les sites</h3>
+
+
     {% if tousCampus is not empty %}
+
+        {{ form_start(form_searchC) }}
+        <div class="champSearchCampus">
+            {{ form_row(form_searchC.recherche) }}
+        </div>
+        <div class="btnSearchCampus">
+            {{ form_row(form_searchC.rechercher) }}
+        </div>
+        {{ form_end(form_searchC) }}
+
+
+        <div class="campusForm">
         <div data-path="{{ path('supprCampus') }}" class="supprimerCampus">
-            <table class="tabCampus">
+            <table id="tabCampus" class="tabCampus">
                 <thead>
                 <tr>
                     <th>Campus</th>
@@ -19,9 +36,9 @@
 
                 <tbody>
                 {% for campus in tousCampus%}
-                    <tr>
+                    <tr class="tabRow">
                         <td id="{{ campus.id }}">{{ campus.nom }}</td>
-                        <td>
+                        <td class="tabCase">
                             <button data-nom="{{ campus.nom }}" data-id="{{ campus.id }}"
                                     class="btn modifCampus"
                                     data-toggle="modal" data-target="#modifCampus">Modifier</button>
@@ -41,12 +58,50 @@
             </table>
             <input class="urlCampusModif" type="hidden" data-path="{{ path('modifCampus') }}">
         </div>
+        </div>
     {% else %}
         <div>
-            Il n'y a aucun campus en base.
+            {{ baseVide}}
         </div>
-    {% endif %}
 
+        {{ form_start(form_searchC) }}
+        <div class="champSearchCampus">
+            {{ form_row(form_searchC.recherche) }}
+        </div>
+        <div class="btnSearchCampus">
+            {{ form_row(form_searchC.rechercher) }}
+        </div>
+        {{ form_end(form_searchC) }}
+
+        <div class="campusForm">
+            <div data-path="{{ path('supprCampus') }}" class="supprimerCampus">
+                <table id="tabCampus" class="tabCampus">
+                    <thead>
+                        <tr>
+                            <th>Campus</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+
+                        <tr>
+                            {{ form_start(form_campus) }}
+                            <td>{{ form_row(form_campus.nom) }}</td>
+                            <td>{{ form_row(form_campus.Ajouter) }}</td>
+                            {{ form_end(form_campus) }}
+                        </tr>
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+
+
+
+
+    {% endif %}
 
 
 
@@ -97,5 +152,6 @@
 
 
 {% block javascripts %}
+
     <script type="text/javascript" src="{{ asset('js/campus.js') }}"></script>
 {% endblock %}
