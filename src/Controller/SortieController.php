@@ -14,6 +14,7 @@ use App\Repository\EtatRepository;
 use App\Repository\LieuRepository;
 use App\Repository\SortieRepository;
 use App\Services\AnnulationValidator;
+use App\Services\PublicationValidator;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -292,5 +293,58 @@ class SortieController extends AbstractController
     ]);
     }
 
+    /**
+     * @Route("/sortie/publication/{id}", name="sortie_publication")
+     */
+    public function publicationSortie(PublicationValidator $publicationValidator,
+                                      EntityManagerInterface $entityManager,
+                                      EtatRepository $etatRepository,
+                                      Request $request)
+    {
+
+        $id= $request->get('id');
+        //on récupère la sortie à annuler
+        $sortie = new Sortie();
+        $sortie = $entityManager->find(Sortie::class,$id);
+
+        //récupération de l'utilisateur connecté
+        $idUser = $this->getUser()->getId();
+        //recuperation de l'id de l'organisateur de la sortie
+        $idOrg = $sortie->getOrganisateur()->getId();
+
+        //on fait appel au service de validation
+        $message=null;
+        $tabErreurs = array();
+        $message = $publicationValidator->validationPublication($idOrg,$idUser);
+
+        if($message){
+            $tabErreurs[]=$message;
+        }
+
+        if(empty($tabErreurs)){
+
+            $etat = new Etat();
+            $etat = $etatRepository->find(2);
+
+            $sortie->setEtatsNoEtat($etat);
+
+            $entityManager->persist($sortie);
+            $entityManager->flush();
+
+            //ajout d'un message de confirmation
+            $this->addFlash('success', "Votre sortie est publiée");
+
+            //redirection vers la page d'accueil
+            return $this->redirectToRoute('AccueilSorties');
+
+        }
+        else{
+            foreach ($tabErreurs as $erreur){
+                $this->addFlash('error', $erreur);
+            }
+            //redirection vers la page d'accueil
+            return $this->redirectToRoute('AccueilSorties');
+        }
+    }
 
 }

@@ -28,10 +28,14 @@
                 <div>
 
                     <button type="submit" class="btn">Enregistrer</button>
-                    <a href="{{ path('AccueilSorties') }}" title="annuler"id="btnannulation"/><button class="btn" type="reset">Annuler</button></a>
+
                 </div>
 
+
             {{ form_end(annulation_form) }}
+        </div>
+        <div>
+            <a href="{{ path('AccueilSorties') }}" title="annuler"id="btnannulation"/><button class="btn" type="reset">Annuler</button></a>
         </div>
 
     </div>

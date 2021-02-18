@@ -177,7 +177,7 @@
                             <td><a href="{{ path("affiche_profil", {id:sortie.getOrganisateur().id} )}}" title="détails de l'utilisateur">{{ sortie.getOrganisateur().pseudo }}</a></td>
                             <td><a href="{{ path("sortie_afficher", {id:sortie.id} )}}" title="détails de la sortie">{{ titre }}</a>
                                 <a href="{{ path("sortie_modif", {id:sortie.id} )}}" title="modifier la sortie">{{ titreModif }}</a>
-                                <a href="{{ path("sortie_modif", {id:sortie.id} )}}" title="publier la sortie">{{ titrePublication }}</a>
+                                <a href="{{ path("sortie_publication", {id:sortie.id} )}}" title="publier la sortie">{{ titrePublication }}</a>
                                 <a href="{{ path(''~routeInscription~'', {id:sortie.id} )}}" title="inscription/désistement">{{ titreInscription }}</a>
                                 <a href="{{ path("sortie_annulation", {id:sortie.id} )}}" title="annulation">{{ titreAnnulation }}</a>
                             </td>
