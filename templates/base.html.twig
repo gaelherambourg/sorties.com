@@ -28,8 +28,7 @@
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
         <link  rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
         <link rel="stylesheet" href="{{ asset('css/app.css') }}">
-        <!--<link rel="icon" href="{{ asset('img/Favicon.png') }}">-->
-        <link rel="icon" href="{{ asset('img/Favison-S.png') }}">
+        <link rel="icon" href="{{ asset('img/Favicon_ballon.png') }}">
         {% block stylesheets %}{% endblock %}
 
 
@@ -62,7 +61,8 @@
             </div>
             <div class="mx-auto order-0">
                 <a class="navbar-brand mx-auto" href="{{ path('AccueilSorties') }}">
-                    <img src="{{ asset('img/logo-final-transp.png') }}" alt="LOGO Sortir.com">
+                    <img src="{{ asset('img/Logo_plage.png') }}" alt="LOGO Sortir.com"
+                    id="logo">
                 </a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".dual-collapse2">
                     <span class="navbar-toggler-icon"></span>
@@ -72,12 +72,18 @@
                 {% if app.user %}
                     <ul class="navbar-nav ml-auto">
                         <li class="nav-item active">
-                            <a class="nav-link" id="bienvenue">
+                            <a class="nav-link" id="icon-li">
                                 {% if app.user.nomPhoto %}
-                                <img src="img/icon/{{ app.user.nomPhoto }}" alt="Icone de profil" id="icon">
+                                    <img src="img/icon/{{ app.user.nomPhoto }}" alt="" id="icon">
                                 {% endif %}
-                                Bievenue, {{app.user.pseudo}}   </a>
+                                </a>
+                        </li>
 
+
+                        <li class="nav-item active">
+                            <a class="nav-link" id="bienvenue">
+                                Bievenue, {{app.user.pseudo}}
+                            </a>
                         </li>
 
                         {% endif %}
