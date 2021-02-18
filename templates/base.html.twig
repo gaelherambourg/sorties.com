@@ -61,7 +61,7 @@
             </div>
             <div class="mx-auto order-0">
                 <a class="navbar-brand mx-auto" href="{{ path('AccueilSorties') }}">
-                    <img src="{{ asset('img/Logo_plage.png') }}" alt="LOGO Sortir.com"
+                    <img src="{{ asset('img/Logo_ballon.png') }}" alt="LOGO Sortir.com"
                     id="logo">
                 </a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".dual-collapse2">
@@ -76,16 +76,17 @@
                                 {% if app.user.nomPhoto %}
                                     <img src="img/icon/{{ app.user.nomPhoto }}" alt="" id="icon">
                                 {% endif %}
-                                </a>
+                                Bonjour, {{app.user.pseudo}}
+                            </a>
                         </li>
 
-
+                        {#
                         <li class="nav-item active">
                             <a class="nav-link" id="bienvenue">
                                 Bievenue, {{app.user.pseudo}}
                             </a>
                         </li>
-
+                        #}
 
                         <li class="nav-item active" id="deconnecter">
 
