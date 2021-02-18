@@ -34,8 +34,8 @@ class SearchFormType extends AbstractType
                 'choices'=>
                     [
                         'Tous' =>0,
-                        'Rennes'=>1,
-                        'Nantes'=>2,
+                        'Nantes'=>1,
+                        'Rennes'=>2,
                         'Quimper'=>3,
                         'Niort'=>4
 
