@@ -45,7 +45,7 @@ function cliqueSurBoutonModifier(){
 
 function modifierVilleAjax(){
 
-    $('.supprVille').unbind().on('click', '#modifVille', function (){
+    $('.supprimerVille').unbind().on('click', '#modifVille', function (){
         let idVille = $(this).attr("data-v");
         let nomVille = $('#ville_form_nom').val();
         let cpVille = $('#ville_form_codePostal').val();
