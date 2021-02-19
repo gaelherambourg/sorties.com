@@ -53,10 +53,10 @@
                     {{ form_row(selection_form.passees)}}
                 </div>
                 <div class="col-4" id="ValidationForm">
-                    <h4>Nous sommes le :{{ "now"|date("d/m/Y H:i:s") }}</h4>
                     <div id="btnRechercher">
                         {{ form_row(selection_form.submit)}}
                     </div>
+                    <h4>Nous sommes le :{{ "now"|date("d/m/Y H:i:s") }}</h4>
                 </div>
                 {{ form_end(selection_form) }}
             </div>
@@ -188,7 +188,7 @@
 
             {% endif %}
         </div>
-        <div>
+        <div id="btnCreerSortie">
             <a href="{{ path('sortie_creation') }}" title="View pic detail"id="btnCreeListe"/><button class="btn">Créer une sortie</button></a>
         </div>
 
