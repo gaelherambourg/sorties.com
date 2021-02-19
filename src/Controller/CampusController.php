@@ -71,7 +71,7 @@ class CampusController extends AbstractController
             $entityManager->flush();
 
             //et un message Flash en informe l'utilisateur,
-            $this->addFlash('success', 'Le campus a bien été ajoutée en base.');
+            $this->addFlash('success', 'Le campus a bien été ajouté en base.');
 
             //sur la même page actualisée où il est redirigé.
             return $this->redirectToRoute('campus');
