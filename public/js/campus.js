@@ -34,13 +34,14 @@ $(document).ready(function () {
             .done(function (Response) {
                 console.log(Response);
                 console.log(Response.status);
-                let ligneASupprimer= document.getElementById(idCampus)
-                let boutonslies = ligneASupprimer.nextSibling.nextSibling || ligneASupprimer.nextElementSibling.nextElementSibling
-                console.log(boutonslies)
-                if (Response.status === "deleted"){
-                    $(ligneASupprimer).remove();
-                    $(boutonslies).remove();
 
+                let caseAsuppr = document.getElementById(idCampus)
+
+                let ligneASupprimer = caseAsuppr.closest('tr')
+
+                console.log(ligneASupprimer)
+                if (Response.status === "deleted"){
+                    ligneASupprimer.remove();
             }
         })
         //Sinon, un message d'erreur est transmis à l'utilisateur.
