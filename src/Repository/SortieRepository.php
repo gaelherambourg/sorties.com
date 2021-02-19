@@ -72,7 +72,7 @@ class SortieRepository extends ServiceEntityRepository
 
         if($search->isInscrit()){
             $qb = $qb
-                ->andWhere('ps.id = :participant')
+                ->andWhere(':participant MEMBER OF s.participants')
                 ->setParameter('participant', "{$id}");
         }
 
@@ -107,16 +107,6 @@ class SortieRepository extends ServiceEntityRepository
     }
 
 
-    public function participantsSortie()
-    {
-        $em = $this->getEntityManager();
-        $dql = "SELECT s FROM App\Entity\Sortie s
-                LEFT JOIN s.participants ps";
-
-        $query = $em->createQuery($dql);
-        $result = $query->getResult();
-        return $result;
-    }
 
 
 

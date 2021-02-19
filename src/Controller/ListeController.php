@@ -54,19 +54,6 @@ class ListeController extends AbstractController
         $date = (new \DateTime('now'));
         dump($date);
 
-        //requete2
-        $tabNbInscrits = array();
-        $sorties2 = $sortiesRepo->participantsSortie();
-        //$tabId = array();
-        foreach($sorties2 as $sortie){
-            $idSortie= $sortie->getId();
-            // $tabId = $sortie->getId();
-            $participants = $sortie->getParticipants();
-            $nbInscrits = count($participants);
-            //dump($nbInscrits);
-            $tabNbInscrits[$idSortie]=$nbInscrits;
-
-        }
 
 
         //requete. On peut passer en parametre les filtres reçus du form + id user + date actuelle
@@ -79,7 +66,6 @@ class ListeController extends AbstractController
 
         return $this ->render('main/listeSorties.html.twig', [
             "sorties" => $sorties,
-            //"tabNbInscrits"=>$tabNbInscrits,
             "participe" =>$participe,
             "tabErreurs"=>$tab2,
             "selection_form" => $form->createView()
