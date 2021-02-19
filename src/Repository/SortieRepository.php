@@ -107,10 +107,15 @@ class SortieRepository extends ServiceEntityRepository
     }
 
 
-    public function filtrerSorties()
+    public function participantsSortie()
     {
+        $em = $this->getEntityManager();
+        $dql = "SELECT s FROM App\Entity\Sortie s
+                LEFT JOIN s.participants ps";
 
-
+        $query = $em->createQuery($dql);
+        $result = $query->getResult();
+        return $result;
     }
 
 
