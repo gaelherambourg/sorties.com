@@ -138,9 +138,9 @@
 
                         {# filtre lien inscription selon date cloture #}
                         {# a decommenter à la fin des tests #}
-                      {#{% if sortie.datecloture|date("d/m/Y H:i:s") < dateJour %}
+                      {% if sortie.datecloture|date("d/m/Y H:i:s") < dateJour %}
                             {% set titreInscription = ""%}
-                        {% endif %}#}
+                        {% endif %}
 
                         {# filtre lien inscription selon etat sortie #}
                         {# a decommenter à la fin des tests #}
