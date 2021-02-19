@@ -1,8 +1,6 @@
 
 $(document).ready(function () {
 
-    ///supprimerCampus();
-
     suppressionCampus()
 
     supprCampusModal();
@@ -93,62 +91,6 @@ function modifierCampus(){
             })
     })
 }
-
-/*
-function modifierCampus(){
-    //Récupération de l'Id à modifier.
-    $('.modifCampus').unbind().click(function (event){
-        let idCampus = $(this).attr('data-campus')
-        let nomCampus = $('#form_campus_nom').val();
-
-        $.ajax({
-            url: $('.urlCampusModif').attr('data-path'),
-            data: {
-                'idCampus': idCampus,
-                'nomCampus': nomCampus
-            }
-        })
-            .done(function (Response) {
-                console.log(Response);
-                location.reload();
-            })
-    })
-}
-*/
-
-
-function supprimerCampus(){
-    //Requête Ajax pour la suppression dynamique d'un campus.
-    $('.supprCampus').unbind().click(function (event){
-        let idCampus = $(this).attr('data-id');
-        let ligneASupprimer = $(this).parent().parent();
-        console.log(idCampus);
-        console.log(ligneASupprimer);
-        $.ajax({
-            url : $('.supprimerCampus').attr('data-path'),
-            data : {
-                'idCampus' : idCampus
-            }
-        })
-            //En cas de succès de la requête, la ligne est enlevée dynamiquement du tableau.
-            .done(function (Response) {
-                console.log(Response);
-                console.log(Response.status);
-                if (Response.status === "deleted"){
-                    $(ligneASupprimer).remove();
-                    setTimeout(function(){
-                        $('.alert').fadeOut();}, 5);
-                }
-            })
-            //Sinon, un message d'erreur est transmis à l'utilisateur.
-            .fail(function (Fail){
-                //Impossible de supprimer ce campus.
-                $(".supprimerCampus").prepend("<div class='error'>Impossible de supprimer ce campus, lié à un ou plusieurs participants à supprimer en premier lieu.</div>");
-            })
-
-    })
-}
-
 
 
 
