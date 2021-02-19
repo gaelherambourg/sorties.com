@@ -15,7 +15,7 @@
                        placeholder="Rechercher une ville">
                 <div class="ville-list"></div>
             </div>
-            <div data-path="{{ path('suppr_ville') }}" class="supprVille">
+            <div data-path="{{ path('suppr_ville') }}" class="supprimerVille">
                 <table rules="all" class="listVille">
                     <thead>
                     <tr>
@@ -26,11 +26,16 @@
                     </thead>
                     {% for ville in villes %}
                         <tr align="center">
-                            <td class="tdNomVille">{{ ville.nom }}</td>
+                            <td class="tdNomVille" id="{{ ville.id }}">{{ ville.nom }}</td>
                             <td class="tdCodePostalVille">{{ ville.codePostal }}</td>
                             <td>
                                 <button data-ville="{{ ville.id }}" class="modifier btn">Modifier</button>
-                                <button data-ville="{{ ville.id }}" class="supprimer btn">Supprimer</button>
+{#                                <button data-ville="{{ ville.id }}" class="supprimer btn">Supprimer</button>#}
+
+                                <button data-nom="{{ ville.nom }}" data-id="{{ ville.id }}" class="btn supprVille" title="Suppression de la ville"
+                                        data-toggle="modal" data-target="#supprVille"
+                                >Supprimer
+                                </button>
                             </td>
                         </tr>
                     {% endfor %}
@@ -63,6 +68,28 @@
         <a href="{{ path('AccueilSorties') }}">
             <button class="btn"><i class="fa fa-arrow-left"></i> Retour</button>
         </a>
+    </div>
+    <!-- Fenêtre pop-up de confirmation de suppression-->
+    <div class="modal fade" id="supprVille" tabindex="-1" role="dialog"
+         aria-labelledby="supprVilleLabel" aria-hidden="true" data-backdrop="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="supprVilleLabel">Supprimer la ville</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p style="visibility: hidden" id="idVilleASuppr"></p>
+                    Voulez-vous supprimer la ville : <a></a> ?
+                </div>
+                <div class="modal-footer">
+                    <button class="btn" data-dismiss="modal"><i class="fa fa-times"></i> Annuler</button>
+                    <button class="btn villeASuppr"><i class="fa fa-check"></i> Supprimer la ville</button>
+                </div>
+            </div>
+        </div>
     </div>
 {% endblock %}
 {% block javascripts %}

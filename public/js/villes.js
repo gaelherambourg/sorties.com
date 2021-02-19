@@ -3,7 +3,11 @@ $(document).ready(function () {
     setTimeout(function(){
         $('.alert').fadeOut();}, 4000);
 
-    supprVille();
+    // supprVille();
+
+    supprVilleModal();
+
+    suppressionVille();
 
     cliqueSurBoutonModifier()
 
@@ -93,32 +97,32 @@ function rechercheAjaxKeyup(){
 
 }
 
-function supprVille(){
-    $('.supprimer').unbind().click(function (event) {
-        let idVille = $(this).attr("data-ville");
-        let parentToRemove = $(this).parent().parent();
-        console.log(idVille);
-        $.ajax({
-
-            "url": $(".supprVille").attr("data-path"),
-            "data": {
-                "idVille": idVille
-            }
-        })
-            .done(function (Response) {
-                console.log(Response);
-                console.log(Response.status);
-                if (Response.status === "deleted"){
-                    $(parentToRemove).remove();
-                }
-            })
-            .fail(function (Fail){
-                console.log("titi");
-                //Impossible de supprimer cette ville
-                $(".supprVille").prepend("<div class='error'>Impossible de supprimer cette ville, elle est déjà rattachée à des lieux, supprimez les d'abord</div>");
-            })
-    })
-}
+// function supprVille(){
+//     $('.supprimer').unbind().click(function (event) {
+//         let idVille = $(this).attr("data-ville");
+//         let parentToRemove = $(this).parent().parent();
+//         console.log(idVille);
+//         $.ajax({
+//
+//             "url": $(".supprVille").attr("data-path"),
+//             "data": {
+//                 "idVille": idVille
+//             }
+//         })
+//             .done(function (Response) {
+//                 console.log(Response);
+//                 console.log(Response.status);
+//                 if (Response.status === "deleted"){
+//                     $(parentToRemove).remove();
+//                 }
+//             })
+//             .fail(function (Fail){
+//                 console.log("titi");
+//                 //Impossible de supprimer cette ville
+//                 $(".supprVille").prepend("<div class='error'>Impossible de supprimer cette ville, elle est déjà rattachée à des lieux, supprimez les d'abord</div>");
+//             })
+//     })
+// }
 
 function cliqueListeRecherche(){
     $('.containerVille').unbind().on('click', '.rechercheVille', function (event){
@@ -143,3 +147,56 @@ function cliqueListeRecherche(){
     })
 }
 
+function supprVilleModal(){
+    $('#supprVille').on('show.bs.modal', function (event){
+        let idVille = $(event.relatedTarget).data('id')
+        let nomVille = document.getElementById(idVille).innerText
+        let modal=$(this)
+        modal.find('.modal-body p').text(idVille)
+        console.log(modal.find('.modal-body p').text())
+        modal.find('.modal-body a').text(nomVille)
+
+
+    })
+}
+
+function suppressionVille(){
+    $('.villeASuppr').unbind().click(function (event){
+        console.log('oui?')
+        let idVille = $('#idVilleASuppr').text()
+        console.log(idVille)
+        $.ajax({
+            "url" : $(".supprimerVille").attr("data-path"),
+            "data": {
+                "idVille": idVille
+            }
+
+        })
+            //En cas de succès de la requête, la ligne est enlevée dynamiquement du tableau.
+            .done(function (Response) {
+                console.log(Response);
+                console.log(Response.status);
+                let ligneASupprimer= document.getElementById(idVille)
+                let boutonslies = ligneASupprimer.nextSibling.nextSibling || ligneASupprimer.nextElementSibling.nextElementSibling
+                let lignes = boutonslies.nextSibling.nextSibling || boutonslies.nextElementSibling.nextElementSibling
+                console.log(boutonslies)
+                if (Response.status === "deleted"){
+                    $(ligneASupprimer).remove();
+                    $(boutonslies).remove();
+                    $(lignes).remove();
+
+                }
+            })
+            //Sinon, un message d'erreur est transmis à l'utilisateur.
+            .fail(function (Fail){
+                //Impossible de supprimer ce campus.
+                $(".supprimerVille").prepend("<div class='error'>" +
+                    "Impossible de supprimer cette vilel, liée à un ou plusieurs lieu(x) à " +
+                    "supprimer en premier lieu.</div>")
+            })
+        $('#supprVille').modal('hide')
+        setTimeout(function(){
+            $('.alert').fadeOut();}, 5);
+
+    })
+}

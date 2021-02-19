@@ -58,35 +58,35 @@ class VilleController extends AbstractController
         ]);
     }
 
-    /**
-     * @IsGranted("ROLE_ADMIN")
-     * @Route("/admin/suppr_ville", name="suppr_ville")
-     */
-    public function SupprimerVille(Request $request,
-                                EntityManagerInterface $entityManager,
-                                VilleRepository $villeRepository): Response
-    {
-
-        $idVille = $request->get('idVille');
-
-        $ville = $entityManager->find(Ville::class, $idVille);
-
-        if (!empty($ville)){
-            try {
-                $entityManager->remove($ville);
-                $entityManager->flush();
-
-                return new JsonResponse([
-                    "status" => "deleted"
-                ], 200);
-            }catch (\Doctrine\DBAL\Exception $exception){
-                $erreur = $exception->getMessage();
-                return new JsonResponse([
-                    "status" => "impossible"
-                ], 400);
-            }
-        }
-    }
+//    /**
+//     * @IsGranted("ROLE_ADMIN")
+//     * @Route("/admin/suppr_ville", name="suppr_ville")
+//     */
+//    public function SupprimerVille(Request $request,
+//                                EntityManagerInterface $entityManager,
+//                                VilleRepository $villeRepository): Response
+//    {
+//
+//        $idVille = $request->get('idVille');
+//
+//        $ville = $entityManager->find(Ville::class, $idVille);
+//
+//        if (!empty($ville)){
+//            try {
+//                $entityManager->remove($ville);
+//                $entityManager->flush();
+//
+//                return new JsonResponse([
+//                    "status" => "deleted"
+//                ], 200);
+//            }catch (\Doctrine\DBAL\Exception $exception){
+//                $erreur = $exception->getMessage();
+//                return new JsonResponse([
+//                    "status" => "impossible"
+//                ], 400);
+//            }
+//        }
+//    }
 
     /**
      * @IsGranted("ROLE_ADMIN")
@@ -167,6 +167,42 @@ class VilleController extends AbstractController
         $json = $serializer->serialize($villes, 'json');
         //le true sert à spécifier que nos données sont déjà en JSON
         return new JsonResponse($json, 200, [], true);
+
+    }
+
+    /**
+     * @IsGranted ("ROLE_ADMIN")
+     * @Route ("/admin/suppr_ville", name="suppr_ville")
+     */
+    public function supprVille(Request $request,
+                                    EntityManagerInterface $entityManager,
+                                    VilleRepository $villeRepository): Response
+    {
+        //Récupération de l'ID passé à ville.js après clic sur le bouton Supprimer
+        $idVille = $request->get('idVille');
+
+        //Récupération de l'objet Ville que l'admin veut supprimer
+        $ville = $entityManager->find(Ville::class, $idVille);
+
+        //Si la ville a été trouvée, elle est supprimée de la BDD,
+        if (!empty($ville)){
+            try {
+                $entityManager->remove($ville);
+                $entityManager->flush();
+
+                //et un message de confirmation complète la requête AJAX.
+                return new JsonResponse([
+                    "status" => "deleted"
+                ], 200);
+
+                //En cas d'échec lors de l'accès à la BDD, la requête AJAX est déclarée impossible.
+            }catch (\Doctrine\DBAL\Exception $exception){
+                $erreur = $exception->getMessage();
+                return new JsonResponse([
+                    "status" => "impossible"
+                ], 400);
+            }
+        }
 
     }
 
