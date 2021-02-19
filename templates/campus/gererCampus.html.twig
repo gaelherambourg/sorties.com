@@ -1,5 +1,6 @@
 {% extends 'base.html.twig' %}
 
+{% block url %}../{% endblock %}
 
 {% block title %}ADMIN - Gérer les campus{% endblock %}
 
@@ -24,40 +25,43 @@
         {{ form_end(form_searchC) }}
 
 
-        <div class="campusForm">
-        <div data-path="{{ path('supprCampus') }}" class="supprimerCampus">
-            <table id="tabCampus" class="tabCampus">
-                <thead>
-                <tr>
-                    <th>Campus</th>
-                    <th>Actions</th>
-                </tr>
-                </thead>
 
-                <tbody>
-                {% for campus in tousCampus%}
-                    <tr class="tabRow">
-                        <td id="{{ campus.id }}">{{ campus.nom }}</td>
-                        <td class="tabCase">
-                            <button data-nom="{{ campus.nom }}" data-id="{{ campus.id }}"
-                                    class="btn modifCampus"
-                                    data-toggle="modal" data-target="#modifCampus">Modifier</button>
-                            <button data-campus="{{ campus.id }}" class="btn supprCampus" title="Suppression du campus"
-                                    {# data-toggle="modal" data-target="#supprCampus" #}
-                            >Supprimer</button>
-                        </td>
-                    </tr>
-                {% endfor %}
-                <tr>
-                    {{ form_start(form_campus) }}
-                    <td>{{ form_row(form_campus.nom) }}</td>
-                    <td>{{ form_row(form_campus.Ajouter) }}</td>
-                    {{ form_end(form_campus) }}
-                </tr>
-                </tbody>
-            </table>
-            <input class="urlCampusModif" type="hidden" data-path="{{ path('modifCampus') }}">
-        </div>
+        <div data-path="{{ path('supprCampus') }}" class="supprimerCampus">
+
+                <table id="tabCampus" class="tabCampus">
+                    <thead>
+                        <tr>
+                            <th>Campus</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        {% for campus in tousCampus%}
+                            <tr class="tabRow">
+                                <td id="{{ campus.id }}">{{ campus.nom }}</td>
+                                <td class="tabCase">
+                                    <button data-nom="{{ campus.nom }}" data-id="{{ campus.id }}"
+                                        class="btn modifCampus"
+                                        data-toggle="modal" data-target="#modifCampus">Modifier
+                                    </button>
+                                    <button data-nom="{{ campus.nom }}" data-id="{{ campus.id }}" class="btn supprCampus" title="Suppression du campus"
+                                        data-toggle="modal" data-target="#supprCampus"
+                                    >Supprimer
+                                    </button>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                            <tr>
+                                {{ form_start(form_campus) }}
+                                    <td>{{ form_row(form_campus.nom) }}</td>
+                                    <td>{{ form_row(form_campus.Ajouter) }}</td>
+                                {{ form_end(form_campus) }}
+                            </tr>
+                    </tbody>
+                </table>
+                    <input class="urlCampusModif" type="hidden" data-path="{{ path('modifCampus') }}">
+
         </div>
     {% else %}
         <div>
@@ -96,31 +100,7 @@
                 </table>
             </div>
         </div>
-
-
-
-
-
     {% endif %}
-
-
-
-
-
-
-
-
-
-
-    </tbody>
-
-
-
-
-    </table>
-
-
-
 
 
 
@@ -147,6 +127,30 @@
             </div>
         </div>
     </div>
+
+
+    <!-- Fenêtre pop-up de confirmation de suppression-->
+    <div class="modal fade" id="supprCampus" tabindex="-1" role="dialog"
+         aria-labelledby="supprCampusLabel" aria-hidden="true" data-backdrop="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="supprCampusLabel">Supprimer le campus</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p style="visibility: hidden" id="idCampusASuppr"></p>
+                    Voulez-vous supprimer le campus : <a></a> ?
+                </div>
+                <div class="modal-footer">
+                    <button class="btn" data-dismiss="modal"><i class="fa fa-times"></i> Annuler</button>
+                    <button class="btn campusASuppr"><i class="fa fa-check"></i> Supprimer le campus</button>
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock %}
 
 
@@ -154,4 +158,7 @@
 {% block javascripts %}
 
     <script type="text/javascript" src="{{ asset('js/campus.js') }}"></script>
+
+    <script src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
+    <script src="{{ path('fos_js_routing_js', { callback: 'fos.Router.setData' }) }}"></script>
 {% endblock %}

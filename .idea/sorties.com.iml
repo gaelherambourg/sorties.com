@@ -110,6 +110,8 @@
       <excludeFolder url="file://$MODULE_DIR$/vendor/league/color-extractor" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/claviska/simpleimage" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/symfonycasts/reset-password-bundle" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/willdurand/jsonp-callback-validator" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/friendsofsymfony/jsrouting-bundle" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />

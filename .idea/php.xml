@@ -107,6 +107,8 @@
       <path value="$PROJECT_DIR$/vendor/league/color-extractor" />
       <path value="$PROJECT_DIR$/vendor/claviska/simpleimage" />
       <path value="$PROJECT_DIR$/vendor/symfonycasts/reset-password-bundle" />
+      <path value="$PROJECT_DIR$/vendor/willdurand/jsonp-callback-validator" />
+      <path value="$PROJECT_DIR$/vendor/friendsofsymfony/jsrouting-bundle" />
     </include_path>
   </component>
   <component name="PhpProjectSharedConfiguration" php_language_level="7.2" />

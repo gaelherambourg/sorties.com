@@ -137,12 +137,22 @@ input[type="checkbox"]:checked + label::before {
 
 /* ELEMENTS DE FORMULAIRE */
 
+#tabSorties>tbody>tr>td>a{
+    color: darkgoldenrod;
+}
+
+#tabCampus{
+    border-collapse: inherit;
+    display: initial;
+    width: 60%;
+}
+
 .tabCase{
     padding: 0 10px;
 }
 
 .campusForm{
-    text-align: center
+    text-align: center;
 }
 
 .champSearchCampus, .btnSearchCampus {
@@ -167,11 +177,16 @@ input[type="checkbox"]:checked + label::before {
     margin-bottom: 2px;
 }
 
-.form-group>input, .form-group>select, .form-control{
+.form-group>input, .form-group>select,.form-group>textarea, .form-control{
     border: 1px solid darkgoldenrod;
 }
 
 #form_login>input:hover, #form_login>select:hover{
+    background-color: darkgoldenrod;
+    color: white;
+}
+
+.form-inline>input:hover, .form-inline>select:hover{
     background-color: darkgoldenrod;
     color: white;
 }
@@ -181,12 +196,17 @@ input[type="checkbox"]:checked + label::before {
     color: white;
 }
 
-.form-group>input:hover, .form-group>select:hover{
+.form-inline>input:focus, .form-inline>select:focus{
+    background-color: #26495c;
+    color: white;
+}
+
+.form-group>input:hover, .form-group>select:hover, .form-group>textarea:hover{
     background-color: darkgoldenrod;
     color: white;
 }
 
-.form-group>input:focus, .form-group>select:focus{
+.form-group>input:focus, .form-group>select:focus, .form-group>textarea:focus{
     background-color: #26495c;
     color: white;
 }
@@ -232,6 +252,7 @@ input[type="checkbox"]:checked + label::before {
 
 #form_profil_photo:hover{
     cursor: pointer;
+    background-color: darkgoldenrod;
 }
 
 #form_login{
@@ -259,6 +280,7 @@ input[type="checkbox"]:checked + label::before {
 
 .custom-file-input:hover{
     cursor: pointer;
+    border-color: darkgoldenrod;
 }
 
 .coordonnees{
@@ -297,11 +319,15 @@ footer{
     border-radius: 10px;
     margin : 16px 0px 5px 0px;
     box-shadow: 1px 1px 12px darkgoldenrod;
+    border-color: transparent;
+    color: black;
+
 }
 
 .btn:hover{
     color: white;
     background-color: #26495c;
+    border-color: transparent;
 }
 
 #search_campus_rechercher{
@@ -311,6 +337,8 @@ footer{
 #campus_form_Ajouter{
     margin-bottom: 21px;
 }
+
+
 
 .modifBtn{
     margin: auto;
@@ -370,7 +398,7 @@ footer{
     background-color: #e5e5dc;
 }
 
-.campusAModif{
+.campusAModif, .campusASuppr{
     margin-left: 3px;
 }
 
@@ -455,17 +483,14 @@ h4{
     width: auto;
 }
 
-.col-form-label{
-
-}
-
-
 /* Ecran Gérer Ville  */
 .rechercheVille{
     display: block;
     border: none;
     background-color: #e5e5dc;
     color: darkgoldenrod;
+
+
 }
 .rechercheVille::after{
     border: none;
