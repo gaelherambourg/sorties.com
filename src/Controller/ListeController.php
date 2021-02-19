@@ -54,6 +54,8 @@ class ListeController extends AbstractController
         $date = (new \DateTime('now'));
         dump($date);
 
+
+
         //requete. On peut passer en parametre les filtres reçus du form + id user + date actuelle
         $sorties = $sortiesRepo->trouverToutesSorties($data,$id, $date);
         dump($sorties);

@@ -72,7 +72,7 @@ class SortieRepository extends ServiceEntityRepository
 
         if($search->isInscrit()){
             $qb = $qb
-                ->andWhere('ps.id = :participant')
+                ->andWhere(':participant MEMBER OF s.participants')
                 ->setParameter('participant', "{$id}");
         }
 
@@ -107,11 +107,6 @@ class SortieRepository extends ServiceEntityRepository
     }
 
 
-    public function filtrerSorties()
-    {
-
-
-    }
 
 
 

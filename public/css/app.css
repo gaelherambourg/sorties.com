@@ -444,11 +444,11 @@ h4{
 }
 */
 
-#btnCreeListe{
+/*#btnCreeListe{
 
     padding-left: 47%;
     margin-top: 40px;
-}
+}*/
 
 #tabSorties{
     margin-top: 40px;
@@ -565,6 +565,10 @@ h4{
 }
 .error{
     color: tomato;
+}
+
+#btnCreerSortie{
+    text-align: center;
 }
 
 /*page annulation*/
